@@ -14,7 +14,7 @@ class ChangeThemeIconButton extends StatelessWidget {
     if (themeNotifier.getTheme() == _themeDataLight) {
       return IconButton(
         color: Colors.white,
-        icon: Icon(Icons.nightlight_round_outlined),
+        icon: Icon(Icons.wb_sunny_rounded),
         onPressed: () {
           themeNotifier.setTheme();
           print("cambiar temaa");
@@ -23,7 +23,7 @@ class ChangeThemeIconButton extends StatelessWidget {
     } else {
       return IconButton(
         color: Colors.white,
-        icon: Icon(Icons.wb_sunny_rounded),
+        icon: Icon(Icons.nightlight_round_outlined),
         onPressed: () {
           themeNotifier.setTheme();
           // print("cambiar temaa");

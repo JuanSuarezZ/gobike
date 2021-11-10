@@ -3,13 +3,14 @@ import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
 import 'package:gobike/UI/widgets/background/background.dart';
-import 'package:gobike/UI/widgets/changethemebutton.dart';
+import 'package:gobike/UI/widgets/buttons/customSinginbutton.dart';
+
+import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 import 'package:gobike/UI/widgets/buttons/customButton.dart';
 import 'package:gobike/UI/widgets/customTextField.dart';
 import 'package:gobike/UI/widgets/labels.dart';
 
 import 'package:animate_do/animate_do.dart';
-import 'package:sign_button/sign_button.dart';
 
 class LoginPage extends StatelessWidget {
   //blocs
@@ -26,16 +27,10 @@ class LoginPage extends StatelessWidget {
     final loginBloc =
         new LoginBloc(emailbloc.getstream(), passwordbloc.getstream());
 
-    // if ((defaultTargetPlatform == TargetPlatform.iOS) ||
-    //     (defaultTargetPlatform == TargetPlatform.android)) {
-    //   services.SystemChrome.setSystemUIOverlayStyle(
-    //       services.SystemUiOverlayStyle.light);
-    // }
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: FadeInDown(
-        delay: Duration(milliseconds: 100),
+        delay: Duration(milliseconds: 200),
         child: Container(
             child: Stack(
           children: [
@@ -58,16 +53,15 @@ class LoginPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(
+            // margin: EdgeInsets.only(top: 16),
             color: Colors.transparent,
-            height: size.height - safePading,
             child: Stack(
               children: [
                 Container(
-                  margin: EdgeInsets.only(
-                    bottom: size.height * .15,
-                  ),
+                  padding: EdgeInsets.only(top: 20),
+                  height: size.height,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FadeInLeft(
                           duration: Duration(milliseconds: 500),
@@ -76,55 +70,13 @@ class LoginPage extends StatelessWidget {
                           duration: Duration(milliseconds: 1000),
                           child:
                               CustomTextField.password(context, passwordbloc)),
-                      SizedBox(
-                        height: size.height * .03,
+                      FadeInLeft(
+                        duration: Duration(milliseconds: 1250),
+                        child: _createButtonLogin(loginBloc),
                       ),
                       FadeInLeft(
                         duration: Duration(milliseconds: 1500),
-                        child: CustomButton(
-                          loginBloc,
-                          text: "iniciar sesion",
-                        ),
-                      ),
-                      SizedBox(
-                        height: size.height * .02,
-                      ),
-                      //buttons
-                      FadeInLeft(
-                        delay: Duration(milliseconds: 650),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 20),
-                          child: SignInButton(
-                            buttonType: ButtonType.google,
-                            onPressed: () {
-                              //TODO: login con google
-                            },
-                            buttonSize: ButtonSize.medium,
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            width: size.width * 0.75,
-                          ),
-                        ),
-                      ),
-                      FadeInLeft(
-                        delay: Duration(milliseconds: 650),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: SignInButton(
-                            buttonType: ButtonType.facebook,
-                            onPressed: () {
-                              //TODO: login con facebook
-                            },
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            buttonSize: ButtonSize.medium,
-                            elevation: 2,
-                            width: size.width * 0.75,
-                          ),
-                        ),
+                        child: _createButtons2(context),
                       ),
                     ],
                   ),
@@ -133,6 +85,109 @@ class LoginPage extends StatelessWidget {
               ],
             ))
       ]),
+    );
+  }
+
+  Container _createButtonLogin(LoginBloc loginBloc) {
+    return Container(
+      padding: EdgeInsets.only(top: 20),
+      child: CustomButton(
+        loginBloc,
+        text: "iniciar sesion",
+      ),
+    );
+  }
+
+  Container _createButtons2(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 36),
+            child: InkWell(
+              child: Text("¿Olvidaste tu contraseña?",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontSize: 14)),
+              onTap: () {},
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(right: 36),
+            child: InkWell(
+                child: Text(
+                  "Loguearme Con...",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(fontSize: 14),
+                ),
+                onTap: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      builder: (context) {
+                        return _createBottomSheetContent(context);
+                      });
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _createBottomSheetContent(BuildContext context) {
+    final color;
+    if (Theme.of(context).backgroundColor == Color(0xffF4F4F4)) {
+      color = Color(0xffF4F4F4);
+    } else {
+      color = Color(0xff202020);
+    }
+
+    return Container(
+      padding: EdgeInsets.only(top: 16, bottom: 24),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20), topRight: Radius.circular(25)),
+      ),
+      child: GestureDetector(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              height: 5,
+              width: 50,
+              margin: const EdgeInsets.symmetric(
+                vertical: 10,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey.shade800,
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            CustomSingInButton(
+              text: "Google",
+              url:
+                  "https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png",
+            ),
+            CustomSingInButton(
+              text: "Twitter",
+              url:
+                  "https://hipertextual.com/wp-content/uploads/2012/06/twitter-bird-white-on-blue.jpg",
+            ),
+            CustomSingInButton(
+              text: "Facebook",
+              url:
+                  "https://ideadev.insomnation.com/sites/default/files/facebook-logo-512x512.png",
+            ),
+          ],
+        ),
+      ),
     );
   }
 

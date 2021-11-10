@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final String? text;
   final dynamic bloc;
+  final Function? function;
 
-  CustomButton(this.bloc, {@required this.text});
+  CustomButton(
+    this.bloc, {
+    @required this.text,
+    this.function,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +79,6 @@ class CustomButton extends StatelessWidget {
                 colors: [
                   Colors.grey.withOpacity(0.3),
                   Colors.grey.withOpacity(0.5),
-                  // Colors.grey[300],
-                  // Colors.grey[300],
-                  // Color(0xffC5A466),
-                  // Color(0xffB68D40),
                 ],
               ),
               borderRadius: BorderRadius.circular(15),
@@ -94,7 +95,9 @@ class CustomButton extends StatelessWidget {
                 // elevation: MaterialStateProperty.all(3),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              onPressed: () {},
+              onPressed: () {
+                print("button pushed: ${this.text}");
+              },
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,
@@ -104,7 +107,6 @@ class CustomButton extends StatelessWidget {
                   this.text!,
                   style: TextStyle(
                     fontSize: 18,
-                    // fontWeight: FontWeight.w700,
                     color: Colors.white,
                   ),
                 ),

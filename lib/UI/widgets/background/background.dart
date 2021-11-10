@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:gobike/UI/widgets/background/logo.dart';
-import 'package:gobike/UI/widgets/changethemebutton.dart';
 
 class LoginBackground extends StatelessWidget {
   @override
@@ -15,6 +14,7 @@ class LoginBackground extends StatelessWidget {
           children: [
             Container(
               height: size.height,
+              width: size.width,
             ),
             Positioned(
               top: -100,
@@ -43,8 +43,6 @@ class LoginBackground extends StatelessWidget {
                 angulo: 1.6,
               ),
             ),
-            //set theme iconbutton
-            Positioned(top: 24, left: 16, child: ChangeThemeIconButton()),
           ],
         ),
       ),

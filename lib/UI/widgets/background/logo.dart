@@ -16,16 +16,19 @@ class Logo extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            right: 8,
-            top: size!.height / 13,
+            right: -25,
+            top: size!.height * .12,
             child: CustomPaint(
-              size: Size(250, (250).toDouble()),
+              size: Size(
+                  size!.width * 0.8,
+                  (size!.width * 0.53)
+                      .toDouble()), //You can Replace [WIDTH] with your desired width for Custom Paint and height will be calculated automatically
               painter: CustomPainterBike(),
             ),
           ),
           Positioned(
             left: 8,
-            top: size!.height / 6,
+            top: size!.height * .20,
             child: Text(
               "Go Bike",
               style: Theme.of(context).textTheme.headline6,

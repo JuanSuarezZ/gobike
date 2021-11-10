@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 
-class TestPage extends StatefulWidget {
-
+class Testpage extends StatefulWidget {
+  Testpage({Key? key}) : super(key: key);
 
   @override
-  _TestPageState createState() => _TestPageState();
+  _TestpageState createState() => _TestpageState();
 }
 
-class _TestPageState extends State<TestPage> {
-  
-  int i=1;
-  
+class _TestpageState extends State<Testpage> {
   @override
   Widget build(BuildContext context) {
+    final list = [
+      {"nombre": "juan"},
+      {"nombre": "lis"},
+      {"nombre": "carlos"},
+      {"nombre": "pepe"},
+      {"nombre": "lux"},
+      {"nombre": "roy"},
+    ];
+
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text('Hola Mundo$i'),
-        IconButton(
-            onPressed: () {
-              setState(() {
-                i++;
-              });
-            },
-            icon: Icon(Icons.ac_unit,color: Colors.white,))
-      ])),
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return Container(
+              margin: EdgeInsets.only(top: 5),
+              color: Colors.green,
+              width: 500,
+              height: 50,
+              child: Text(list[index]['nombre'].toString()),
+            );
+          },
+        ),
+      ),
     );
   }
 }

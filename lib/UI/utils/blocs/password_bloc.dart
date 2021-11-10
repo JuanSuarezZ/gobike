@@ -8,34 +8,62 @@ import 'package:gobike/UI/utils/blocs/textfiel_bloc.dart';
 class Passwordbloc extends PlantillaTextField with Validators {
   //controllers
   final _passwordTextController = new TextEditingController();
+  final _confirmTextController = new TextEditingController();
 
   //streams
   final _passwordController = BehaviorSubject<String>();
+  final _confirmPassword = BehaviorSubject<String>();
 
-  Stream<String> get passwordStream =>
-      _passwordController.stream.transform(validarPassword);
+  //get Streams
+  Stream<String> get getPasswordStream => _passwordController.stream
+          .transform(validarPassword)
+          .doOnData((String c) {
+        if (_passwordTextController.text.toString() ==
+            _confirmTextController.text.toString()) {
+          _confirmPassword.sink.add(_confirmTextController.text.toString());
+        } else {
+          _confirmPassword.sink.addError("The passwords do not match");
+        }
+      });
 
-  // Insertar valores al Stream
+  Stream<String> get getConfirmStream =>
+      _confirmPassword.stream.doOnData((String c) {
+        if (_passwordTextController.text.toString() ==
+            _confirmTextController.text.toString()) {
+        } else {
+          _confirmPassword.sink.addError("The passwords do not match");
+        }
+      });
+
+  // Insertar valores nuevos al Stream
   Function(String) get changePassword => _passwordController.sink.add;
+  Function(String) get changeConfirmPassword => _confirmPassword.sink.add;
 
   restartPasswordController() {
     _passwordController.sink.add("");
   }
 
+  restartConfirmController() {
+    _confirmPassword.sink.add("");
+  }
+
   // Obtener el último valor ingresado a los streams
-  String? get password => _passwordController.value;
+  String? get currentValuePassword => _passwordController.value;
+  String? get currentValueConfirm => _confirmPassword.value;
 
   //geters
   getPasswordController() => _passwordTextController;
-
-  dispose() {
-    _passwordController.close();
-  }
+  getConfirmController() => _confirmTextController;
 
   //override the global funtions
   @override
   getstream() {
-    return passwordStream;
+    return getPasswordStream;
+  }
+
+  @override
+  getstream2() {
+    return getConfirmStream;
   }
 
   @override
@@ -44,8 +72,18 @@ class Passwordbloc extends PlantillaTextField with Validators {
   }
 
   @override
+  getTextController2() {
+    return getConfirmController();
+  }
+
+  @override
   restartController() {
     return restartPasswordController();
+  }
+
+  @override
+  restartController2() {
+    return restartConfirmController();
   }
 
   @override
@@ -54,7 +92,22 @@ class Passwordbloc extends PlantillaTextField with Validators {
   }
 
   @override
+  changeStream2() {
+    return changeConfirmPassword;
+  }
+
+  @override
   valueofStream() {
-    return password;
+    return currentValuePassword;
+  }
+
+  @override
+  valueofStream2() {
+    return currentValueConfirm;
+  }
+
+  dispose() {
+    _passwordController.close();
+    _confirmPassword.close();
   }
 }

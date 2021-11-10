@@ -8,11 +8,5 @@ Map<String, Widget Function(BuildContext)> getAplicationRoutes = {
   'login': (_) => LoginPage(),
   'home': (_) => HomePage(),
   'register': (_) => RegisterPage(),
-  'test': (_) => TestPage()
+  'test': (_) => Testpage()
 };
-
-// Map<String, Widget> getAplicationRoutesNamed = {
-//   'login': LoginPage(), 
-//   'home': HomePage(), 
-//   'register': RegisterPage()
-// };

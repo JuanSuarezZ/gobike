@@ -6,7 +6,7 @@ import 'package:gobike/UI/utils/blocs/password_bloc.dart';
 import 'package:gobike/UI/utils/blocs/username_bloc.dart';
 import 'package:gobike/UI/widgets/background/registerbackground.dart';
 import 'package:gobike/UI/widgets/buttons/customButton.dart';
-import 'package:gobike/UI/widgets/changethemebutton.dart';
+import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 import 'package:gobike/UI/widgets/customTextField.dart';
 import 'package:gobike/UI/widgets/labels.dart';
 
@@ -25,8 +25,11 @@ class RegisterPage extends StatelessWidget {
     final safePading = MediaQuery.of(context).padding.top;
 
     //registro_bloc
-    final RegistroBloc _registroBloc = new RegistroBloc(emailbloc.getstream(),
-        passwordbloc.getstream(), usernamebloc.getstream());
+    final RegistroBloc _registroBloc = new RegistroBloc(
+        emailbloc.getstream(),
+        usernamebloc.getstream(),
+        passwordbloc.getstream(),
+        passwordbloc.getstream2());
 
     //scaffold principal
     return Scaffold(
@@ -54,7 +57,7 @@ class RegisterPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(
-            height: size.height - safePading,
+            height: size.height,
             child: Stack(
               children: [
                 Center(
@@ -78,12 +81,17 @@ class RegisterPage extends StatelessWidget {
                           delay: Duration(milliseconds: 150),
                           child: CustomTextField.email(context, emailbloc)),
                       FadeInLeft(
-                        delay: Duration(milliseconds: 300),
+                        delay: Duration(milliseconds: 350),
+                        child: CustomTextField.username(context, usernamebloc),
+                      ),
+                      FadeInLeft(
+                        delay: Duration(milliseconds: 450),
                         child: CustomTextField.password(context, passwordbloc),
                       ),
                       FadeInLeft(
-                        delay: Duration(milliseconds: 350),
-                        child: CustomTextField.password(context, passwordbloc),
+                        delay: Duration(milliseconds: 550),
+                        child: CustomTextField.confirmPassword(
+                            context, passwordbloc),
                       ),
                       SizedBox(
                         height: size.height * .04,

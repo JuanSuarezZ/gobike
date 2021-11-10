@@ -41,7 +41,6 @@ class BlocTheme with ChangeNotifier {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }
