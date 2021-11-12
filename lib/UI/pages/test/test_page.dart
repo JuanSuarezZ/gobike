@@ -22,7 +22,7 @@ class _TestpageState extends State<Testpage> {
     ];
 
     final network = Provider.of<NetworkStateUseCase>(context);
-    network.checkInternetConnection();
+    // network.checkInternetConnection();
     return Scaffold(
       body: SafeArea(
         child: Container(
