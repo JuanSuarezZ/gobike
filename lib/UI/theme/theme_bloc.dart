@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gobike/UI/theme/App_theme.dart';
 
 class BlocTheme with ChangeNotifier {
+  //
   ThemeData _themeDataLight = lightTheme;
   ThemeData _themeDataDark = darkTheme;
   late ThemeData _themaActual;

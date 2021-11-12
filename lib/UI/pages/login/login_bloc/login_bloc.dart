@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:gobike/Core/helpers/validators.dart';
+import 'package:gobike/UI/utils/blocs/email_bloc.dart';
+import 'package:gobike/UI/utils/blocs/password_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LoginBloc with Validators {
-  final Stream<String> emailStream;
-  final Stream<String> passwordStream;
+  final Emailbloc emailbloc;
+  final Passwordbloc passwordbloc;
 
-  LoginBloc(this.emailStream, this.passwordStream);
+  LoginBloc(this.emailbloc, this.passwordbloc);
 
-  Stream<bool> get formValidStream =>
-      Rx.combineLatest2(emailStream, passwordStream, (e, p) => true);
+  Stream<bool> get formValidStream => Rx.combineLatest2(
+      emailbloc.getstream(), passwordbloc.getstream(), (e, p) => true);
 }

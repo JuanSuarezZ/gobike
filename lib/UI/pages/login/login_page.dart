@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:gobike/UI/widgets/customTextField.dart';
 import 'package:gobike/UI/widgets/labels.dart';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   //blocs
@@ -24,8 +26,7 @@ class LoginPage extends StatelessWidget {
     final safePading = MediaQuery.of(context).padding.top;
 
     //login_bloc
-    final loginBloc =
-        new LoginBloc(emailbloc.getstream(), passwordbloc.getstream());
+    final loginBloc = new LoginBloc(emailbloc, passwordbloc);
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -72,7 +73,7 @@ class LoginPage extends StatelessWidget {
                               CustomTextField.password(context, passwordbloc)),
                       FadeInLeft(
                         duration: Duration(milliseconds: 1250),
-                        child: _createButtonLogin(loginBloc),
+                        child: _createButtonLogin(context, loginBloc),
                       ),
                       FadeInLeft(
                         duration: Duration(milliseconds: 1500),
@@ -88,13 +89,13 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Container _createButtonLogin(LoginBloc loginBloc) {
+  Container _createButtonLogin(BuildContext context, LoginBloc loginBloc) {
+    final funtion =
+        Provider.of<AuthUseCase>(context, listen: false).signInEmailPassword;
+
     return Container(
       padding: EdgeInsets.only(top: 20),
-      child: CustomButton(
-        loginBloc,
-        text: "iniciar sesion",
-      ),
+      child: CustomButton.login("iniciar sesion", loginBloc, funtion, "login"),
     );
   }
 
@@ -112,7 +113,11 @@ class LoginPage extends StatelessWidget {
                       .textTheme
                       .bodyText1!
                       .copyWith(fontSize: 14)),
-              onTap: () {},
+              onTap: () {
+                // Provider.of<AuthUseCase>(context, listen: false)
+                //     .signOutFromGoogle();
+                // Navigator.pushReplacementNamed(context, "home");
+              },
             ),
           ),
           Container(
@@ -174,16 +179,22 @@ class LoginPage extends StatelessWidget {
               text: "Google",
               url:
                   "https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png",
+              function: Provider.of<AuthUseCase>(context, listen: false)
+                  .signInwithGoogle,
             ),
             CustomSingInButton(
               text: "Twitter",
               url:
                   "https://hipertextual.com/wp-content/uploads/2012/06/twitter-bird-white-on-blue.jpg",
+              function: Provider.of<AuthUseCase>(context, listen: false)
+                  .signInwithGoogle,
             ),
             CustomSingInButton(
               text: "Facebook",
               url:
                   "https://ideadev.insomnation.com/sites/default/files/facebook-logo-512x512.png",
+              function: Provider.of<AuthUseCase>(context, listen: false)
+                  .signInwithGoogle,
             ),
           ],
         ),

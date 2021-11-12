@@ -34,10 +34,6 @@ class _CustomSingInButtonState extends State<CustomSingInButton> {
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                     color: Colors.transparent, shape: BoxShape.circle),
-                // child: Image.network(
-                //   widget.url,
-                //   fit: BoxFit.cover,
-                // ),
                 child: CachedNetworkImage(
                   imageUrl: widget.url,
                   fit: BoxFit.cover,
@@ -54,9 +50,17 @@ class _CustomSingInButtonState extends State<CustomSingInButton> {
                   ))
             ],
           ),
-          onTap: () {
-            widget.function;
+          onTap: () async {
             print("taped sheet button: ${widget.text}");
+            final resp = await widget.function!();
+            print("resp: ${resp.toString()}");
+            if (resp != null) {
+              // Navigator.pushReplacementNamed(context, 'home');
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "home", (route) => false);
+            } else {
+              print("no se pudo logear con ggoogle");
+            }
           }),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/Core/routes/routes.dart';
+import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
+import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 
 import 'package:gobike/UI/theme/theme_bloc.dart';
 
@@ -9,12 +11,15 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(
-    ChangeNotifierProvider<BlocTheme>(
-      create: (_) => BlocTheme(),
-      child: App(),
-    ),
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<BlocTheme>(create: (_) => BlocTheme()),
+      ChangeNotifierProvider<AuthUseCase>(create: (_) => AuthUseCase()),
+      ChangeNotifierProvider<NetworkStateUseCase>(
+          create: (_) => NetworkStateUseCase()),
+    ],
+    child: App(),
+  ));
 }
 
 class App extends StatefulWidget {
@@ -29,7 +34,7 @@ class _MyAppState extends State<App> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "login",
+      initialRoute: "test",
       routes: getAplicationRoutes,
       theme: themeNotifier.getTheme(),
     );
