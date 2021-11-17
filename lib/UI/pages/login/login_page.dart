@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
+import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
+import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
 import 'package:gobike/UI/widgets/background/background.dart';
 import 'package:gobike/UI/widgets/buttons/customSinginbutton.dart';
 
@@ -21,7 +24,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //var mediaQuery
     final size = MediaQuery.of(context).size;
     final safePading = MediaQuery.of(context).padding.top;
 
@@ -40,7 +42,7 @@ class LoginPage extends StatelessWidget {
             //set theme iconbutton
             Positioned(
               top: 24,
-              left: 16,
+              right: 16,
               child: ChangeThemeIconButton(),
             ),
           ],
@@ -100,6 +102,9 @@ class LoginPage extends StatelessWidget {
   }
 
   Container _createButtons2(BuildContext context) {
+    //conection
+    final conection = Provider.of<NetworkStateUseCase>(context);
+
     return Container(
       padding: EdgeInsets.only(top: 16),
       child: Row(
@@ -108,15 +113,20 @@ class LoginPage extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(left: 36),
             child: InkWell(
-              child: Text("¿Olvidaste tu contraseña?",
+              child: Text(NetworkStateUseCase.state.toString(),
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
                       .copyWith(fontSize: 14)),
               onTap: () {
-                // Provider.of<AuthUseCase>(context, listen: false)
-                //     .signOutFromGoogle();
-                // Navigator.pushReplacementNamed(context, "home");
+                if (conectionvalidation()) {
+                  Provider.of<AuthUseCase>(context, listen: false)
+                      .signOutFromGoogle();
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => ErrorAlertDialog());
+                }
               },
             ),
           ),
@@ -219,4 +229,9 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+
+bool conectionvalidation() {
+  if (NetworkStateUseCase.state) return true;
+  return false;
 }

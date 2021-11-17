@@ -3,7 +3,7 @@ abstract class AuthGateWay {
   Future<bool> signInwithGoogle();
   Future<bool> signOutFromGoogle();
   Future<String?> getCurrentUser();
+  Future<bool> createUsermailPassword(String email, String password);
   Future<bool> signInEmailPassword(String email, String password);
-  Future<bool> signUpEmailPassword(String email, String password);
   Future<bool> signOutEmailPassword();
 }

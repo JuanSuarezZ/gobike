@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gobike/UI/theme/App_theme.dart';
@@ -14,15 +15,21 @@ class BlocTheme with ChangeNotifier {
     this._themaActual = _themeDataLight;
   }
 
-  getTheme() => this._themaActual;
+  getTheme() {
+    return this._themaActual;
+  }
 
   setTheme() async {
     if (this._themaActual == _themeDataDark) {
       guardarTheme("light");
       this._themaActual = _themeDataLight;
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark
+          .copyWith(statusBarIconBrightness: Brightness.dark));
     } else {
       guardarTheme("dark");
       this._themaActual = _themeDataDark;
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
+          .copyWith(statusBarIconBrightness: Brightness.light));
     }
     notifyListeners();
   }

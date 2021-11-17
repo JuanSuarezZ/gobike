@@ -62,13 +62,24 @@ class CustomButton extends StatelessWidget {
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: () async {
-                print("pusheado de boton login");
+                print("pusheado de boton login con email and password");
                 print("email: ${bloc.emailbloc.valueofStream()}");
                 print("password: ${bloc.passwordbloc.valueofStream()}");
                 final email = bloc.emailbloc.valueofStream();
                 final password = bloc.passwordbloc.valueofStream();
-                final resp = auth.signInEmailPassword(email, password);
+                final resp = await auth.signInEmailPassword(email, password);
                 print("respuesta: ${await resp.toString()}");
+
+                if (resp == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    duration: Duration(seconds: 2),
+                    content: Text("Te has logueado"),
+                  ));
+
+                  Navigator.pushNamed(context, "home");
+                } else {
+                  print("respuesta: ${await resp.toString()}");
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.only(

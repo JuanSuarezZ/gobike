@@ -12,13 +12,17 @@ final darkTheme = ThemeData(
     cursorColor: Colors.white,
   ),
   textTheme: const TextTheme(
-    bodyText1: TextStyle(color: Colors.white, fontSize: 16),
-    headline6: TextStyle(
-        color: Colors.white,
-        fontSize: 54,
-        fontFamily: "Roboto",
-        fontWeight: FontWeight.normal),
-  ),
+      bodyText1: TextStyle(color: Colors.white, fontSize: 16),
+      headline6: TextStyle(
+          color: Colors.white,
+          fontSize: 54,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.normal),
+      headline5: TextStyle(
+          color: Colors.white,
+          fontSize: 58,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.w400)),
 );
 
 final lightTheme = ThemeData(
@@ -31,14 +35,20 @@ final lightTheme = ThemeData(
   colorScheme: const ColorScheme.light(primary: Color(0xffB68D40)),
   textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black26),
   textTheme: const TextTheme(
-    bodyText1: TextStyle(color: Colors.black54, fontSize: 16),
-    headline6: TextStyle(
-        color: Colors.black,
-        fontSize: 54,
-        fontFamily: "Roboto",
-        fontWeight: FontWeight.normal),
-  ),
+      bodyText1: TextStyle(color: Colors.black54, fontSize: 16),
+      headline6: TextStyle(
+          color: Colors.black,
+          fontSize: 54,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.normal),
+      headline5: TextStyle(
+          color: Colors.black,
+          fontSize: 54,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.w400)),
 );
+
+
 
 // final lightTheme = ThemeData(
 //   colorScheme: const ColorScheme.light(primary: Colors.green),

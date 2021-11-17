@@ -1,49 +1,122 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:gobike/UI/widgets/background/logo.dart';
 
-class LoginBackground extends StatelessWidget {
+class LoginBackground extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<LoginBackground>
+    with TickerProviderStateMixin {
+  late AnimationController controller1;
+  late AnimationController controller2;
+  late Animation<double> animation1;
+  late Animation<double> animation2;
+  late Animation<double> animation3;
+  late Animation<double> animation4;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller1 = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 10,
+      ),
+    );
+
+    controller2 = AnimationController(
+      vsync: this,
+      duration: Duration(
+        seconds: 5,
+      ),
+    );
+
+    animation1 = Tween<double>(begin: .01, end: .2).animate(
+      CurvedAnimation(
+        parent: controller1,
+        curve: Curves.linear,
+      ),
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller1.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller1.forward();
+        }
+      });
+    animation2 = Tween<double>(begin: .5, end: .3).animate(
+      CurvedAnimation(
+        parent: controller1,
+        curve: Curves.linear,
+      ),
+    )..addListener(() {
+        setState(() {});
+      });
+
+    animation4 = Tween<double>(begin: 100, end: 120).animate(
+      CurvedAnimation(
+        parent: controller2,
+        curve: Curves.easeInOut,
+      ),
+    )..addListener(() {
+        setState(() {});
+      });
+
+    controller1.forward();
+    controller2.forward();
+  }
+
+  @override
+  void dispose() {
+    controller1.dispose();
+    controller2.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
+    Size size = MediaQuery.of(context).size;
     return Container(
       child: SingleChildScrollView(
-        child: Stack(
-          alignment: Alignment.topRight,
-          children: [
-            Container(
-              height: size.height,
-              width: size.width,
-            ),
-            Positioned(
-              top: -100,
-              right: -70,
-              child: Custombox(
-                tamanio: size.height / 5,
-                angulo: 0.7,
+        child: SizedBox(
+          height: size.height,
+          child: Stack(
+            children: [
+              Positioned(
+                top: size.height * .1,
+                left: size.width * .8,
+                child: CustomPaint(
+                  painter: MyPainter(animation4.value),
+                ),
               ),
-            ),
-            Positioned(
-              top: -60,
-              left: -80,
-              child: Custombox(
-                tamanio: size.height / 4.4,
-                angulo: .3,
+              Positioned(
+                top: size.height * .5,
+                left: size.width * (animation1.value),
+                child: CustomPaint(
+                  painter: MyPainter(60),
+                ),
               ),
-            ),
-            Logo(
-              size: size,
-            ),
-            Positioned(
-              bottom: -40,
-              right: -90,
-              child: Custombox(
-                tamanio: size.height / 5,
-                angulo: 1.6,
+              Positioned(
+                bottom: -50,
+                right: -60,
+                child: Custombox(
+                  tamanio: animation2.value * (size.width * 0.9),
+                  angulo: 1.6,
+                ),
               ),
-            ),
-          ],
+              Logo(
+                size: size,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -65,7 +138,7 @@ class Custombox extends StatelessWidget {
     //final size = MediaQuery.of(context).size;
 
     return Transform.rotate(
-      angle: -pi / this.angulo!,
+      angle: -3.14 / this.angulo!,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         width: tamanio,
@@ -86,5 +159,31 @@ class Custombox extends StatelessWidget {
             )),
       ),
     );
+  }
+}
+
+class MyPainter extends CustomPainter {
+  final double radius;
+
+  MyPainter(this.radius);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..shader = LinearGradient(colors: [
+        Color(0xffD3BB8C),
+        Color(0xffB68D40),
+      ], begin: Alignment.topLeft, end: Alignment.bottomRight)
+          .createShader(Rect.fromCircle(
+        center: Offset(0, 0),
+        radius: radius,
+      ));
+
+    canvas.drawCircle(Offset.zero, radius, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }

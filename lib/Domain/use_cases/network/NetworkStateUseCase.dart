@@ -11,22 +11,13 @@ class NetworkStateUseCase extends ChangeNotifier {
       _connectivity.onConnectivityChanged
           .listen((_) => checkInternetConnection());
 
-  bool _isOnline = true;
+  static bool _isOnline = true;
 
-  String _nombre = "juan";
-
-  String get nombre => _nombre;
-
-  setNombre() {
-    _nombre = "asd";
-    notifyListeners();
-  }
+  static bool get state => _isOnline;
 
   Future<void> checkInternetConnection() async {
-    print("pingeando1");
     try {
       await Future.delayed(const Duration(seconds: 3));
-      print("pingeando2");
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         _isOnline = true;

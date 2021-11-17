@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
 
 import 'package:gobike/Domain/use_cases/auth/AuthUseCaseConfig.dart';
+import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 
 class AuthUseCase with ChangeNotifier {
   //inyection dependenci
@@ -19,14 +20,6 @@ class AuthUseCase with ChangeNotifier {
     return this._authGateWay.checkUser();
   }
 
-  Future<bool> signUpEmailPassword(String email, String password) {
-    return this._authGateWay.signUpEmailPassword(email, password);
-  }
-
-  Future<bool> signInEmailPassword(String email, String password) {
-    return this._authGateWay.signInEmailPassword(email, password);
-  }
-
   Future<bool> signInwithGoogle() async {
     final result = await this._authGateWay.signInwithGoogle();
     _loggedIn = false;
@@ -41,5 +34,17 @@ class AuthUseCase with ChangeNotifier {
     final resp = await this._authGateWay.getCurrentUser();
     print("nombre useCase: $resp");
     return resp;
+  }
+
+  Future<bool> createUsermailPassword(String email, String password) {
+    return this._authGateWay.createUsermailPassword(email, password);
+  }
+
+  Future<bool> signInEmailPassword(String email, String password) {
+    return this._authGateWay.signInEmailPassword(email, password);
+  }
+
+  Future<bool> signOutEmailPassword(String email, String password) {
+    return this._authGateWay.signOutEmailPassword();
   }
 }

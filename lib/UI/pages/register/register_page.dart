@@ -24,7 +24,7 @@ class RegisterPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final safePading = MediaQuery.of(context).padding.top;
 
-    //registro_bloc
+    //register_bloc
     final RegistroBloc _registroBloc = new RegistroBloc(
         emailbloc.getstream(),
         usernamebloc.getstream(),
@@ -64,10 +64,10 @@ class RegisterPage extends StatelessWidget {
                   child: Container(
                       height: size.height,
                       padding: EdgeInsets.only(top: size.height / 5),
-                      child: Text("Registro",
+                      child: Text("Registrate!",
                           style: Theme.of(context)
                               .textTheme
-                              .headline6!
+                              .headline5!
                               .copyWith(fontSize: 48))),
                 ),
                 Container(

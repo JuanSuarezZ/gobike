@@ -21,7 +21,7 @@ class CustomTextField extends StatefulWidget {
     this.placeholder = "Nombre de usuario",
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
-    this.iconLeft = Icons.align_vertical_top_sharp,
+    this.iconLeft = Icons.account_circle,
     this.iconRight = Icons.close,
   });
 
