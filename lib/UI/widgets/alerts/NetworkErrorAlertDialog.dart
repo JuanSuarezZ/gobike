@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/UI/widgets/alerts/PainterWheel.dart';
 
-class ErrorAlertDialog extends StatelessWidget {
-  const ErrorAlertDialog({Key? key}) : super(key: key);
+class NetworkErrorAlertDialog extends StatelessWidget {
+  const NetworkErrorAlertDialog();
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +47,12 @@ class ErrorAlertDialog extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 40.0),
                         child: Text(
-                            "Ups... Parece que no estas conectado a internet.",
+                            "Ups... parece que no estas conectado a internet",
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline6!
-                                .copyWith(fontSize: 20, color: Colors.grey)),
+                                .copyWith(fontSize: 18, color: Colors.grey)),
                       ),
                     ],
                   ),

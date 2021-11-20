@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gobike/Core/routes/routes.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
-import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 
 import 'package:gobike/UI/theme/theme_bloc.dart';
 
@@ -20,8 +19,6 @@ void main() async {
     providers: [
       ChangeNotifierProvider<BlocTheme>(create: (_) => BlocTheme()),
       ChangeNotifierProvider<AuthUseCase>(create: (_) => AuthUseCase()),
-      ChangeNotifierProvider<NetworkStateUseCase>(
-          create: (_) => NetworkStateUseCase()),
     ],
     child: App(),
   ));
@@ -36,8 +33,6 @@ class _MyAppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<BlocTheme>(context);
-    final network = Provider.of<NetworkStateUseCase>(context);
-    network.checkInternetConnection();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

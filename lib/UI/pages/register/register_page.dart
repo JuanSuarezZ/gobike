@@ -13,23 +13,11 @@ import 'package:gobike/UI/widgets/labels.dart';
 import 'package:animate_do/animate_do.dart';
 
 class RegisterPage extends StatelessWidget {
-  //blocs
-  final Emailbloc emailbloc = new Emailbloc();
-  final Passwordbloc passwordbloc = new Passwordbloc();
-  final Usernamebloc usernamebloc = new Usernamebloc();
-
   @override
   Widget build(BuildContext context) {
     //variables mediaQuery
     final size = MediaQuery.of(context).size;
     final safePading = MediaQuery.of(context).padding.top;
-
-    //register_bloc
-    final RegistroBloc _registroBloc = new RegistroBloc(
-        emailbloc.getstream(),
-        usernamebloc.getstream(),
-        passwordbloc.getstream(),
-        passwordbloc.getstream2());
 
     //scaffold principal
     return Scaffold(
@@ -40,7 +28,7 @@ class RegisterPage extends StatelessWidget {
             child: Stack(
           children: [
             RegisterBackground(),
-            _crearContenido(size, safePading, context, _registroBloc),
+            _crearContenido(size, safePading, context),
             Positioned(
               top: 24,
               left: 16,
@@ -52,8 +40,17 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  SingleChildScrollView _crearContenido(Size size, double safePading,
-      BuildContext context, RegistroBloc registroBloc) {
+  SingleChildScrollView _crearContenido(
+      Size size, double safePading, BuildContext context) {
+    //blocs
+    final Emailbloc emailbloc = new Emailbloc();
+    final Passwordbloc passwordbloc = new Passwordbloc();
+    final Usernamebloc usernamebloc = new Usernamebloc();
+
+    //register_bloc
+    final RegistroBloc registroBloc =
+        new RegistroBloc(emailbloc, passwordbloc, usernamebloc);
+
     return SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(

@@ -2,19 +2,23 @@ import 'dart:async';
 
 import 'package:gobike/Core/helpers/validators.dart';
 
+import 'package:gobike/UI/utils/blocs/email_bloc.dart';
+import 'package:gobike/UI/utils/blocs/password_bloc.dart';
+import 'package:gobike/UI/utils/blocs/username_bloc.dart';
+
 import 'package:rxdart/rxdart.dart';
 
 class RegistroBloc with Validators {
-  //controllers
+  final Emailbloc emailbloc;
+  final Passwordbloc passwordbloc;
+  final Usernamebloc usernamebloc;
 
-  final Stream<String> emailStream;
-  final Stream<String> username;
-  final Stream<String> passwordStream;
-  final Stream<String> confirmStream;
+  RegistroBloc(this.emailbloc, this.passwordbloc, this.usernamebloc);
 
-  RegistroBloc(
-      this.emailStream, this.passwordStream, this.confirmStream, this.username);
-
-  Stream<bool> get formValidStream => Rx.combineLatest4(emailStream, username,
-      passwordStream, confirmStream, (a, b, c, d) => true);
+  Stream<bool> get formValidStream => Rx.combineLatest4(
+      emailbloc.getstream(),
+      usernamebloc.getstream(),
+      passwordbloc.getstream(),
+      passwordbloc.getstream2(),
+      (a, b, c, d) => true);
 }

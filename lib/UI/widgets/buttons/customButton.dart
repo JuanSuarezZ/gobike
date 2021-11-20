@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
+import 'package:gobike/UI/widgets/alerts/CredentialAlertDialog.dart';
 import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {
@@ -78,6 +79,10 @@ class CustomButton extends StatelessWidget {
 
                   Navigator.pushNamed(context, "home");
                 } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          CredentialErrorAlertDialog());
                   print("respuesta: ${await resp.toString()}");
                 }
               },
@@ -180,9 +185,7 @@ class CustomButton extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.transparent),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              onPressed: () {
-                print("pusheado!");
-              },
+              onPressed: () {},
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,
@@ -283,8 +286,34 @@ class CustomButton extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.transparent),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              onPressed: () {
-                print("pusheado!");
+              onPressed: () async {
+                print("pusheado de boton login con email and password");
+                print("email: ${bloc.emailbloc.valueofStream().toString()}");
+                print(
+                    "password: ${bloc.passwordbloc.valueofStream().toString()}");
+                print(
+                    "username: ${bloc.usernamebloc.valueofStream().toString()}");
+                final email = bloc.emailbloc.valueofStream();
+                final username = bloc.usernamebloc.valueofStream();
+                final password = bloc.passwordbloc.valueofStream();
+
+                final resp = await auth.createUsermailPassword(email, password);
+                print("respuesta: ${await resp.toString()}");
+
+                if (resp == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    duration: Duration(seconds: 2),
+                    content: Text("Te has logueado"),
+                  ));
+
+                  Navigator.pushNamed(context, "home");
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          CredentialErrorAlertDialog());
+                  print("respuesta: ${await resp.toString()}");
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.only(

@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
+import 'package:gobike/UI/widgets/alerts/NetworkErrorAlertDialog.dart';
 
 class CustomSingInButton extends StatelessWidget {
   final Function? function;
@@ -45,27 +47,33 @@ class CustomSingInButton extends StatelessWidget {
             ],
           ),
           onTap: () async {
-            final resp = await function!();
+            if (await NetworkStateUseCase().checkInternetConnection()) {
+              final resp = await function!();
 
-            // print("!!!!respuestaaaa:!!!! ${resp.toString()}");
+              // print("!!!!respuestaaaa:!!!! ${resp.toString()}");
 
-            if (resp == true) {
-              // print("!!!Te has logueado!!:");
+              if (resp == true) {
+                // print("!!!Te has logueado!!:");
 
-              // Navigator.pop(context);
+                // Navigator.pop(context);
 
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                duration: Duration(seconds: 2),
-                content: Text("Te has logueado"),
-              ));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  duration: Duration(seconds: 2),
+                  content: Text("Te has logueado"),
+                ));
 
-              Navigator.pushNamed(context, "home");
+                Navigator.pushNamed(context, "home");
+              } else {
+                // print("!!!No Te has logueado:");
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text("No Te has logueado"),
+                ));
+                Navigator.pop(context);
+              }
             } else {
-              // print("!!!No Te has logueado:");
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text("No Te has logueado"),
-              ));
-              Navigator.pop(context);
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => NetworkErrorAlertDialog());
             }
           }),
     );

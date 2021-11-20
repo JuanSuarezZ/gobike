@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
 
 import 'package:gobike/Domain/use_cases/auth/AuthUseCaseConfig.dart';
-import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 
 class AuthUseCase with ChangeNotifier {
   //inyection dependenci

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
-import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
+import 'package:gobike/UI/widgets/alerts/NetworkErrorAlertDialog.dart';
 import 'package:gobike/UI/widgets/background/background.dart';
 import 'package:gobike/UI/widgets/buttons/customSinginbutton.dart';
 
@@ -18,17 +18,11 @@ import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  //blocs
-  final Emailbloc emailbloc = new Emailbloc();
-  final Passwordbloc passwordbloc = new Passwordbloc();
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final safePading = MediaQuery.of(context).padding.top;
-
-    //login_bloc
-    final loginBloc = new LoginBloc(emailbloc, passwordbloc);
+    //conecction
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -38,7 +32,7 @@ class LoginPage extends StatelessWidget {
             child: Stack(
           children: [
             LoginBackground(),
-            _crearContenido(size, safePading, context, loginBloc),
+            _crearContenido(size, safePading, context),
             //set theme iconbutton
             Positioned(
               top: 24,
@@ -52,7 +46,14 @@ class LoginPage extends StatelessWidget {
   }
 
   SingleChildScrollView _crearContenido(
-      Size size, double safePading, BuildContext context, LoginBloc loginBloc) {
+      Size size, double safePading, BuildContext context) {
+    //blocs
+    final Emailbloc emailbloc = new Emailbloc();
+    final Passwordbloc passwordbloc = new Passwordbloc();
+
+    //login_bloc
+    final loginBloc = new LoginBloc(emailbloc, passwordbloc);
+
     return SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(
@@ -102,9 +103,6 @@ class LoginPage extends StatelessWidget {
   }
 
   Container _createButtons2(BuildContext context) {
-    //conection
-    final conection = Provider.of<NetworkStateUseCase>(context);
-
     return Container(
       padding: EdgeInsets.only(top: 16),
       child: Row(
@@ -113,19 +111,20 @@ class LoginPage extends StatelessWidget {
           Container(
             padding: EdgeInsets.only(left: 36),
             child: InkWell(
-              child: Text(NetworkStateUseCase.state.toString(),
+              child: Text("olvide mi contraseña",
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1!
-                      .copyWith(fontSize: 14)),
-              onTap: () {
-                if (conectionvalidation()) {
-                  Provider.of<AuthUseCase>(context, listen: false)
-                      .signOutFromGoogle();
+                      .copyWith(fontSize: 14, fontWeight: FontWeight.w400)),
+              onTap: () async {
+                if (await NetworkStateUseCase().checkInternetConnection()) {
+                  //TODO: restar password
+                  print("restar password");
                 } else {
                   showDialog(
                       context: context,
-                      builder: (BuildContext context) => ErrorAlertDialog());
+                      builder: (BuildContext context) =>
+                          NetworkErrorAlertDialog());
                 }
               },
             ),
@@ -229,9 +228,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-}
-
-bool conectionvalidation() {
-  if (NetworkStateUseCase.state) return true;
-  return false;
 }
