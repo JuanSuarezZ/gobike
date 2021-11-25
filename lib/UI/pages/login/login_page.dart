@@ -186,22 +186,19 @@ class LoginPage extends StatelessWidget {
             ),
             CustomSingInButton(
               text: "Google",
-              url:
-                  "https://rotulosmatesanz.com/wp-content/uploads/2017/09/2000px-Google_G_Logo.svg_.png",
+              url: "assets/images/google.png",
               function: Provider.of<AuthUseCase>(context, listen: false)
                   .signInwithGoogle,
             ),
             CustomSingInButton(
               text: "Twitter",
-              url:
-                  "https://hipertextual.com/wp-content/uploads/2012/06/twitter-bird-white-on-blue.jpg",
+              url: "assets/images/twitter.png",
               function: Provider.of<AuthUseCase>(context, listen: false)
                   .signInwithGoogle,
             ),
             CustomSingInButton(
               text: "Facebook",
-              url:
-                  "https://ideadev.insomnation.com/sites/default/files/facebook-logo-512x512.png",
+              url: "assets/images/facebook.png",
               function: Provider.of<AuthUseCase>(context, listen: false)
                   .signInwithGoogle,
             ),

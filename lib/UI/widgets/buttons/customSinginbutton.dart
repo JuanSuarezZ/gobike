@@ -30,8 +30,13 @@ class CustomSingInButton extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                     color: Colors.transparent, shape: BoxShape.circle),
-                child: CachedNetworkImage(
-                  imageUrl: url,
+                // child: CachedNetworkImage(
+                //   imageUrl: url,
+                //   fit: BoxFit.cover,
+                // ),
+
+                child: Image.asset(
+                  url,
                   fit: BoxFit.cover,
                 ),
               ),

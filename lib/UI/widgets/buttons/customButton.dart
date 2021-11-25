@@ -294,7 +294,7 @@ class CustomButton extends StatelessWidget {
                 print(
                     "username: ${bloc.usernamebloc.valueofStream().toString()}");
                 final email = bloc.emailbloc.valueofStream();
-                final username = bloc.usernamebloc.valueofStream();
+                // final username = bloc.usernamebloc.valueofStream();
                 final password = bloc.passwordbloc.valueofStream();
 
                 final resp = await auth.createUsermailPassword(email, password);
