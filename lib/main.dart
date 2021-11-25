@@ -36,7 +36,7 @@ class _MyAppState extends State<App> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: "status",
+      initialRoute: "test",
       routes: getAplicationRoutes,
       theme: themeNotifier.getTheme(),
     );

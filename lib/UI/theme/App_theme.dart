@@ -28,7 +28,7 @@ final darkTheme = ThemeData(
 final lightTheme = ThemeData(
   backgroundColor: const Color(0xffF4F4F4),
   primaryColor: Colors.white,
-  iconTheme: IconThemeData(color: Colors.black26),
+  iconTheme: IconThemeData(color: Colors.black),
   buttonColor: const Color(0xffB2BABB),
   accentColor: const Color(0xffB68D40),
   errorColor: Colors.red,
