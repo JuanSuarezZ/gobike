@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:bottom_bar/bottom_bar.dart';
+import 'package:gobike/UI/pages/home/home_page.dart';
+import 'package:gobike/UI/pages/login/login_page.dart';
+import 'package:gobike/UI/pages/register/register_page.dart';
+import 'package:gobike/UI/widgets/background/registerbackground.dart';
+import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 
 class Testpage extends StatefulWidget {
   Testpage({Key? key}) : super(key: key);
@@ -9,83 +13,6 @@ class Testpage extends StatefulWidget {
   _TestpageState createState() => _TestpageState();
 }
 
-// class _TestpageState extends State<Testpage> {
-//   int _currentIndex = 0;
-//   late PageController _pageController;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _pageController = PageController();
-//   }
-
-//   @override
-//   void dispose() {
-//     _pageController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text("Bottom Nav Bar")),
-//       body: SizedBox.expand(
-//         child: PageView(
-//           controller: _pageController,
-//           onPageChanged: (index) {
-//             setState(() => _currentIndex = index);
-//           },
-//           children: <Widget>[
-//             Container(
-//               color: Colors.blueGrey,
-//             ),
-//             Container(
-//               color: Colors.red,
-//             ),
-//             Container(
-//               color: Colors.green,
-//             ),
-//             Container(
-//               color: Colors.blue,
-//             ),
-//           ],
-//         ),
-//       ),
-//       bottomNavigationBar: BottomNavyBar(
-//         selectedIndex: _currentIndex,
-//         onItemSelected: (index) {
-//           setState(() => _currentIndex = index);
-//           _pageController.animateToPage(index,
-//               duration: Duration(milliseconds: 300), curve: Curves.ease);
-//         },
-//         items: [
-//           BottomNavyBarItem(
-//             icon: Icon(Icons.apps),
-//             title: Text('Home'),
-//             activeColor: Colors.red,
-//           ),
-//           BottomNavyBarItem(
-//             icon: Icon(Icons.apps),
-//             title: Text('Home'),
-//             activeColor: Colors.red,
-//           ),
-//           BottomNavyBarItem(
-//               icon: Icon(Icons.people),
-//               title: Text('Users'),
-//               activeColor: Colors.purpleAccent),
-//           BottomNavyBarItem(
-//               icon: Icon(Icons.message),
-//               title: Text('Messages'),
-//               activeColor: Colors.pink),
-//           BottomNavyBarItem(
-//               icon: Icon(Icons.settings),
-//               title: Text('Settings'),
-//               activeColor: Colors.blue),
-//         ],
-//       ),
-//     );
-//   }
-// }
 class _TestpageState extends State<Testpage> {
   int _currentPage = 0;
   final _pageController = PageController();
@@ -93,21 +20,33 @@ class _TestpageState extends State<Testpage> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).iconTheme.color;
+    final colorBottomNav = Theme.of(context).bottomAppBarTheme.color;
+
     return Scaffold(
       body: PageView(
         controller: _pageController,
         children: [
-          Container(color: Colors.blue),
-          Container(color: Colors.red),
-          Container(color: Colors.greenAccent.shade700),
-          Container(color: Colors.orange),
-          Container(color: Colors.black),
+          Container(
+              color: Colors.blue,
+              child: Center(child: ChangeThemeIconButton())),
+          Container(
+              color: Colors.red, child: Center(child: ChangeThemeIconButton())),
+          Container(
+              color: Colors.green,
+              child: Center(child: ChangeThemeIconButton())),
+          Container(
+              color: Colors.orange,
+              child: Center(child: ChangeThemeIconButton())),
+          Container(
+              color: Colors.purple,
+              child: Center(child: ChangeThemeIconButton())),
         ],
         onPageChanged: (index) {
           setState(() => _currentPage = index);
         },
       ),
       bottomNavigationBar: BottomBar(
+        backgroundColor: colorBottomNav,
         selectedIndex: _currentPage,
         onTap: (int index) {
           _pageController.jumpToPage(index);
@@ -116,7 +55,7 @@ class _TestpageState extends State<Testpage> {
         items: <BottomBarItem>[
           BottomBarItem(
             icon: Icon(
-              Icons.home,
+              Icons.home_outlined,
             ),
             title: Text('Home'),
             inactiveColor: color,
@@ -124,31 +63,31 @@ class _TestpageState extends State<Testpage> {
           ),
           BottomBarItem(
             icon: Icon(
-              Icons.favorite,
+              Icons.notifications_none_rounded,
             ),
             title: Text(
-              'Favorites',
+              'notificaciones',
             ),
             inactiveColor: color,
             activeColor: Colors.red,
           ),
           BottomBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Account'),
+            icon: Icon(Icons.add_circle_outline),
+            title: Text('crear'),
             inactiveColor: color,
             activeColor: Colors.greenAccent.shade700,
           ),
           BottomBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.inventory_2_outlined),
             title: Text('Settings'),
             inactiveColor: color,
             activeColor: Colors.orange,
           ),
           BottomBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.person_outlined),
             title: Text('Other'),
             inactiveColor: color,
-            activeColor: Colors.orange,
+            activeColor: Colors.purple,
           ),
         ],
       ),
