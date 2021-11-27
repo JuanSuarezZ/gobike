@@ -77,7 +77,7 @@ class CustomButton extends StatelessWidget {
                     content: Text("Te has logueado"),
                   ));
 
-                  Navigator.pushNamed(context, "home");
+                  Navigator.pushNamed(context, "test");
                 } else {
                   showDialog(
                       context: context,
@@ -306,7 +306,7 @@ class CustomButton extends StatelessWidget {
                     content: Text("Te has logueado"),
                   ));
 
-                  Navigator.pushNamed(context, "home");
+                  Navigator.pushNamed(context, "test");
                 } else {
                   showDialog(
                       context: context,

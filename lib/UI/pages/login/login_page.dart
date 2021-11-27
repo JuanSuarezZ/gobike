@@ -6,7 +6,7 @@ import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
 import 'package:gobike/UI/widgets/alerts/NetworkErrorAlertDialog.dart';
-import 'package:gobike/UI/widgets/background/background.dart';
+import 'package:gobike/UI/widgets/background/loginBackground.dart';
 import 'package:gobike/UI/widgets/buttons/customSinginbutton.dart';
 
 import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';

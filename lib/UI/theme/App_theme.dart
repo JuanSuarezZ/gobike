@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
-  backgroundColor: const Color(0xff000000),
+  backgroundColor: const Color(0xff313132),
   primaryColor: const Color(0xff1C1C1C),
-  iconTheme: IconThemeData(color: Colors.white),
-  bottomAppBarTheme: BottomAppBarTheme(color: Colors.black),
+  dividerColor: Colors.white,
+  iconTheme: const IconThemeData(color: Colors.white, size: 50),
+  bottomAppBarTheme: const BottomAppBarTheme(color: Colors.black),
   buttonColor: const Color(0xffB2BABB),
   accentColor: const Color(0xffB68D40),
   errorColor: Colors.red,
-  colorScheme: const ColorScheme.light(primary: Colors.white),
+  colorScheme: const ColorScheme.light(primary: Color(0xffB68D40)),
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: Colors.white,
   ),
@@ -23,13 +24,24 @@ final darkTheme = ThemeData(
           color: Colors.white,
           fontSize: 58,
           fontFamily: "Roboto",
-          fontWeight: FontWeight.w400)),
+          fontWeight: FontWeight.w400),
+      headline4: TextStyle(
+          color: Color(0xffB68D40),
+          fontSize: 45,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.w600),
+      headline3: TextStyle(
+          color: Colors.black87,
+          fontSize: 16,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.bold)),
 );
 
 final lightTheme = ThemeData(
-  backgroundColor: const Color(0xffF4F4F4),
+  backgroundColor: const Color(0xffE7E9EB),
   primaryColor: Colors.white,
-  iconTheme: IconThemeData(color: Colors.black),
+  dividerColor: Colors.black,
+  iconTheme: IconThemeData(color: Colors.black54),
   bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
   buttonColor: const Color(0xffB2BABB),
   accentColor: const Color(0xffB68D40),
@@ -47,7 +59,17 @@ final lightTheme = ThemeData(
           color: Colors.black,
           fontSize: 54,
           fontFamily: "Roboto",
-          fontWeight: FontWeight.w400)),
+          fontWeight: FontWeight.w400),
+      headline4: TextStyle(
+          color: Color(0xffB68D40),
+          fontSize: 45,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.w600),
+      headline3: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontFamily: "Roboto",
+          fontWeight: FontWeight.bold)),
 );
 
 

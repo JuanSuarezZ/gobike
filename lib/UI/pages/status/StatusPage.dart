@@ -31,7 +31,7 @@ class _StatusPageState extends State<StatusPage> {
     final state = await auth.checkUser();
 
     if (state) {
-      Navigator.of(context).pushReplacementNamed("home");
+      Navigator.of(context).pushReplacementNamed("test");
     } else {
       Navigator.of(context).pushReplacementNamed("login");
     }

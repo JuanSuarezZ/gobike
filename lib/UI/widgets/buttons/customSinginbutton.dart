@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 import 'package:gobike/UI/widgets/alerts/NetworkErrorAlertDialog.dart';
@@ -67,7 +66,7 @@ class CustomSingInButton extends StatelessWidget {
                   content: Text("Te has logueado"),
                 ));
 
-                Navigator.pushNamed(context, "home");
+                Navigator.pushNamed(context, "test");
               } else {
                 // print("!!!No Te has logueado:");
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(

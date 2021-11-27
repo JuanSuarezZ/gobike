@@ -13,8 +13,8 @@ class ChangeThemeIconButton extends StatelessWidget {
 
     if (themeNotifier.getTheme() == _themeDataLight) {
       return IconButton(
-        color: Colors.white,
-        icon: Icon(Icons.wb_sunny_rounded),
+        color: Colors.black,
+        icon: Icon(Icons.wb_sunny_outlined),
         onPressed: () {
           themeNotifier.setTheme();
           print("cambiar temaa");

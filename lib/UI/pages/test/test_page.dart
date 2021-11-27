@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_bar/bottom_bar.dart';
+import 'package:gobike/UI/pages/archivo/archivo_Page.dart';
 import 'package:gobike/UI/pages/home/home_page.dart';
-import 'package:gobike/UI/pages/login/login_page.dart';
-import 'package:gobike/UI/pages/register/register_page.dart';
-import 'package:gobike/UI/widgets/background/registerbackground.dart';
 import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 
 class Testpage extends StatefulWidget {
@@ -15,41 +13,62 @@ class Testpage extends StatefulWidget {
 
 class _TestpageState extends State<Testpage> {
   int _currentPage = 0;
-  final _pageController = PageController();
+  // final _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).iconTheme.color;
     final colorBottomNav = Theme.of(context).bottomAppBarTheme.color;
+    final body;
+
+    switch (_currentPage) {
+      case 0:
+        body = Container(
+            color: Colors.blue, child: Center(child: ChangeThemeIconButton()));
+        break;
+      case 1:
+        body = Container(
+            color: Colors.red, child: Center(child: ChangeThemeIconButton()));
+        break;
+      case 2:
+        body = Container(
+            color: Colors.green, child: Center(child: ChangeThemeIconButton()));
+        break;
+      case 3:
+        body = ArchivoPage();
+        break;
+
+      default:
+        body = HomePage();
+    }
 
     return Scaffold(
-      body: PageView(
-        controller: _pageController,
-        children: [
-          Container(
-              color: Colors.blue,
-              child: Center(child: ChangeThemeIconButton())),
-          Container(
-              color: Colors.red, child: Center(child: ChangeThemeIconButton())),
-          Container(
-              color: Colors.green,
-              child: Center(child: ChangeThemeIconButton())),
-          Container(
-              color: Colors.orange,
-              child: Center(child: ChangeThemeIconButton())),
-          Container(
-              color: Colors.purple,
-              child: Center(child: ChangeThemeIconButton())),
-        ],
-        onPageChanged: (index) {
-          setState(() => _currentPage = index);
-        },
-      ),
+      // body: PageView(
+      //   controller: _pageController,
+      //   children: [
+      //     Container(
+      //         color: Colors.blue,
+      //         child: Center(child: ChangeThemeIconButton())),
+      //     Container(
+      //         color: Colors.red, child: Center(child: ChangeThemeIconButton())),
+      //     Container(
+      //         color: Colors.green,
+      //         child: Center(child: ChangeThemeIconButton())),
+      //     Container(
+      //         color: Colors.orange,
+      //         child: Center(child: ChangeThemeIconButton())),
+      //     HomePage(),
+      //   ],
+      //   onPageChanged: (index) {
+      //     setState(() => _currentPage = index);
+      //   },
+      // ),
+      body: body,
       bottomNavigationBar: BottomBar(
         backgroundColor: colorBottomNav,
         selectedIndex: _currentPage,
         onTap: (int index) {
-          _pageController.jumpToPage(index);
+          // _pageController.jumpToPage(index);
           setState(() => _currentPage = index);
         },
         items: <BottomBarItem>[
@@ -66,7 +85,7 @@ class _TestpageState extends State<Testpage> {
               Icons.notifications_none_rounded,
             ),
             title: Text(
-              'notificaciones',
+              'alertas',
             ),
             inactiveColor: color,
             activeColor: Colors.red,
@@ -79,7 +98,7 @@ class _TestpageState extends State<Testpage> {
           ),
           BottomBarItem(
             icon: Icon(Icons.inventory_2_outlined),
-            title: Text('Settings'),
+            title: Text('Archivo'),
             inactiveColor: color,
             activeColor: Colors.orange,
           ),
