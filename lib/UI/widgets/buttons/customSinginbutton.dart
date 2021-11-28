@@ -29,14 +29,9 @@ class CustomSingInButton extends StatelessWidget {
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                     color: Colors.transparent, shape: BoxShape.circle),
-                // child: CachedNetworkImage(
-                //   imageUrl: url,
-                //   fit: BoxFit.cover,
-                // ),
-
                 child: Image.asset(
                   url,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
               Container(
@@ -54,10 +49,10 @@ class CustomSingInButton extends StatelessWidget {
             if (await NetworkStateUseCase().checkInternetConnection()) {
               final resp = await function!();
 
-              // print("!!!!respuestaaaa:!!!! ${resp.toString()}");
+              print("!!!!respuestaaaa:!!!! ${resp.toString()}");
 
               if (resp == true) {
-                // print("!!!Te has logueado!!:");
+                print("!!!Te has logueado!!:");
 
                 // Navigator.pop(context);
 
@@ -66,9 +61,9 @@ class CustomSingInButton extends StatelessWidget {
                   content: Text("Te has logueado"),
                 ));
 
-                Navigator.pushNamed(context, "test");
+                Navigator.pushNamed(context, "body");
               } else {
-                // print("!!!No Te has logueado:");
+                print("!!!No Te has logueado:");
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text("No Te has logueado"),
                 ));

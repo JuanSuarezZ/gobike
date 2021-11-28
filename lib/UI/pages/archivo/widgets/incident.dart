@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class IncidenteDeArchivo extends StatelessWidget {
   final String title;
@@ -15,30 +17,44 @@ class IncidenteDeArchivo extends StatelessWidget {
     final style = Theme.of(context).textTheme.headline3!.copyWith(fontSize: 18);
     final size = MediaQuery.of(context).size;
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(30)),
+      borderRadius: BorderRadius.all(Radius.circular(15)),
       child: Container(
-        color: Colors.red,
         height: size.height * .3,
         width: size.width * .9,
-        child: Stack(
+        child: Column(
           children: [
             Container(
-              height: size.height * .3,
+              height: (size.height * .3) * .7,
               width: size.width * .9,
-              child: Image.network(
-                "https://miblogota.files.wordpress.com/2015/03/hueco-cll-72.jpg",
+              child: CachedNetworkImage(
                 fit: BoxFit.cover,
+                imageUrl:
+                    "https://miblogota.files.wordpress.com/2015/03/hueco-cll-72.jpg",
+                placeholder: (context, url) => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      child: LoadingIndicator(
+                        indicatorType: Indicator.ballRotateChase,
+                        colors: [Theme.of(context).accentColor],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Container(
-              height: size.height * .3 * .3,
-              color: Color(0xffC1C8C9).withOpacity(0.7),
+              height: (size.height * .3) * .3,
+              color: Theme.of(context).cardColor,
               child: Container(
                 margin: EdgeInsets.only(left: 14, top: 10, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
+                      margin: EdgeInsets.only(bottom: 8),
                       // color: Colors.green,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,36 +62,43 @@ class IncidenteDeArchivo extends StatelessWidget {
                         children: [
                           Text(
                             "Titulo",
-                            style: style,
+                            style: style.copyWith(fontWeight: FontWeight.bold),
                           ),
                           Container(
                             height: 3,
                           ),
+                          Expanded(child: Container()),
                           Text(
-                            "12:00 am",
+                            "3/3/2022",
                             style: style.copyWith(fontSize: 14),
                           ),
                           Text(
-                            "Barrio venecia",
+                            "12:00 am",
                             style: style.copyWith(fontSize: 14),
                           ),
                         ],
                       ),
                     ),
                     Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              "usuario",
-                              style: style,
-                            ),
-                            Container(
-                              width: 8,
-                            ),
-                            CircleAvatar(),
-                          ],
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Theme.of(context).accentColor,
+                          ),
+                          height: (size.height * .3) * .15,
+                          width: (size.width * .9) * .2,
+                          child: InkWell(
+                            child: Center(
+                                child: Text(
+                              "Editar",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                            onTap: () {
+                              //TODO: hacer el editar
+                            },
+                          ),
                         )
                       ],
                     )

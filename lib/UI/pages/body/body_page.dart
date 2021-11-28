@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:gobike/UI/pages/archivo/archivo_Page.dart';
 import 'package:gobike/UI/pages/home/home_page.dart';
+import 'package:gobike/UI/pages/perfil/perfilPage.dart';
 import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 
-class Testpage extends StatefulWidget {
-  Testpage({Key? key}) : super(key: key);
+class Body extends StatefulWidget {
+  Body({Key? key}) : super(key: key);
 
   @override
-  _TestpageState createState() => _TestpageState();
+  _BodyState createState() => _BodyState();
 }
 
-class _TestpageState extends State<Testpage> {
+class _BodyState extends State<Body> {
   int _currentPage = 0;
   // final _pageController = PageController();
 
@@ -23,8 +24,7 @@ class _TestpageState extends State<Testpage> {
 
     switch (_currentPage) {
       case 0:
-        body = Container(
-            color: Colors.blue, child: Center(child: ChangeThemeIconButton()));
+        body = HomePage();
         break;
       case 1:
         body = Container(
@@ -39,7 +39,7 @@ class _TestpageState extends State<Testpage> {
         break;
 
       default:
-        body = HomePage();
+        body = PerfilPage();
     }
 
     return Scaffold(

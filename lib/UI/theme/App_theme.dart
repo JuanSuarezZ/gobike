@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
   backgroundColor: const Color(0xff313132),
+  cardColor: Colors.black87,
   primaryColor: const Color(0xff1C1C1C),
   dividerColor: Colors.white,
   iconTheme: const IconThemeData(color: Colors.white, size: 50),
@@ -31,13 +32,14 @@ final darkTheme = ThemeData(
           fontFamily: "Roboto",
           fontWeight: FontWeight.w600),
       headline3: TextStyle(
-          color: Colors.black87,
+          color: Colors.white70,
           fontSize: 16,
           fontFamily: "Roboto",
-          fontWeight: FontWeight.bold)),
+          fontWeight: FontWeight.w500)),
 );
 
 final lightTheme = ThemeData(
+  cardColor: Colors.white,
   backgroundColor: const Color(0xffE7E9EB),
   primaryColor: Colors.white,
   dividerColor: Colors.black,
@@ -66,10 +68,10 @@ final lightTheme = ThemeData(
           fontFamily: "Roboto",
           fontWeight: FontWeight.w600),
       headline3: TextStyle(
-          color: Colors.white,
+          color: Colors.black87,
           fontSize: 16,
           fontFamily: "Roboto",
-          fontWeight: FontWeight.bold)),
+          fontWeight: FontWeight.w500)),
 );
 
 

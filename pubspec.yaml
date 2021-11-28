@@ -47,8 +47,8 @@ dependencies:
   #Toast 
   fluttertoast: ^8.0.8
   #button nav 
-  bottom_navy_bar: ^6.0.0
   bottom_bar: ^1.2.5
+
 
 
 
@@ -80,6 +80,7 @@ flutter:
   assets:
     - assets/
     - assets/fonts/
+    - assets/icons/
     - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -99,6 +100,9 @@ flutter:
     - family: Langer     
       fonts:
         - asset: assets/fonts/RedHatMono-VariableFont_wght.ttf
+    - family:  CustomIcons
+      fonts:
+        - asset: assets/icons/CustomIcons.ttf
 
   #
   # For details regarding fonts from package dependencies,

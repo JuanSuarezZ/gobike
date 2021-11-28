@@ -154,17 +154,17 @@ class LoginPage extends StatelessWidget {
   }
 
   Container _createBottomSheetContent(BuildContext context) {
-    final color;
-    if (Theme.of(context).backgroundColor == Color(0xffF4F4F4)) {
-      color = Color(0xffF4F4F4);
-    } else {
-      color = Color(0xff202020);
-    }
+    // final color;
+    // if (Theme.of(context).backgroundColor == Color(0xffF4F4F4)) {
+    //   color = Color(0xffF4F4F4);
+    // } else {
+    //   color = Color(0xff202020);
+    // }
 
     return Container(
       padding: EdgeInsets.only(top: 16, bottom: 24),
       decoration: BoxDecoration(
-        color: color,
+        color: Theme.of(context).backgroundColor,
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(25)),
       ),
