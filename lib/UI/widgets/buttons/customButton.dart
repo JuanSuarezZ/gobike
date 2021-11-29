@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
-import 'package:gobike/UI/widgets/alerts/CredentialAlertDialog.dart';
+import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
+import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
 import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {
@@ -9,9 +10,11 @@ class CustomButton extends StatelessWidget {
   final Function? function;
   final String? type;
 
-  CustomButton.login(this.text, this.bloc, this.function, this.type);
+  CustomButton.login(this.bloc, this.function,
+      {this.type = "login", this.text = "Iniciar sesion"});
 
-  CustomButton.register(this.text, this.bloc, this.function, this.type);
+  CustomButton.register(this.bloc, this.function,
+      {this.type = "register", this.text = "Registrarme"});
 
   CustomButton(
     this.bloc, {
@@ -63,28 +66,43 @@ class CustomButton extends StatelessWidget {
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: () async {
-                print("pusheado de boton login con email and password");
+                print("[boton login con email and password]");
                 print("email: ${bloc.emailbloc.valueofStream()}");
                 print("password: ${bloc.passwordbloc.valueofStream()}");
                 final email = bloc.emailbloc.valueofStream();
                 final password = bloc.passwordbloc.valueofStream();
-                final resp = await auth.signInEmailPassword(email, password);
-                print("respuesta: ${await resp.toString()}");
 
-                if (resp == true) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    duration: Duration(seconds: 2),
-                    content: Text("Te has logueado"),
-                  ));
+                final conection =
+                    await NetworkStateUseCase().checkInternetConnection();
 
-                  Navigator.pushNamed(context, "body");
-                } else {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          CredentialErrorAlertDialog());
+                if (conection) {
+                  final resp = await auth.signInEmailPassword(email, password);
+
+                  bloc.emailbloc.restartController();
+                  bloc.passwordbloc.restartController();
                   print("respuesta: ${await resp.toString()}");
+
+                  if (resp == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 2),
+                      content: Text("Te has logueado"),
+                    ));
+
+                    Navigator.pushNamed(context, "body");
+                    return;
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            ErrorAlertDialog.credentials());
+                    print("respuesta: ${await resp.toString()}");
+                    return;
+                  }
                 }
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        ErrorAlertDialog.network());
               },
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -185,7 +203,43 @@ class CustomButton extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.transparent),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                print("[boton crear usuario con email and password]");
+                print("email: ${bloc.emailbloc.valueofStream().toString()}");
+                print(
+                    "password: ${bloc.passwordbloc.valueofStream().toString()}");
+                print(
+                    "username: ${bloc.usernamebloc.valueofStream().toString()}");
+                final email = bloc.emailbloc.valueofStream();
+                final password = bloc.passwordbloc.valueofStream();
+                final conection =
+                    await NetworkStateUseCase().checkInternetConnection();
+                if (conection) {
+                  final resp =
+                      await auth.createUsermailPassword(email, password);
+                  print("respuesta: ${await resp.toString()}");
+
+                  if (resp == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 2),
+                      content: Text("Te has logueado"),
+                    ));
+
+                    Navigator.pushNamed(context, "body");
+                    return;
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            ErrorAlertDialog.register());
+                    return;
+                  }
+                }
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        ErrorAlertDialog.network());
+              },
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,
@@ -286,35 +340,7 @@ class CustomButton extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all(Colors.transparent),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              onPressed: () async {
-                print("pusheado de boton login con email and password");
-                print("email: ${bloc.emailbloc.valueofStream().toString()}");
-                print(
-                    "password: ${bloc.passwordbloc.valueofStream().toString()}");
-                print(
-                    "username: ${bloc.usernamebloc.valueofStream().toString()}");
-                final email = bloc.emailbloc.valueofStream();
-                // final username = bloc.usernamebloc.valueofStream();
-                final password = bloc.passwordbloc.valueofStream();
-
-                final resp = await auth.createUsermailPassword(email, password);
-                print("respuesta: ${await resp.toString()}");
-
-                if (resp == true) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    duration: Duration(seconds: 2),
-                    content: Text("Te has logueado"),
-                  ));
-
-                  Navigator.pushNamed(context, "body");
-                } else {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          CredentialErrorAlertDialog());
-                  print("respuesta: ${await resp.toString()}");
-                }
-              },
+              onPressed: () async {},
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,

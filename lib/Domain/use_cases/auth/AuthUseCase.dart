@@ -46,4 +46,8 @@ class AuthUseCase with ChangeNotifier {
   Future<bool> signOutEmailPassword(String email, String password) {
     return this._authGateWay.signOutEmailPassword();
   }
+
+  sendPasswordResetEmail(String email) {
+    this._authGateWay.sendPasswordResetEmail(email);
+  }
 }

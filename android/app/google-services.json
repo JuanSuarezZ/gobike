@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "980279898793-snj7ra2hcqtv4bfa2bkdvu8b9gfda5v2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.JDev_suarez.gobike",
+            "certificate_hash": "a4f8ec95316d46d6d498929367065307881b47ee"
+          }
+        },
+        {
           "client_id": "980279898793-5q60fgllrcbrnporsl490cv247ci9h7q.apps.googleusercontent.com",
           "client_type": 3
         }

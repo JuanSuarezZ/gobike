@@ -128,12 +128,23 @@ class _PerfilPageState extends State<PerfilPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "Cambiar contraseña",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6!
-                        .copyWith(fontSize: 15),
+                  InkWell(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        content: Text(
+                          "Te hemos enviado un correo :)",
+                          style: Theme.of(context).textTheme.headline3,
+                        ),
+                      ));
+                    },
+                    child: Text(
+                      "Cambiar contraseña",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(fontSize: 15),
+                    ),
                   ),
                 ],
               ),

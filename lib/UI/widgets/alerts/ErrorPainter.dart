@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //Copy this CustomPainter code to the Bottom of the File
-class PaniterrWheel extends CustomPainter {
+class ErrorPainter extends CustomPainter {
     @override
     void paint(Canvas canvas, Size size) {
             

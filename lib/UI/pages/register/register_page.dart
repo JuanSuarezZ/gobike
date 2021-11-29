@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 
 import 'package:gobike/UI/pages/register/registro_bloc/registro_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:gobike/UI/widgets/customTextField.dart';
 import 'package:gobike/UI/widgets/labels.dart';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
   @override
@@ -64,7 +66,7 @@ class RegisterPage extends StatelessWidget {
                       child: Text("Registrate!",
                           style: Theme.of(context)
                               .textTheme
-                              .headline5!
+                              .headline1!
                               .copyWith(fontSize: 48))),
                 ),
                 Container(
@@ -95,8 +97,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       FadeInLeft(
                           delay: Duration(milliseconds: 600),
-                          child:
-                              CustomButton(registroBloc, text: "Registarme!")),
+                          child: createRegisterButton(registroBloc, context)),
                     ],
                   ),
                 ),
@@ -105,6 +106,13 @@ class RegisterPage extends StatelessWidget {
             ))
       ]),
     );
+  }
+
+  CustomButton createRegisterButton(
+      RegistroBloc registroBloc, BuildContext context) {
+    final function =
+        Provider.of<AuthUseCase>(context, listen: false).createUsermailPassword;
+    return CustomButton.register(registroBloc, function);
   }
 
   Container _crearLabels(Size size) {

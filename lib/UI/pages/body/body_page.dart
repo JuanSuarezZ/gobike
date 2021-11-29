@@ -104,7 +104,7 @@ class _BodyState extends State<Body> {
           ),
           BottomBarItem(
             icon: Icon(Icons.person_outlined),
-            title: Text('Other'),
+            title: Text('Perfil'),
             inactiveColor: color,
             activeColor: Colors.purple,
           ),

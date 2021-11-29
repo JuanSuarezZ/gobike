@@ -31,7 +31,8 @@ class Logo extends StatelessWidget {
             top: size!.height * .20,
             child: Text(
               "Go Bike",
-              style: Theme.of(context).textTheme.headline6,
+              style:
+                  Theme.of(context).textTheme.headline1!.copyWith(fontSize: 54),
             ),
           ),
         ],

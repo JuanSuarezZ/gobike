@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
-import 'package:gobike/UI/widgets/alerts/NetworkErrorAlertDialog.dart';
+import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
 
 class CustomSingInButton extends StatelessWidget {
   final Function? function;
@@ -46,16 +46,10 @@ class CustomSingInButton extends StatelessWidget {
             ],
           ),
           onTap: () async {
+            print("[loguearme con terceros]");
             if (await NetworkStateUseCase().checkInternetConnection()) {
-              final resp = await function!();
-
-              print("!!!!respuestaaaa:!!!! ${resp.toString()}");
-
-              if (resp == true) {
-                print("!!!Te has logueado!!:");
-
-                // Navigator.pop(context);
-
+              //make main function
+              if (await function!()) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 2),
                   content: Text("Te has logueado"),
@@ -63,7 +57,6 @@ class CustomSingInButton extends StatelessWidget {
 
                 Navigator.pushNamed(context, "body");
               } else {
-                print("!!!No Te has logueado:");
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text("No Te has logueado"),
                 ));
@@ -72,7 +65,8 @@ class CustomSingInButton extends StatelessWidget {
             } else {
               showDialog(
                   context: context,
-                  builder: (BuildContext context) => NetworkErrorAlertDialog());
+                  builder: (BuildContext context) =>
+                      ErrorAlertDialog.network());
             }
           }),
     );

@@ -79,7 +79,6 @@ class AuthApi extends AuthGateWay {
     }
   }
 
-  @override
   Future<bool> signInEmailPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -92,9 +91,19 @@ class AuthApi extends AuthGateWay {
     }
   }
 
+  @override
   Future<String?> getCurrentUser() async {
     final String? user = await _auth.currentUser!.displayName;
     print("nombre api: $user");
     return user;
+  }
+
+  @override
+  Future<bool> sendPasswordResetEmail(String email) async {
+    try {
+      _auth.sendPasswordResetEmail(email: email);
+    } catch (e) {}
+
+    return true;
   }
 }

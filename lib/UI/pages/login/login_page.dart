@@ -5,7 +5,8 @@ import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
-import 'package:gobike/UI/widgets/alerts/NetworkErrorAlertDialog.dart';
+import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
+import 'package:gobike/UI/widgets/alerts/RestartPassword.dart';
 import 'package:gobike/UI/widgets/background/loginBackground.dart';
 import 'package:gobike/UI/widgets/buttons/customSinginbutton.dart';
 
@@ -57,7 +58,7 @@ class LoginPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(
-            // margin: EdgeInsets.only(top: 16),
+            // margin: EdgeInsets. only(top: 16),
             color: Colors.transparent,
             child: Stack(
               children: [
@@ -98,7 +99,7 @@ class LoginPage extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.only(top: 20),
-      child: CustomButton.login("iniciar sesion", loginBloc, funtion, "login"),
+      child: CustomButton.login(loginBloc, funtion),
     );
   }
 
@@ -118,13 +119,15 @@ class LoginPage extends StatelessWidget {
                       .copyWith(fontSize: 14, fontWeight: FontWeight.w400)),
               onTap: () async {
                 if (await NetworkStateUseCase().checkInternetConnection()) {
-                  //TODO: restar password
-                  print("restar password");
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) =>
+                          RestarPasswordDialog());
                 } else {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) =>
-                          NetworkErrorAlertDialog());
+                          ErrorAlertDialog.network());
                 }
               },
             ),
@@ -154,13 +157,6 @@ class LoginPage extends StatelessWidget {
   }
 
   Container _createBottomSheetContent(BuildContext context) {
-    // final color;
-    // if (Theme.of(context).backgroundColor == Color(0xffF4F4F4)) {
-    //   color = Color(0xffF4F4F4);
-    // } else {
-    //   color = Color(0xff202020);
-    // }
-
     return Container(
       padding: EdgeInsets.only(top: 16, bottom: 24),
       decoration: BoxDecoration(
@@ -180,7 +176,7 @@ class LoginPage extends StatelessWidget {
                 vertical: 10,
               ),
               decoration: BoxDecoration(
-                color: Colors.blueGrey.shade800,
+                color: Theme.of(context).dividerColor,
                 borderRadius: BorderRadius.circular(15),
               ),
             ),

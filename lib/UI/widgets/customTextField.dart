@@ -82,11 +82,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
       ],
     );
     final padding = EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 20);
-    final margin = EdgeInsets.only(bottom: 20, left: 25, right: 25);
+    final margin = EdgeInsets.only(bottom: 20, left: 16, right: 16);
     final contentPadding =
         EdgeInsets.only(left: 11, right: 3, top: 14, bottom: 14);
     final errorStyle =
-        TextStyle(fontSize: 12, color: Theme.of(context).errorColor);
+        TextStyle(fontSize: 14, color: Theme.of(context).errorColor);
     final border = OutlineInputBorder(
       borderSide: BorderSide.none,
       borderRadius: BorderRadius.circular(20),
