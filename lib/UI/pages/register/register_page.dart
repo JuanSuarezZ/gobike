@@ -15,13 +15,22 @@ import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
+  //blocs
+  final Emailbloc emailbloc = new Emailbloc();
+  final Passwordbloc passwordbloc = new Passwordbloc();
+  final Usernamebloc usernamebloc = new Usernamebloc();
+
   @override
   Widget build(BuildContext context) {
     //variables mediaQuery
     final size = MediaQuery.of(context).size;
     final safePading = MediaQuery.of(context).padding.top;
 
-    //scaffold principal
+    //register_bloc
+    final RegistroBloc registroBloc =
+        new RegistroBloc(emailbloc, passwordbloc, usernamebloc);
+
+    //main scaffold
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: FadeInDown(
@@ -30,7 +39,7 @@ class RegisterPage extends StatelessWidget {
             child: Stack(
           children: [
             RegisterBackground(),
-            _crearContenido(size, safePading, context),
+            _crearContenido(size, safePading, context, registroBloc),
             Positioned(
               top: 24,
               left: 16,
@@ -42,17 +51,8 @@ class RegisterPage extends StatelessWidget {
     );
   }
 
-  SingleChildScrollView _crearContenido(
-      Size size, double safePading, BuildContext context) {
-    //blocs
-    final Emailbloc emailbloc = new Emailbloc();
-    final Passwordbloc passwordbloc = new Passwordbloc();
-    final Usernamebloc usernamebloc = new Usernamebloc();
-
-    //register_bloc
-    final RegistroBloc registroBloc =
-        new RegistroBloc(emailbloc, passwordbloc, usernamebloc);
-
+  SingleChildScrollView _crearContenido(Size size, double safePading,
+      BuildContext context, RegistroBloc registroBloc) {
     return SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(

@@ -13,7 +13,7 @@ class ArchivoBackground extends StatelessWidget {
           width: size.width,
         ),
         Positioned(
-          top: size.height * .1,
+          top: size.height * .05,
           left: size.width * .8,
           child: CustomPaint(
             painter: MyPainter(100),

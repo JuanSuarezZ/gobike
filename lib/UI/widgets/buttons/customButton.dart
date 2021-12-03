@@ -74,12 +74,9 @@ class CustomButton extends StatelessWidget {
 
                 final conection =
                     await NetworkStateUseCase().checkInternetConnection();
-
                 if (conection) {
                   final resp = await auth.signInEmailPassword(email, password);
 
-                  bloc.emailbloc.restartController();
-                  bloc.passwordbloc.restartController();
                   print("respuesta: ${await resp.toString()}");
 
                   if (resp == true) {
@@ -87,7 +84,6 @@ class CustomButton extends StatelessWidget {
                       duration: Duration(seconds: 2),
                       content: Text("Te has logueado"),
                     ));
-
                     Navigator.pushNamed(context, "body");
                     return;
                   } else {
@@ -212,11 +208,14 @@ class CustomButton extends StatelessWidget {
                     "username: ${bloc.usernamebloc.valueofStream().toString()}");
                 final email = bloc.emailbloc.valueofStream();
                 final password = bloc.passwordbloc.valueofStream();
+                final username = bloc.usernamebloc.valueofStream();
                 final conection =
                     await NetworkStateUseCase().checkInternetConnection();
+
+                bloc.emailbloc.restartController();
                 if (conection) {
-                  final resp =
-                      await auth.createUsermailPassword(email, password);
+                  final resp = await auth.createUsermailPassword(
+                      email, password, username);
                   print("respuesta: ${await resp.toString()}");
 
                   if (resp == true) {

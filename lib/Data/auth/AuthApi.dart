@@ -1,25 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
+import 'package:gobike/Domain/use_cases/models/FirestoreUser.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthApi extends AuthGateWay {
-  //dependencis
+  //dependencias
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   //google auth
   @override
-  Future<bool> checkUser() async {
+  Future<bool> checkSesion() async {
     final user = await _auth.currentUser;
+
     if (user != null) {
       print("hay una sesion abierta");
-
       return true;
     } else {
       print("no hay sesiones");
       return false;
+    }
+  }
+
+  @override
+  Future<FirestoreUser?> getCurrentUser() async {
+    try {
+      final authuser = await FirebaseAuth.instance.currentUser;
+      return await FirebaseFirestore.instance
+          .collection("users")
+          .doc(authuser!.uid)
+          .get()
+          .then((value) => FirestoreUser.fromJson(value, authuser));
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 
@@ -38,14 +54,34 @@ class AuthApi extends AuthGateWay {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
+      final response = await _auth.signInWithCredential(credential);
+      if (response.additionalUserInfo!.isNewUser) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(response.user!.uid)
+            .set({
+          "username": response.user!.displayName,
+          "age": null,
+          "lastConnection": Timestamp.now(),
+          "registrationDate": Timestamp.now(),
+          "emailSecundary": "",
+          "profiledFinished": false,
+        });
+        return true;
+      }
 
-      await _auth.signInWithCredential(credential);
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(response.user!.uid)
+          .update({
+        "lastConnection": Timestamp.now(),
+      });
+
       return true;
-    } on PlatformException catch (err) {
-      print("Error en googleSingIn: $err");
-      return false;
     } catch (err) {
       print("Error en googleSingIn: $err");
+      await _googleSignIn.signOut();
+      await _auth.signOut();
       return false;
     }
   }
@@ -65,15 +101,30 @@ class AuthApi extends AuthGateWay {
 
   //email auth
   @override
-  Future<bool> createUsermailPassword(String email, String password) async {
+  Future<bool> createUsermailPassword(
+      String email, String password, String username) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      final response = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(response.user!.uid)
+          .set({
+        "username": username,
+        "age": null,
+        "lastConnection": Timestamp.now(),
+        "registrationDate": Timestamp.now(),
+        "emailSecundary": "",
+        "profiledFinished": false,
+      });
+
+      _auth.currentUser!.updateDisplayName(username);
+
       return true;
     } on FirebaseAuthException catch (e) {
-      // return e.message;
+      _auth.signOut();
       print("error: $e");
       return false;
     }
@@ -81,21 +132,20 @@ class AuthApi extends AuthGateWay {
 
   Future<bool> signInEmailPassword(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final response = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(response.user!.uid)
+          .update({"lastConnection": Timestamp.now()});
+
       return true;
     } on FirebaseAuthException catch (e) {
-      // FirebaseAuthException
+      await _auth.signOut();
       print("error: ${e.runtimeType}");
-
       return false;
     }
-  }
-
-  @override
-  Future<String?> getCurrentUser() async {
-    final String? user = await _auth.currentUser!.displayName;
-    print("nombre api: $user");
-    return user;
   }
 
   @override
@@ -103,7 +153,6 @@ class AuthApi extends AuthGateWay {
     try {
       _auth.sendPasswordResetEmail(email: email);
     } catch (e) {}
-
     return true;
   }
 }

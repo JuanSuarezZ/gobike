@@ -19,11 +19,16 @@ import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
+  final Emailbloc emailbloc = new Emailbloc();
+  final Passwordbloc passwordbloc = new Passwordbloc();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final safePading = MediaQuery.of(context).padding.top;
-    //conecction
+
+    //login_bloc
+    final loginBloc = new LoginBloc(emailbloc, passwordbloc);
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -33,7 +38,7 @@ class LoginPage extends StatelessWidget {
             child: Stack(
           children: [
             LoginBackground(),
-            _crearContenido(size, safePading, context),
+            _crearContenido(size, safePading, context, loginBloc),
             //set theme iconbutton
             Positioned(
               top: 24,
@@ -47,14 +52,8 @@ class LoginPage extends StatelessWidget {
   }
 
   SingleChildScrollView _crearContenido(
-      Size size, double safePading, BuildContext context) {
+      Size size, double safePading, BuildContext context, LoginBloc loginBloc) {
     //blocs
-    final Emailbloc emailbloc = new Emailbloc();
-    final Passwordbloc passwordbloc = new Passwordbloc();
-
-    //login_bloc
-    final loginBloc = new LoginBloc(emailbloc, passwordbloc);
-
     return SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(

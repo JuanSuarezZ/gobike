@@ -34,6 +34,12 @@ final darkTheme = ThemeData(
         fontSize: 12,
         fontFamily: "Roboto",
         fontWeight: FontWeight.w300),
+    //card text
+    headline4: TextStyle(
+        color: Colors.black,
+        fontSize: 12,
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.w300),
     // texto2
     bodyText1: TextStyle(
         color: Colors.white,
@@ -72,6 +78,12 @@ final lightTheme = ThemeData(
         fontWeight: FontWeight.w400),
     //texto
     headline3: TextStyle(
+        color: Colors.black,
+        fontSize: 12,
+        fontFamily: "Roboto",
+        fontWeight: FontWeight.w300),
+    //card text
+    headline4: TextStyle(
         color: Colors.black,
         fontSize: 12,
         fontFamily: "Roboto",

@@ -22,7 +22,7 @@ class Passwordbloc extends PlantillaTextField with Validators {
             _confirmTextController.text.toString()) {
           _confirmPassword.sink.add(_confirmTextController.text.toString());
         } else {
-          _confirmPassword.sink.addError("The passwords do not match");
+          _confirmPassword.sink.addError("Las Contraseñas no coinciden");
         }
       });
 

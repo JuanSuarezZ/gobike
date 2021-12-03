@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
+import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
+import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
 
 import 'package:provider/provider.dart';
 
@@ -28,12 +30,23 @@ class _StatusPageState extends State<StatusPage> {
 
   void checkAuth(BuildContext context) async {
     final auth = Provider.of<AuthUseCase>(context);
-    final state = await auth.checkUser();
+    //conection is bool
+    final conection = await NetworkStateUseCase().checkInternetConnection();
+    print("conection: ${conection}");
 
-    if (state) {
-      Navigator.of(context).pushReplacementNamed("body");
+    if (conection) {
+      final state = await auth.checkSesion();
+      if (state) {
+        Navigator.of(context).pushReplacementNamed("body");
+      } else {
+        Navigator.of(context).pushReplacementNamed("login");
+      }
     } else {
-      Navigator.of(context).pushReplacementNamed("login");
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) => ErrorAlertDialog.network());
+      await Future.delayed(Duration(seconds: 3));
+      setState(() {});
     }
   }
 }

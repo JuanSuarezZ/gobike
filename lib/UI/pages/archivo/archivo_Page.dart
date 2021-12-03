@@ -42,7 +42,7 @@ class ArchivoPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Stack(
           children: [
             ArchivoBackground(),
@@ -86,16 +86,17 @@ class ArchivoPage extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        padding: EdgeInsets.only(left: 24, top: 50),
+        margin: EdgeInsets.only(left: 24, right: 24, top: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Mis Incidentes",
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                    fontSize: 24,
-                  ),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontWeight: FontWeight.w400),
             ),
             Container(
               margin: EdgeInsets.only(top: 8),

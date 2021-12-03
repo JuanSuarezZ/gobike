@@ -14,7 +14,7 @@ class IncidenteDeArchivo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme.headline3!.copyWith(fontSize: 18);
+    final style = Theme.of(context).textTheme.headline4!;
     final size = MediaQuery.of(context).size;
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(15)),

@@ -12,6 +12,8 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    //variables
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -33,6 +35,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
   Align createProfile(Size size, BuildContext context) {
     final auth = Provider.of<AuthUseCase>(context);
+    //
     return Align(
       alignment: Alignment.topCenter,
       // color: Colors.red,
@@ -69,21 +72,25 @@ class _PerfilPageState extends State<PerfilPage> {
               //TODO: names of user
               margin: EdgeInsets.only(top: 16),
               child: Text(
-                "Nombre",
+                auth.getUser()!.username.toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
-                    .copyWith(fontSize: 24, fontWeight: FontWeight.w600),
+                    .headline2!
+                    .copyWith(fontSize: 22, fontWeight: FontWeight.w600),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             ),
             Container(
               margin: EdgeInsets.only(top: 4),
               child: Text(
-                "Correo",
+                auth.getUser()!.authuser!.email.toString(),
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .headline3!
                     .copyWith(fontSize: 15),
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             ),
             Container(height: 50),
@@ -93,12 +100,16 @@ class _PerfilPageState extends State<PerfilPage> {
               children: [
                 Column(
                   children: [
-                    Text("20", style: Theme.of(context).textTheme.headline4),
+                    Text("20",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1!
+                            .copyWith(color: Theme.of(context).accentColor)),
                     Text(
                       "Likes",
                       style: Theme.of(context)
                           .textTheme
-                          .headline6!
+                          .headline2!
                           .copyWith(fontSize: 15),
                     ),
                   ],
@@ -110,48 +121,78 @@ class _PerfilPageState extends State<PerfilPage> {
                 ),
                 Column(
                   children: [
-                    Text("30", style: Theme.of(context).textTheme.headline4),
+                    Text(
+                      "30",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(color: Theme.of(context).accentColor),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     Text(
                       "Dislikes",
                       style: Theme.of(context)
                           .textTheme
-                          .headline6!
+                          .headline2!
                           .copyWith(fontSize: 15),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 )
               ],
             ),
             Container(height: 50),
-            Container(
-              margin: EdgeInsets.only(left: 24),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: Theme.of(context).primaryColor,
-                        content: Text(
-                          "Te hemos enviado un correo :)",
-                          style: Theme.of(context).textTheme.headline3,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    margin: EdgeInsets.only(left: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Theme.of(context).primaryColor,
+                              content: Text(
+                                "Te hemos enviado un correo :)",
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                            ));
+                          },
+                          child: Text(
+                            "Cambiar contraseña",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3!
+                                .copyWith(fontSize: 15),
+                          ),
                         ),
-                      ));
-                    },
-                    child: Text(
-                      "Cambiar contraseña",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6!
-                          .copyWith(fontSize: 15),
-                    ),
-                  ),
-                ],
-              ),
+                        Container(
+                          margin: EdgeInsets.only(top: 8),
+                          child: InkWell(
+                            onTap: () {},
+                            child: Text(
+                              "Editar mi perfil",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline3!
+                                  .copyWith(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+              ],
             ),
             Container(height: 70),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   auth.signOutFromGoogle();
                   Navigator.pushNamedAndRemoveUntil(
                       context, "login", (route) => false);
@@ -174,9 +215,10 @@ class _PerfilPageState extends State<PerfilPage> {
           children: [
             Text(
               "Mi Perfil",
-              style: Theme.of(context).textTheme.headline6!.copyWith(
-                    fontSize: 24,
-                  ),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1!
+                  .copyWith(fontWeight: FontWeight.w400),
             ),
             Container(
               margin: EdgeInsets.only(top: 8),
@@ -190,54 +232,3 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 }
-
-// class _HomePageState extends State<HomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final auth = Provider.of<AuthUseCase>(context);
-//     getUser(context);
-//     return Scaffold(
-//         body: FutureBuilder(
-//       future: auth.checkUser(),
-//       builder: (context, snapshot) {
-//         if (snapshot.data == true) {
-//           return Center(
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Center(child: Text("ya has iniciado sesion")),
-//                 ElevatedButton(
-//                     onPressed: () {
-//                       auth.signOutFromGoogle();
-//                       Navigator.pushNamedAndRemoveUntil(
-//                           context, "login", (route) => false);
-//                     },
-//                     child: Text("sing out"))
-//               ],
-//             ),
-//           );
-//         }
-//         return Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Center(child: Text("no has iniciado sesion")),
-//               ElevatedButton(
-//                   onPressed: () {
-//                     auth.signInwithGoogle();
-//                   },
-//                   child: Text("sing in")),
-//             ],
-//           ),
-//         );
-//       },
-//     ));
-//   }
-
-//   getUser(BuildContext context) async {
-//     final auth = await Provider.of<AuthUseCase>(context);
-//     final nombre = await auth.getCurrentUser();
-//     // print("nombre ui:  ${nombre.toString()}");
-//     print("nombre ui:  ${nombre}");
-//   }
-// }
