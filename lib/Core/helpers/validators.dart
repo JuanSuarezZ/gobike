@@ -19,7 +19,7 @@ class Validators {
     if (password.length >= 6) {
       sink.add(password);
     } else {
-      sink.addError('Más de 6 caracteres por favor');
+      sink.addError('Usa más de 6 caracteres por favor');
     }
   });
 
@@ -29,6 +29,40 @@ class Validators {
       sink.add(name);
     } else {
       sink.addError('Ingresa un Nombre mas largo');
+    }
+  });
+
+  final validarTitulo = StreamTransformer<String, String>.fromHandlers(
+      handleData: (titulo, sink) {
+    if (titulo.length >= 10) {
+      sink.add(titulo);
+    } else {
+      sink.addError('Ingresa un Titulo mas largo');
+    }
+  });
+
+  final validarEdad =
+      StreamTransformer<String, String>.fromHandlers(handleData: (edad, sink) {
+    Pattern pattern = r'^[0-9]+$';
+    RegExp regExp = new RegExp(pattern.toString());
+
+    if (regExp.hasMatch(edad)) {
+      if (int.parse(edad) > 13 && int.parse(edad) <= 100) {
+        sink.add(edad);
+      } else {
+        sink.addError('Ingresa una edad valida');
+      }
+    } else {
+      sink.addError('Ingresa una edad valida');
+    }
+  });
+
+  final validarDescripcion = StreamTransformer<String, String>.fromHandlers(
+      handleData: (descripcion, sink) {
+    if (descripcion.length >= 40) {
+      sink.add(descripcion);
+    } else {
+      sink.addError('Ingresa una descripcion mas larga');
     }
   });
 }

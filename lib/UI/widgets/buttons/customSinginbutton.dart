@@ -55,7 +55,7 @@ class CustomSingInButton extends StatelessWidget {
                   content: Text("Te has logueado"),
                 ));
 
-                Navigator.pushNamed(context, "body");
+                Navigator.pushNamed(context, "status");
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text("No Te has logueado"),

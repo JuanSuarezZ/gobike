@@ -28,22 +28,6 @@ class _HomePageState extends State<RegisterBackground>
         seconds: 10,
       ),
     );
-    animation1 = Tween<double>(begin: .01, end: .2).animate(
-      CurvedAnimation(
-        parent: controller1,
-        curve: Curves.linear,
-      ),
-    )
-      ..addListener(() {
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controller1.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          controller1.forward();
-        }
-      });
     animation2 = Tween<double>(begin: .5, end: .3).animate(
       CurvedAnimation(
         parent: controller1,
@@ -82,11 +66,13 @@ class _HomePageState extends State<RegisterBackground>
         setState(() {});
       });
 
-    Timer(Duration(milliseconds: 2500), () {
+    Timer(Duration(milliseconds: 100), () {
       controller1.forward();
     });
 
-    controller2.forward();
+    Timer(Duration(milliseconds: 100), () {
+      controller1.forward();
+    });
   }
 
   @override

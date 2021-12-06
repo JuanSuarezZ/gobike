@@ -1,4 +1,4 @@
-import 'package:gobike/Data/auth/AuthApi.dart';
+import 'package:gobike/Data/user/auth/AuthApi.dart';
 
 class AlbumUseCaseConfig {
   final getway = AuthApi();

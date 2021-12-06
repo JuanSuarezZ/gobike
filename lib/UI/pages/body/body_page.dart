@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_bar/bottom_bar.dart';
-import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/UI/pages/archivo/archivo_Page.dart';
 import 'package:gobike/UI/pages/create/createPage.dart';
+import 'package:gobike/UI/pages/create/provider/createProvider.dart';
 import 'package:gobike/UI/pages/home/home_page.dart';
 import 'package:gobike/UI/pages/perfil/perfilPage.dart';
+import 'package:gobike/UI/theme/theme_bloc.dart';
 import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
-  Body({Key? key}) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  int _currentPage = 0;
+  int _currentPage = 2;
 
   @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthUseCase>(context);
-
     final body;
-
+    //
     switch (_currentPage) {
       case 0:
         body = HomePage();
@@ -33,33 +32,27 @@ class _BodyState extends State<Body> {
             color: Colors.green, child: Center(child: ChangeThemeIconButton()));
         break;
       case 2:
-        body = CreatePage();
+        body = ChangeNotifierProvider(
+          create: (_) => CreateProvider(),
+          child: CreatePage(),
+        );
+
         break;
       case 3:
-        body = ArchivoPage();
+        body = const ArchivoPage();
         break;
 
       default:
-        body = PerfilPage();
+        body = const PerfilPage();
     }
-
-    return FutureBuilder(
-      future: auth.getCurrentUser(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          return createContent(body, context);
-        } else {
-          return Container(
-              color: Colors.white,
-              child: Center(child: CircularProgressIndicator()));
-        }
-      },
-    );
-  }
-
-  Scaffold createContent(body, BuildContext context) {
+    //
     final colorBottomNav = Theme.of(context).bottomAppBarTheme.color;
     final color = Theme.of(context).iconTheme.color;
+    return createBody(body, colorBottomNav, color);
+  }
+
+  Scaffold createBody(body, Color? colorBottomNav, Color? color) {
+    print("[SETSTATE]");
     return Scaffold(
       body: body,
       bottomNavigationBar: BottomBar(

@@ -5,7 +5,7 @@ import 'package:gobike/Domain/use_cases/auth/AuthUseCaseConfig.dart';
 import 'package:gobike/Domain/use_cases/models/FirestoreUser.dart';
 
 class AuthUseCase with ChangeNotifier {
-  //inyection dependenci
+  //inyection dependencias
   late AuthGateWay _authGateWay;
   late FirestoreUser _user;
 
@@ -32,11 +32,11 @@ class AuthUseCase with ChangeNotifier {
   }
 
   //update user
-  Future<FirestoreUser?> getCurrentUser() async {
+  Future getCurrentUser() async {
     final user = await this._authGateWay.getCurrentUser();
     if (user == null) return null;
     this._user = user;
-    return user;
+    notifyListeners();
   }
 
   Future<bool> createUsermailPassword(
@@ -48,7 +48,7 @@ class AuthUseCase with ChangeNotifier {
     return this._authGateWay.signInEmailPassword(email, password);
   }
 
-  Future<bool> signOutEmailPassword(String email, String password) {
+  Future<bool> signOutEmailPassword() {
     return this._authGateWay.signOutEmailPassword();
   }
 

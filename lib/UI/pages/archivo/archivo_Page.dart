@@ -3,40 +3,8 @@ import 'package:gobike/UI/pages/archivo/widgets/incident.dart';
 import 'package:gobike/UI/widgets/background/archivoBackground.dart';
 
 class ArchivoPage extends StatelessWidget {
-  ArchivoPage({Key? key}) : super(key: key);
+  const ArchivoPage({Key? key}) : super(key: key);
 
-  final list = [
-    {
-      "nombre": "juan",
-      "titulo": "asdas",
-      "hora": "12:00 AM",
-      "barrio": "venecia",
-    },
-    {
-      "nombre": "juan",
-      "titulo": "asdas",
-      "hora": "12:00 AM",
-      "barrio": "venecia",
-    },
-    {
-      "nombre": "juan",
-      "titulo": "asdas",
-      "hora": "12:00 AM",
-      "barrio": "venecia",
-    },
-    {
-      "nombre": "juan",
-      "titulo": "asdas",
-      "hora": "12:00 AM",
-      "barrio": "venecia",
-    },
-    {
-      "nombre": "juan",
-      "titulo": "asdas",
-      "hora": "12:00 AM",
-      "barrio": "venecia",
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -56,13 +24,45 @@ class ArchivoPage extends StatelessWidget {
   }
 
   createList(Size size, BuildContext context) {
+    final list = [
+      {
+        "nombre": "juan",
+        "titulo": "asdas",
+        "hora": "12:00 AM",
+        "barrio": "venecia",
+      },
+      {
+        "nombre": "juan",
+        "titulo": "asdas",
+        "hora": "12:00 AM",
+        "barrio": "venecia",
+      },
+      {
+        "nombre": "juan",
+        "titulo": "asdas",
+        "hora": "12:00 AM",
+        "barrio": "venecia",
+      },
+      {
+        "nombre": "juan",
+        "titulo": "asdas",
+        "hora": "12:00 AM",
+        "barrio": "venecia",
+      },
+      {
+        "nombre": "juan",
+        "titulo": "asdas",
+        "hora": "12:00 AM",
+        "barrio": "venecia",
+      },
+    ];
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
             margin: EdgeInsets.only(top: size.width * .25),
             width: size.width * .9,
-            height: size.height * .9,
             // color: Colors.green,
             child: Container(
               // color: Colors.red,

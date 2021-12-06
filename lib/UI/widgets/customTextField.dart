@@ -25,6 +25,17 @@ class CustomTextField extends StatefulWidget {
     this.iconRight = Icons.close,
   });
 
+  CustomTextField.title(
+    this.context,
+    this.bloc, {
+    this.type = "title",
+    this.placeholder = "Ingresa un titulo",
+    this.isPassword = false,
+    this.keyboardType = TextInputType.text,
+    this.iconLeft = Icons.account_circle,
+    this.iconRight = Icons.close,
+  });
+
   CustomTextField.email(
     this.context,
     this.bloc, {
@@ -58,6 +69,50 @@ class CustomTextField extends StatefulWidget {
     this.iconRight = Icons.close,
   });
 
+  CustomTextField.age(
+    this.context,
+    this.bloc, {
+    this.type = "age",
+    this.placeholder = "ingresa tu edad",
+    this.isPassword = false,
+    this.keyboardType = TextInputType.number,
+    this.iconLeft = Icons.child_care,
+    this.iconRight = Icons.close,
+  });
+
+  CustomTextField.description(
+    this.context,
+    this.bloc, {
+    this.type = "description",
+    this.placeholder = "Describe tu incidente",
+    this.isPassword = false,
+    this.keyboardType = TextInputType.text,
+    this.iconLeft = Icons.content_paste,
+    this.iconRight = Icons.close,
+  });
+
+  CustomTextField.tag(
+    this.context,
+    this.bloc, {
+    this.type = "tag",
+    this.placeholder = "tag",
+    this.isPassword = false,
+    this.keyboardType = TextInputType.text,
+    this.iconLeft = Icons.tag,
+    this.iconRight = Icons.close,
+  });
+
+  CustomTextField.search(
+    this.context,
+    this.bloc, {
+    this.type = "search",
+    this.placeholder = "selecciona tu barrio",
+    this.isPassword = false,
+    this.keyboardType = TextInputType.text,
+    this.iconLeft = Icons.tag,
+    this.iconRight = Icons.close,
+  });
+
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
 }
@@ -78,13 +133,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
         BoxShadow(
             color: Colors.black.withOpacity(0.08),
             offset: Offset(0, 8),
-            blurRadius: 5)
+            blurRadius: 4.0)
       ],
     );
-    final padding = EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 20);
-    final margin = EdgeInsets.only(bottom: 20, left: 16, right: 16);
+    final padding =
+        const EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 20);
+    final margin = const EdgeInsets.only(bottom: 20, left: 16, right: 16);
     final contentPadding =
-        EdgeInsets.only(left: 11, right: 3, top: 14, bottom: 14);
+        const EdgeInsets.only(left: 11, right: 3, top: 14, bottom: 14);
     final errorStyle =
         TextStyle(fontSize: 12, color: Theme.of(context).errorColor);
     final border = OutlineInputBorder(
@@ -95,6 +151,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         onPressed: () {},
         icon: Icon(this.widget.iconLeft,
             color: Theme.of(context).iconTheme.color));
+    final size = MediaQuery.of(context).size;
 
     //config of buttons and actions in textfield
     final buttons;
@@ -222,6 +279,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               margin: margin,
               decoration: decoration,
               child: TextField(
+                  autofocus: false,
                   style: Theme.of(context).textTheme.bodyText1,
                   controller: widget.bloc.getTextController2(),
                   obscureText: this.widget.isPassword,
@@ -252,6 +310,135 @@ class _CustomTextFieldState extends State<CustomTextField> {
           },
         );
 
+      case "tag":
+        return StreamBuilder(
+          stream: widget.bloc.getstream(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return Container(
+              width: size.width * .7,
+              padding: padding,
+              margin: EdgeInsets.only(left: 16, right: 16),
+              decoration: decoration,
+              child: TextField(
+                  autofocus: false,
+                  minLines: 1,
+                  maxLines: 10, // allow user to enter 5 line in textfield
+                  keyboardType: TextInputType.multiline,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  controller: widget.bloc.getTextController(),
+                  obscureText: this.widget.isPassword,
+                  decoration: InputDecoration(
+                      //IMPORTANT STYLES COLORS
+                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                      fillColor: Colors.white,
+                      hintStyle: Theme.of(context).textTheme.bodyText1,
+                      contentPadding: contentPadding,
+                      errorStyle: errorStyle,
+                      border: border,
+                      suffixIcon:
+                          (widget.bloc.getTextController().text == null ||
+                                  widget.bloc.getTextController().text == "")
+                              ? null
+                              : buttons,
+                      icon: icon,
+                      hintText: this.widget.placeholder,
+                      errorText: (snapshot.error is ArgumentError ||
+                              snapshot.error == null ||
+                              widget.bloc.valueofStream2() == "" ||
+                              snapshot.error is NoSuchMethodError)
+                          ? null
+                          : snapshot.error.toString()),
+                  onChanged: widget.bloc.changeStream()),
+            );
+          },
+        );
+
+      case "search":
+        return StreamBuilder(
+          stream: widget.bloc.getstream(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return Expanded(
+              child: Container(
+                padding: padding,
+                margin: EdgeInsets.only(left: 16, right: 16),
+                decoration: decoration,
+                child: TextField(
+                    autofocus: false,
+                    minLines: 1,
+                    maxLines: 10, // allow user to enter 5 line in textfield
+                    keyboardType: TextInputType.multiline,
+                    style: Theme.of(context).textTheme.bodyText1,
+                    controller: widget.bloc.getTextController(),
+                    obscureText: this.widget.isPassword,
+                    decoration: InputDecoration(
+                        //IMPORTANT STYLES COLORS
+                        labelStyle: Theme.of(context).textTheme.bodyText1,
+                        fillColor: Colors.white,
+                        hintStyle: Theme.of(context).textTheme.bodyText1,
+                        contentPadding: contentPadding,
+                        errorStyle: errorStyle,
+                        border: border,
+                        suffixIcon:
+                            (widget.bloc.getTextController().text == null ||
+                                    widget.bloc.getTextController().text == "")
+                                ? null
+                                : buttons,
+                        hintText: this.widget.placeholder,
+                        errorText: (snapshot.error is ArgumentError ||
+                                snapshot.error == null ||
+                                widget.bloc.valueofStream2() == "" ||
+                                snapshot.error is NoSuchMethodError)
+                            ? null
+                            : snapshot.error.toString()),
+                    onChanged: widget.bloc.changeStream()),
+              ),
+            );
+          },
+        );
+
+      case "description":
+        return StreamBuilder(
+          stream: widget.bloc.getstream(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return Container(
+              height: 200,
+              padding: padding,
+              margin: margin,
+              decoration: decoration,
+              child: TextField(
+                  autofocus: false,
+                  minLines: 1,
+                  maxLines: 10, // allow user to enter 5 line in textfield
+                  keyboardType: TextInputType.multiline,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  controller: widget.bloc.getTextController(),
+                  obscureText: this.widget.isPassword,
+                  decoration: InputDecoration(
+                      //IMPORTANT STYLES COLORS
+                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                      fillColor: Colors.white,
+                      hintStyle: Theme.of(context).textTheme.bodyText1,
+                      contentPadding: contentPadding,
+                      errorStyle: errorStyle,
+                      border: border,
+                      suffixIcon:
+                          (widget.bloc.getTextController().text == null ||
+                                  widget.bloc.getTextController().text == "")
+                              ? null
+                              : buttons,
+                      // icon: icon,
+                      hintText: this.widget.placeholder,
+                      errorText: (snapshot.error is ArgumentError ||
+                              snapshot.error == null ||
+                              widget.bloc.valueofStream2() == "" ||
+                              snapshot.error is NoSuchMethodError)
+                          ? null
+                          : snapshot.error.toString()),
+                  onChanged: widget.bloc.changeStream()),
+            );
+          },
+        );
+
       default:
         return StreamBuilder(
           stream: widget.bloc.getstream(),
@@ -261,6 +448,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               margin: margin,
               decoration: decoration,
               child: TextField(
+                  autofocus: false,
                   style: Theme.of(context).textTheme.bodyText1,
                   cursorColor: Theme.of(context).textSelectionTheme.cursorColor,
                   controller: widget.bloc.getTextController(),

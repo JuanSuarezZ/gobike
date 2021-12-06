@@ -6,8 +6,8 @@ final darkTheme = ThemeData(
   dividerColor: Colors.white,
   //color del puntero textfield
   colorScheme: const ColorScheme.light(primary: Color(0xffB68D40)),
-  //
-  iconTheme: const IconThemeData(color: Colors.white, size: 50),
+
+  iconTheme: const IconThemeData(color: Colors.white),
   bottomAppBarTheme: const BottomAppBarTheme(color: Colors.black),
   buttonColor: const Color(0xff434243),
   accentColor: const Color(0xffB68D40),
@@ -56,6 +56,7 @@ final lightTheme = ThemeData(
   //color del puntero textfield
   colorScheme: const ColorScheme.light(primary: Color(0xffB68D40)),
   //
+
   cardColor: Colors.white,
   iconTheme: IconThemeData(color: Colors.black54),
   // bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),

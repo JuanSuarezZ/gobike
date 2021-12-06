@@ -50,6 +50,14 @@ dependencies:
   bottom_bar: ^1.2.5
   #testing
   firebase_auth_mocks: ^0.8.1
+  #cam
+  image_picker: 0.8.4
+  #internationalization
+  intl: ^0.17.0
+  #images
+  image: ^3.1.0
+  #provier image
+  path_provider: ^2.0.4
 
 
 

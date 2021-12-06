@@ -1,9 +1,16 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
-import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
+import 'package:gobike/Domain/use_cases/userData/UserDataUseCase.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
+import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
+
 class PerfilPage extends StatefulWidget {
+  const PerfilPage({Key? key}) : super(key: key);
   @override
   _PerfilPageState createState() => _PerfilPageState();
 }
@@ -12,6 +19,8 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final auth = Provider.of<AuthUseCase>(context);
+    print(auth.getUser()!.authuser!.email);
 
     //variables
     return Scaffold(
@@ -35,6 +44,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
   Align createProfile(Size size, BuildContext context) {
     final auth = Provider.of<AuthUseCase>(context);
+    final userdata = UserDataUseCase();
     //
     return Align(
       alignment: Alignment.topCenter,
@@ -47,18 +57,41 @@ class _PerfilPageState extends State<PerfilPage> {
             Container(
               child: Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 85,
-                    backgroundImage: NetworkImage(
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPrc-eB8ToLHJMwj9LGZ-ePKw3cxEZv2gkDbnLzVmezWYnLIwZAUAYPTMOZ9RNaEuQ_IE&usqp=CAU"),
-                    backgroundColor: Colors.transparent,
+                  Container(
+                    clipBehavior: Clip.antiAlias,
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: auth.getUser()!.authuser!.photoURL.toString(),
+                      placeholder: (context, url) => Container(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                   Positioned(
                       right: -10,
                       bottom: -10,
                       child: IconButton(
-                          onPressed: () {
-                            //TODO: change the photo
+                          //
+                          onPressed: () async {
+                            final image = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            File file = File(image!.path);
+                            if (await userdata.changeProfilePhoto(file)) {
+                              auth.getCurrentUser();
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                duration: Duration(seconds: 2),
+                                content:
+                                    Text("No hemos podido cambiar tu foto :("),
+                              ));
+                            }
                           },
                           icon: Icon(
                             Icons.camera_alt_rounded,
@@ -69,7 +102,6 @@ class _PerfilPageState extends State<PerfilPage> {
               ),
             ),
             Container(
-              //TODO: names of user
               margin: EdgeInsets.only(top: 16),
               child: Text(
                 auth.getUser()!.username.toString(),
@@ -93,7 +125,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Container(height: 50),
+            Container(height: 80),
             Row(
               // TODO: add data likes and dislikes
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -155,6 +187,8 @@ class _PerfilPageState extends State<PerfilPage> {
                       children: [
                         InkWell(
                           onTap: () {
+                            userdata.changePassword(
+                                auth.getUser()!.authuser!.email.toString());
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               backgroundColor: Theme.of(context).primaryColor,
                               content: Text(
@@ -172,9 +206,11 @@ class _PerfilPageState extends State<PerfilPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 8),
+                          margin: EdgeInsets.only(top: 16),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).pushNamed("editProfile");
+                            },
                             child: Text(
                               "Editar mi perfil",
                               style: Theme.of(context)
@@ -194,6 +230,7 @@ class _PerfilPageState extends State<PerfilPage> {
             ElevatedButton(
                 onPressed: () async {
                   auth.signOutFromGoogle();
+                  auth.signOutEmailPassword();
                   Navigator.pushNamedAndRemoveUntil(
                       context, "login", (route) => false);
                 },

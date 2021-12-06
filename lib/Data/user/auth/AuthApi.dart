@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
 import 'package:gobike/Domain/use_cases/models/FirestoreUser.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AuthApi extends AuthGateWay {
   //dependencias
@@ -27,12 +32,17 @@ class AuthApi extends AuthGateWay {
   @override
   Future<FirestoreUser?> getCurrentUser() async {
     try {
-      final authuser = await FirebaseAuth.instance.currentUser;
-      return await FirebaseFirestore.instance
-          .collection("users")
-          .doc(authuser!.uid)
-          .get()
-          .then((value) => FirestoreUser.fromJson(value, authuser));
+      final User? authuser = await FirebaseAuth.instance.currentUser;
+      if (authuser != null) {
+        print("[authuser: $authuser]");
+        return await FirebaseFirestore.instance
+            .collection("users")
+            .doc(authuser.uid)
+            .get()
+            .then((value) => FirestoreUser.fromJson(value, authuser));
+      } else {
+        return null;
+      }
     } catch (e) {
       print(e);
       return null;
@@ -61,7 +71,7 @@ class AuthApi extends AuthGateWay {
             .doc(response.user!.uid)
             .set({
           "username": response.user!.displayName,
-          "age": null,
+          "age": 0,
           "lastConnection": Timestamp.now(),
           "registrationDate": Timestamp.now(),
           "emailSecundary": "",
@@ -108,6 +118,7 @@ class AuthApi extends AuthGateWay {
         email: email,
         password: password,
       );
+      //register user in firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(response.user!.uid)
@@ -119,8 +130,27 @@ class AuthApi extends AuthGateWay {
         "emailSecundary": "",
         "profiledFinished": false,
       });
-
       _auth.currentUser!.updateDisplayName(username);
+      //read file
+      var bytes = await rootBundle.load('assets/images/profile.png');
+      String tempPath = (await getTemporaryDirectory()).path;
+      File file = File('$tempPath/profile.png');
+      await file.writeAsBytes(
+          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+      //load file in storage
+      await FirebaseStorage.instance
+          .ref("userphoto")
+          .child(_auth.currentUser!.uid)
+          .child("profilePhoto" + ".jpg")
+          .putFile(file);
+      //get the url
+      final url = await FirebaseStorage.instance
+          .ref("userphoto")
+          .child(_auth.currentUser!.uid)
+          .child("profilePhoto" + ".jpg")
+          .getDownloadURL();
+      //update profile
+      await FirebaseAuth.instance.currentUser!.updatePhotoURL(url.toString());
 
       return true;
     } on FirebaseAuthException catch (e) {
