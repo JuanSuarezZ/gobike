@@ -2,23 +2,19 @@
 //
 //     final firestoreUser = firestoreUserFromJson(jsonString);
 
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-String firestoreUserToJson(FirestoreUser data) => json.encode(data.toJson());
-
 class FirestoreUser {
-  FirestoreUser({
-    this.authuser,
-    this.age,
-    this.emailSecundary,
-    this.lastConnection,
-    this.profiledFinished,
-    this.registrationDate,
-    this.username,
-  });
+  FirestoreUser(
+      {this.authuser,
+      this.age,
+      this.emailSecundary,
+      this.lastConnection,
+      this.profiledFinished,
+      this.registrationDate,
+      this.username,
+      required this.listIncidents});
 
   User? authuser;
   final int? age;
@@ -27,6 +23,7 @@ class FirestoreUser {
   final bool? profiledFinished;
   final String? registrationDate;
   final String? username;
+  final List<dynamic> listIncidents;
 
   factory FirestoreUser.fromJson(
           DocumentSnapshot<Map<String, dynamic>> json, User user) =>
@@ -38,14 +35,6 @@ class FirestoreUser {
         profiledFinished: json["profiledFinished"],
         registrationDate: json["registrationDate"].toString(),
         username: json["username"],
+        listIncidents: json["listIncidents"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "age": age,
-        "emailSecundary": emailSecundary,
-        "lastConnection": lastConnection,
-        "profiledFinished": profiledFinished,
-        "registrationDate": registrationDate,
-        "username": username,
-      };
 }

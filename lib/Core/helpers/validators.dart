@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:gobike/Domain/use_cases/models/Media.dart';
+
 class Validators {
   final validarEmail =
       StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
@@ -63,6 +65,15 @@ class Validators {
       sink.add(descripcion);
     } else {
       sink.addError('Ingresa una descripcion mas larga');
+    }
+  });
+
+  final validarMedia = StreamTransformer<List<Media>, List<Media>>.fromHandlers(
+      handleData: (media, sink) {
+    if (media.length != 0) {
+      sink.add(media);
+    } else {
+      sink.addError('no hay media');
     }
   });
 }

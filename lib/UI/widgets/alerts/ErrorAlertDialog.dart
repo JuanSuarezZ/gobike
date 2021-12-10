@@ -9,6 +9,9 @@ class ErrorAlertDialog extends StatelessWidget {
       {this.text = "No puedes registrate con esos datos"});
   const ErrorAlertDialog.credentials(
       {this.text = "Revisa tus credenciales :/"});
+  const ErrorAlertDialog.geolocation(
+      {this.text =
+          "Necesitamos tener permisos de geolocalizacion para gestionar tus incidentes :/"});
 
   @override
   Widget build(BuildContext context) {

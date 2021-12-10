@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:gobike/Core/helpers/validatorFIle.dart';
+import 'package:gobike/Domain/use_cases/models/Media.dart';
 import 'package:gobike/UI/pages/create/provider/blocs/create_bloc.dart';
 import 'package:gobike/UI/utils/blocs/descripcion_bloc.dart';
 import 'package:gobike/UI/utils/blocs/localidad_bloc.dart';
+import 'package:gobike/UI/utils/blocs/media_bloc.dart';
 import 'package:gobike/UI/utils/blocs/tag_bloc.dart';
 import 'package:gobike/UI/utils/blocs/titulo_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateProvider with ChangeNotifier {
-  //
-  int _groupValue = 0;
-  final DateTime? _eventDate = null;
-  final Titulobloc _titulobloc = new Titulobloc();
+  //form grup variables
+  int _incidentValue = 0;
+
+  //form variables
   final Descripcionbloc _descripcionbloc = new Descripcionbloc();
   final Localidadbloc _localidadbloc = new Localidadbloc();
+  final Titulobloc _titulobloc = new Titulobloc();
+  final Mediabloc _mediabloc = new Mediabloc();
   final TagBloc _tagBloc = new TagBloc();
   late CreateBloc _createBloc;
+
+  //place variables
   String _localidad = "Selecciona tu localidad";
-  final images = [
-    'https://images.unsplash.com/photo-1586882829491-b81178aa622e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
-    'https://images.unsplash.com/photo-1586871608370-4adee64d1794?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2862&q=80',
-    'https://images.unsplash.com/photo-1586901533048-0e856dff2c0d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
-    'https://images.unsplash.com/photo-1586902279476-3244d8d18285?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80',
-    'https://images.unsplash.com/photo-1586943101559-4cdcf86a6f87?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1556&q=80',
-    'https://images.unsplash.com/photo-1586951144438-26d4e072b891?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
-    'https://images.unsplash.com/photo-1586953983027-d7508a64f4bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80',
-  ];
   final _localidades = [
     'Usaquén',
     'Chapinero',
@@ -46,19 +45,83 @@ class CreateProvider with ChangeNotifier {
     'Ciudad Bolívar',
     'Sumapaz',
   ];
+
+  //carrusel assets variables
+  final ImagePicker _picker = ImagePicker();
+  final List<Media> _media = [];
+
+  //tags
+  final List<String> _tags = [];
+
   //
   CreateProvider() {
-    this._createBloc =
-        new CreateBloc(_titulobloc, _descripcionbloc, _localidadbloc);
+    this._createBloc = new CreateBloc(
+        _titulobloc, _descripcionbloc, _localidadbloc, _mediabloc);
   }
 
-  function() {
-    final String x = "C";
-    _localidades.forEach((element) {
-      if (element.contains(x)) {
-        print(element);
+  addVideo(XFile? video) async {
+    if (this._media.length < 4) {
+      //comparacion numero de videos
+      int aux = 0;
+      for (int i = 0; i < this._media.length; i++) {
+        if (this._media[i].type == "video") {
+          aux++;
+        }
       }
-    });
+      //mostrar solo un video
+      if (aux < 1) {
+        final frame = await getFrame(video);
+        this._media.add(Media(xfile: video, type: "video", frame: frame));
+        final addfunction = _mediabloc.changeStream();
+        addfunction(this._media);
+        notifyListeners();
+      }
+    }
+  }
+
+  List<Media>? getMedia() {
+    return this._media;
+  }
+
+  addImages(List<XFile?> images) {
+    print("media ${this._media.length}");
+    if (this._media.length < 4) {
+      //iterar
+      //meter img donde no haya
+      int aux = 0;
+      for (int i = 0; i < this._media.length; i++) {
+        if (this._media[i].type == "imagen") {
+          aux++;
+        }
+      }
+      // print("aux $aux");
+      if (aux < 3) {
+        for (int j = 0; j < images.length; j++) {
+          if (aux < 3) {
+            this._media.add(Media(xfile: images[j], type: "imagen"));
+            // print("agrega $aux");
+            notifyListeners();
+            final addfunction = _mediabloc.changeStream();
+            addfunction(this._media);
+            aux++;
+          }
+        }
+      }
+    }
+  }
+
+  deletePhoto(int i) {
+    this._media.removeAt(i);
+    final addfunction = _mediabloc.changeStream();
+    addfunction(this._media);
+    notifyListeners();
+  }
+
+  deleteVideo(int i) {
+    this._media.removeAt(i);
+    final addfunction = _mediabloc.changeStream();
+    addfunction(this._media);
+    notifyListeners();
   }
 
   setLocalidad(String localidad) {
@@ -66,6 +129,10 @@ class CreateProvider with ChangeNotifier {
     final fun = _localidadbloc.changeStream();
     fun(localidad);
     notifyListeners();
+  }
+
+  getImagePicker() {
+    return this._picker;
   }
 
   getLocalidad() {
@@ -80,19 +147,13 @@ class CreateProvider with ChangeNotifier {
     return this._createBloc;
   }
 
-  final tags = [];
-
-  setGroupValue(int value) {
-    this._groupValue = value;
+  setIncidentValue(int value) {
+    this._incidentValue = value;
     notifyListeners();
   }
 
-  getEventDate() {
-    return this._eventDate;
-  }
-
-  getGroupValue() {
-    return this._groupValue;
+  getIncidentValue() {
+    return this._incidentValue;
   }
 
   addtag() {
@@ -101,13 +162,13 @@ class CreateProvider with ChangeNotifier {
     if (tag != "") {
       this._tagBloc.restartController();
       this._tagBloc.getTextController().clear();
-      this.tags.add(tag);
+      this._tags.add(tag);
       notifyListeners();
     }
   }
 
   removeTag(int i) {
-    this.tags.removeAt(i);
+    this._tags.removeAt(i);
     notifyListeners();
   }
 
@@ -123,12 +184,12 @@ class CreateProvider with ChangeNotifier {
     return _tagBloc;
   }
 
-  getLocalidadBloc() {
-    return _localidadbloc;
+  List<String> getTags() {
+    return this._tags;
   }
 
-  getImages() {
-    return images;
+  getLocalidadBloc() {
+    return _localidadbloc;
   }
   //
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
@@ -37,7 +38,25 @@ class _StatusPageState extends State<StatusPage> {
     if (conection) {
       final state = await auth.checkSesion();
       if (state) {
-        Navigator.of(context).pushReplacementNamed("body");
+        var permission = await Geolocator.checkPermission();
+        print("[PERMISION: $permission]");
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+          if (permission == LocationPermission.denied) {
+            ErrorAlertDialog.geolocation();
+            print("[PERMISOS NEGADOS]");
+            await showDialog(
+                context: context,
+                builder: (BuildContext context) =>
+                    ErrorAlertDialog.geolocation());
+            await Future.delayed(Duration(seconds: 3));
+            setState(() {});
+          } else {
+            Navigator.of(context).pushReplacementNamed("body");
+          }
+        } else {
+          Navigator.of(context).pushReplacementNamed("body");
+        }
       } else {
         Navigator.of(context).pushReplacementNamed("login");
       }

@@ -80,7 +80,9 @@ class _PerfilPageState extends State<PerfilPage> {
                           //
                           onPressed: () async {
                             final image = await ImagePicker()
-                                .pickImage(source: ImageSource.gallery);
+                                .pickImage(source: ImageSource.gallery)
+                                .onError((error, stackTrace) => null);
+
                             File file = File(image!.path);
                             if (await userdata.changeProfilePhoto(file)) {
                               auth.getCurrentUser();
@@ -245,7 +247,7 @@ class _PerfilPageState extends State<PerfilPage> {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        padding: EdgeInsets.only(left: 24, top: 24),
+        margin: EdgeInsets.only(left: 24, top: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

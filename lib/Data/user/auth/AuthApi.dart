@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
 import 'package:gobike/Domain/use_cases/models/FirestoreUser.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:path_provider/path_provider.dart';
@@ -76,16 +77,43 @@ class AuthApi extends AuthGateWay {
           "registrationDate": Timestamp.now(),
           "emailSecundary": "",
           "profiledFinished": false,
+          "listIncidents": []
         });
-        return true;
       }
-
       await FirebaseFirestore.instance
           .collection('users')
           .doc(response.user!.uid)
           .update({
         "lastConnection": Timestamp.now(),
       });
+
+      // _auth.currentUser!.updateDisplayName(username);
+      //read file
+      // var bytes = await rootBundle.load('assets/images/profile.png');
+      // String tempPath = (await getTemporaryDirectory()).path;
+      // File file = File('$tempPath/profile.png');
+      // await file.writeAsBytes(
+      //     bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+
+      var bytes = await rootBundle.load('assets/images/profile.png');
+      String tempPath = (await getTemporaryDirectory()).path;
+      File file = File('$tempPath/profile.png');
+      await file.writeAsBytes(
+          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+      //load file in storage
+      await FirebaseStorage.instance
+          .ref("userphoto")
+          .child(_auth.currentUser!.uid)
+          .child("profilePhoto" + ".jpg")
+          .putFile(file);
+      //get the url
+      final url = await FirebaseStorage.instance
+          .ref("userphoto")
+          .child(_auth.currentUser!.uid)
+          .child("profilePhoto" + ".jpg")
+          .getDownloadURL();
+      //update profile
+      await FirebaseAuth.instance.currentUser!.updatePhotoURL(url.toString());
 
       return true;
     } catch (err) {
@@ -129,6 +157,7 @@ class AuthApi extends AuthGateWay {
         "registrationDate": Timestamp.now(),
         "emailSecundary": "",
         "profiledFinished": false,
+        "listIncidents": []
       });
       _auth.currentUser!.updateDisplayName(username);
       //read file
@@ -171,7 +200,7 @@ class AuthApi extends AuthGateWay {
           .update({"lastConnection": Timestamp.now()});
 
       return true;
-    } on FirebaseAuthException catch (e) {
+    } catch (e) {
       await _auth.signOut();
       print("error: ${e.runtimeType}");
       return false;
