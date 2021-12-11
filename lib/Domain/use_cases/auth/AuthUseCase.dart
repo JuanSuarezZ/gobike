@@ -34,6 +34,7 @@ class AuthUseCase with ChangeNotifier {
   //update user
   Future getCurrentUser() async {
     final user = await this._authGateWay.getCurrentUser();
+    print("[user: $user]");
     if (user == null) return null;
     this._user = user;
     notifyListeners();

@@ -152,7 +152,7 @@ class CreateProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getIncidentValue() {
+  int getIncidentValue() {
     return this._incidentValue;
   }
 

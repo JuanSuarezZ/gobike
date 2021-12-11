@@ -33,7 +33,7 @@ class AuthApi extends AuthGateWay {
   @override
   Future<FirestoreUser?> getCurrentUser() async {
     try {
-      final User? authuser = await FirebaseAuth.instance.currentUser;
+      final User? authuser = await _auth.currentUser;
       if (authuser != null) {
         print("[authuser: $authuser]");
         return await FirebaseFirestore.instance

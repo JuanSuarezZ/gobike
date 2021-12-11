@@ -23,7 +23,7 @@ class FirestoreUser {
   final bool? profiledFinished;
   final String? registrationDate;
   final String? username;
-  final List<dynamic> listIncidents;
+  final List<String> listIncidents;
 
   factory FirestoreUser.fromJson(
           DocumentSnapshot<Map<String, dynamic>> json, User user) =>
