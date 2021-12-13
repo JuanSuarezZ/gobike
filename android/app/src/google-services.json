@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "980279898793",
+    "firebase_url": "https://gobike-723c3-default-rtdb.firebaseio.com",
     "project_id": "gobike-723c3",
     "storage_bucket": "gobike-723c3.appspot.com"
   },
@@ -14,15 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "980279898793-f9d15vuvvsss8sp2k9dah9d740n2d93g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.JDev_suarez.gobike",
-            "certificate_hash": "11432dfaaebbd804157cd771a307ed0cd0e634a2"
-          }
-        },
-        {
-          "client_id": "980279898793-snj7ra2hcqtv4bfa2bkdvu8b9gfda5v2.apps.googleusercontent.com",
+          "client_id": "980279898793-ccehnvc6sqta0gq0fq7tb5ultvelv9sr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.JDev_suarez.gobike",

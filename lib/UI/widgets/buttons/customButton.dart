@@ -578,14 +578,14 @@ class CustomButton extends StatelessWidget {
                             fontSize: 20,
                             color: Theme.of(context).accentColor)),
                     onPressed: () async {
-                      Navigator.pop(context);
+                      Navigator.of(context, rootNavigator: true).pop();
                       createProvider.loadingStatus();
                       createProvider.restartBlocs();
                       final r = await IncidentUseCase()
                           .createIncident(incidente, listMedia);
                       createProvider.restartLists();
                       createProvider.finishedStatus();
-
+                      print("[create resp: $r]");
                       if (r == true) {
                         auth.UpdateUserStatus().then((value) {
                           archivoProvider.loadMyIncidents(auth.getUser()!);

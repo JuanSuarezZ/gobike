@@ -37,6 +37,7 @@ class _StatusPageState extends State<StatusPage> {
 
     if (conection) {
       final state = await auth.checkSesion();
+      print("[STATE: ${state}]");
       if (state) {
         var permission = await Geolocator.checkPermission();
         print("[PERMISION: $permission]");

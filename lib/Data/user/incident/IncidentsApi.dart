@@ -20,6 +20,7 @@ class IncidentApi extends IncidentGateWay {
   @override
   Future<bool> createIncident(Incident incident, List<Media> listMedia) async {
     try {
+      print("incidentee!");
       //variables
       var uuid = Uuid();
       String unicID;

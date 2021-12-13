@@ -65,7 +65,6 @@ class AuthApi extends AuthGateWay {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
-
       final response = await _auth.signInWithCredential(credential);
       if (response.additionalUserInfo!.isNewUser) {
         await FirebaseFirestore.instance
@@ -96,7 +95,6 @@ class AuthApi extends AuthGateWay {
       var tempDir = await getTemporaryDirectory();
       File file = await File('${tempDir.path}/img').writeAsBytes(
           buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
       //load file in storage
       await FirebaseStorage.instance
           .ref("userphoto")
