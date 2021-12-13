@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_bar/bottom_bar.dart';
+import 'package:gobike/Core/routes/routes.dart';
+import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/UI/pages/archivo/archivo_Page.dart';
+import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
 import 'package:gobike/UI/pages/create/createPage.dart';
 import 'package:gobike/UI/pages/create/provider/createProvider.dart';
 import 'package:gobike/UI/pages/home/home_page.dart';
@@ -8,6 +11,28 @@ import 'package:gobike/UI/pages/perfil/perfilPage.dart';
 import 'package:gobike/UI/theme/theme_bloc.dart';
 import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 import 'package:provider/provider.dart';
+
+class Bodyx extends StatelessWidget {
+  const Bodyx({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<BlocTheme>(context);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CreateProvider>(create: (_) => CreateProvider()),
+        ChangeNotifierProvider<ArchivoProvider>(
+            create: (_) => ArchivoProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Body(),
+        routes: getAplicationRoutes,
+        theme: themeNotifier.getTheme(),
+      ),
+    );
+  }
+}
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -32,20 +57,18 @@ class _BodyState extends State<Body> {
             color: Colors.green, child: Center(child: ChangeThemeIconButton()));
         break;
       case 2:
-        body = ChangeNotifierProvider(
-          create: (_) => CreateProvider(),
-          child: CreatePage(),
-        );
+        body = CreatePage();
 
         break;
       case 3:
-        body = const ArchivoPage();
+        body = ArchivoPage();
         break;
 
       default:
         body = const PerfilPage();
     }
     //
+
     final colorBottomNav = Theme.of(context).bottomAppBarTheme.color;
     final color = Theme.of(context).iconTheme.color;
     return createBody(body, colorBottomNav, color);

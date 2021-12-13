@@ -20,7 +20,7 @@ class _PerfilPageState extends State<PerfilPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final auth = Provider.of<AuthUseCase>(context);
-    print(auth.getUser()!.authuser!.email);
+    // print(auth.getUser()!.authuser!.email);
 
     //variables
     return Scaffold(
@@ -44,6 +44,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
   Align createProfile(Size size, BuildContext context) {
     final auth = Provider.of<AuthUseCase>(context);
+
     final userdata = UserDataUseCase();
     //
     return Align(
@@ -85,7 +86,7 @@ class _PerfilPageState extends State<PerfilPage> {
 
                             File file = File(image!.path);
                             if (await userdata.changeProfilePhoto(file)) {
-                              auth.getCurrentUser();
+                              auth.UpdateUserStatus();
                             } else {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(

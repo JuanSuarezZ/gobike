@@ -1,21 +1,40 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gobike/Domain/models/Incident.dart';
+import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
+import 'package:gobike/Domain/use_cases/incident/IncidentUseCase.dart';
+import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:provider/provider.dart';
 
-class IncidenteDeArchivo extends StatelessWidget {
-  final String title;
-  final String? hour;
-  final String? place;
-  final String? username;
-  final String? iduser;
+class IncidenteCard extends StatelessWidget {
+  final Incident incident;
 
-  IncidenteDeArchivo(this.title,
-      {this.hour, this.place, this.username, this.iduser});
+  IncidenteCard(this.incident);
 
   @override
   Widget build(BuildContext context) {
+    //
+    final auth = Provider.of<AuthUseCase>(context);
     final style = Theme.of(context).textTheme.headline4!;
     final size = MediaQuery.of(context).size;
+    final provider = Provider.of<ArchivoProvider>(context);
+    //
+    var date = [];
+    var url = "";
+    if (incident.date == "null") {
+      date = [" ", " ", " "];
+      print("[lista vacia ${date.length}]");
+    } else {
+      date = incident.date!.split(" ");
+    }
+
+    if (incident.listUrlImages!.length > 0) {
+      url = incident.listUrlImages![0];
+    } else {
+      url =
+          "https://firebasestorage.googleapis.com/v0/b/gobike-723c3.appspot.com/o/incidents%2F-MqkifUKO2f1MNJAiN9E%2F93ded160-5b99-11ec-bccf-97647a69d1eb.jpg?alt=media&token=b46fb90a-95cb-4cd3-9ca5-b741e92e7bd8";
+    }
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(15)),
       child: Container(
@@ -27,9 +46,9 @@ class IncidenteDeArchivo extends StatelessWidget {
               height: (size.height * .3) * .7,
               width: size.width * .9,
               child: CachedNetworkImage(
+                filterQuality: FilterQuality.low,
                 fit: BoxFit.cover,
-                imageUrl:
-                    "https://miblogota.files.wordpress.com/2015/03/hueco-cll-72.jpg",
+                imageUrl: url,
                 placeholder: (context, url) => Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -49,40 +68,68 @@ class IncidenteDeArchivo extends StatelessWidget {
               height: (size.height * .3) * .3,
               color: Theme.of(context).cardColor,
               child: Container(
+                // color: Colors.red,
                 margin: EdgeInsets.only(left: 14, top: 10, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       margin: EdgeInsets.only(bottom: 8),
-                      // color: Colors.green,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            "Titulo",
-                            style: style.copyWith(fontWeight: FontWeight.bold),
+                          Container(
+                            width: 150,
+                            child: Text(
+                              incident.title!,
+                              style:
+                                  style.copyWith(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           Container(
                             height: 3,
                           ),
                           Expanded(child: Container()),
                           Text(
-                            "3/3/2022",
+                            date[0],
                             style: style.copyWith(fontSize: 14),
                           ),
                           Text(
-                            "12:00 am",
+                            "${date[1]} ${date[2]}",
                             style: style.copyWith(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.red[400],
+                          ),
+                          height: (size.height * .3) * .15,
+                          width: (size.width * .9) * .2,
+                          child: InkWell(
+                            child: Center(
+                                child: Text(
+                              "Eliminar",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                            onTap: () async {
+                              provider.deleteIncident(incident.incidentId!);
+                              await IncidentUseCase()
+                                  .deleteMyIncident(auth.getUser()!, incident);
+                              provider.loadMyIncidents(auth.getUser()!);
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 16),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             color: Theme.of(context).accentColor,
@@ -96,10 +143,13 @@ class IncidenteDeArchivo extends StatelessWidget {
                               style: TextStyle(color: Colors.white),
                             )),
                             onTap: () {
-                              //TODO: hacer el editar
+                              provider.incident = this.incident;
+                              Navigator.of(context).pushNamed(
+                                "editIncident",
+                              );
                             },
                           ),
-                        )
+                        ),
                       ],
                     )
                   ],

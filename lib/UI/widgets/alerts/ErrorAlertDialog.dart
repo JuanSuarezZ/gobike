@@ -32,11 +32,13 @@ class ErrorAlertDialog extends StatelessWidget {
                   onTap: () {
                     print("Error");
                   },
-                  child: Text("Error",
-                      style: Theme.of(context).textTheme.headline6!.copyWith(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
+                  child: Text(
+                    "Error",
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
                 ),
               ),
               Center(

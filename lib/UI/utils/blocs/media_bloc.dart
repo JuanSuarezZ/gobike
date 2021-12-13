@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:gobike/Domain/use_cases/models/Media.dart';
+import 'package:gobike/Domain/models/Media.dart';
 
 import 'package:rxdart/rxdart.dart';
 

@@ -31,7 +31,7 @@ class _StatusPageState extends State<StatusPage> {
 
   void checkAuth(BuildContext context) async {
     final auth = Provider.of<AuthUseCase>(context, listen: false);
-    await auth.getCurrentUser();
+    await auth.UpdateUserStatus();
     final conection = await NetworkStateUseCase().checkInternetConnection();
     print("conection: ${conection}");
 

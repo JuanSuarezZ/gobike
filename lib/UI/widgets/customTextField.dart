@@ -430,7 +430,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       hintText: this.widget.placeholder,
                       errorText: (snapshot.error is ArgumentError ||
                               snapshot.error == null ||
-                              widget.bloc.valueofStream2() == "" ||
+                              widget.bloc.valueofStream() == "" ||
                               snapshot.error is NoSuchMethodError)
                           ? null
                           : snapshot.error.toString()),

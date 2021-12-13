@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:gobike/Domain/use_cases/models/Media.dart';
+import 'package:gobike/Domain/models/Media.dart';
 
 class Validators {
   final validarEmail =
@@ -28,6 +28,15 @@ class Validators {
   final validarUserName =
       StreamTransformer<String, String>.fromHandlers(handleData: (name, sink) {
     if (name.length >= 6) {
+      sink.add(name);
+    } else {
+      sink.addError('Ingresa un Nombre mas largo');
+    }
+  });
+
+  final validarLocalidad =
+      StreamTransformer<String, String>.fromHandlers(handleData: (name, sink) {
+    if (name.length >= 1) {
       sink.add(name);
     } else {
       sink.addError('Ingresa un Nombre mas largo');

@@ -13,15 +13,15 @@ class Localidadbloc extends PlantillaTextField with Validators {
   //streams
   final _localidadController = BehaviorSubject<String>();
 
-  Stream<String> get localidadStream => _localidadController.stream;
+  Stream<String> get localidadStream =>
+      _localidadController.stream.transform(validarLocalidad);
 
   // Insertar valores al Stream
-  changeLocalidad(String localidad) {
-    _localidadController.sink.add(localidad);
-  }
+  Function(String) get changeLocalidad => _localidadController.sink.add;
 
   restartLocalidadController() {
     _localidadController.sink.add("");
+    _localidadTextController.clear();
   }
 
   // Obtener el último valor ingresado a los streams

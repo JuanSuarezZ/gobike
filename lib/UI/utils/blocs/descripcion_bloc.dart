@@ -21,6 +21,7 @@ class Descripcionbloc extends PlantillaTextField with Validators {
 
   restartDescripcionController() {
     _descripcionController.sink.add("");
+    _descripcionTextController.clear();
   }
 
   // Obtener el último valor ingresado a los streams

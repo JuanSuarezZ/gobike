@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/Core/helpers/validatorFIle.dart';
-import 'package:gobike/Domain/use_cases/models/Media.dart';
+import 'package:gobike/Domain/models/Media.dart';
 import 'package:gobike/UI/pages/create/provider/blocs/create_bloc.dart';
 import 'package:gobike/UI/utils/blocs/descripcion_bloc.dart';
 import 'package:gobike/UI/utils/blocs/localidad_bloc.dart';
@@ -20,6 +20,9 @@ class CreateProvider with ChangeNotifier {
   final Mediabloc _mediabloc = new Mediabloc();
   final TagBloc _tagBloc = new TagBloc();
   late CreateBloc _createBloc;
+
+  //state
+  bool _status = false;
 
   //place variables
   String _localidad = "Selecciona tu localidad";
@@ -59,6 +62,34 @@ class CreateProvider with ChangeNotifier {
         _titulobloc, _descripcionbloc, _localidadbloc, _mediabloc);
   }
 
+  restartBlocs() {
+    this._descripcionbloc.restartController();
+    this._localidadbloc.restartController();
+    this._titulobloc.restartController();
+    this._mediabloc.restartController();
+    this._tagBloc.restartController();
+  }
+
+  restartLists() {
+    this._localidad = "Selecciona tu localidad";
+    this._media.clear();
+    this._tags.clear();
+  }
+
+  getStatus() {
+    return this._status;
+  }
+
+  loadingStatus() {
+    this._status = true;
+    notifyListeners();
+  }
+
+  finishedStatus() {
+    this._status = false;
+    notifyListeners();
+  }
+
   addVideo(XFile? video) async {
     if (this._media.length < 4) {
       //comparacion numero de videos
@@ -84,7 +115,6 @@ class CreateProvider with ChangeNotifier {
   }
 
   addImages(List<XFile?> images) {
-    print("media ${this._media.length}");
     if (this._media.length < 4) {
       //iterar
       //meter img donde no haya

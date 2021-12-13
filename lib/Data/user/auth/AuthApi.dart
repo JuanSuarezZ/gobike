@@ -1,11 +1,12 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
+import 'package:gobike/Domain/models/FirestoreUser.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
-import 'package:gobike/Domain/use_cases/models/FirestoreUser.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:google_sign_in/google_sign_in.dart';
@@ -31,11 +32,10 @@ class AuthApi extends AuthGateWay {
   }
 
   @override
-  Future<FirestoreUser?> getCurrentUser() async {
+  Future<FirestoreUser?> UpdateUserStatus() async {
     try {
       final User? authuser = await FirebaseAuth.instance.currentUser;
       if (authuser != null) {
-        print("[authuser: $authuser]");
         return await FirebaseFirestore.instance
             .collection("users")
             .doc(authuser.uid)
@@ -65,6 +65,7 @@ class AuthApi extends AuthGateWay {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
+
       final response = await _auth.signInWithCredential(credential);
       if (response.additionalUserInfo!.isNewUser) {
         await FirebaseFirestore.instance
@@ -87,19 +88,15 @@ class AuthApi extends AuthGateWay {
         "lastConnection": Timestamp.now(),
       });
 
-      // _auth.currentUser!.updateDisplayName(username);
-      //read file
-      // var bytes = await rootBundle.load('assets/images/profile.png');
-      // String tempPath = (await getTemporaryDirectory()).path;
-      // File file = File('$tempPath/profile.png');
-      // await file.writeAsBytes(
-      //     bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+      final http.Response responseData =
+          await http.get(Uri.parse(_auth.currentUser!.photoURL!));
+      Uint8List uint8list = responseData.bodyBytes;
+      var buffer = uint8list.buffer;
+      ByteData byteData = ByteData.view(buffer);
+      var tempDir = await getTemporaryDirectory();
+      File file = await File('${tempDir.path}/img').writeAsBytes(
+          buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
-      var bytes = await rootBundle.load('assets/images/profile.png');
-      String tempPath = (await getTemporaryDirectory()).path;
-      File file = File('$tempPath/profile.png');
-      await file.writeAsBytes(
-          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
       //load file in storage
       await FirebaseStorage.instance
           .ref("userphoto")

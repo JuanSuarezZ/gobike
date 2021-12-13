@@ -1,20 +1,19 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:gobike/Domain/models/Incident.dart';
+import 'package:gobike/Domain/models/Media.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/Domain/use_cases/device/locationUseCase.dart';
+import 'package:gobike/Domain/use_cases/incident/IncidentUseCase.dart';
 import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
+import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
 import 'package:gobike/UI/pages/create/provider/createProvider.dart';
+import 'package:gobike/UI/widgets/alerts/ConfirmCreate.dart';
+import 'package:gobike/UI/widgets/alerts/ConfirmDialog.dart';
 import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
@@ -373,6 +372,7 @@ class CustomButton extends StatelessWidget {
                 bloc.emailbloc.restartController();
                 if (conection) {
                   final resp = await function!(username, email, edad);
+                  auth.UpdateUserStatus();
                   print("respuesta: ${await resp.toString()}");
 
                   if (resp == true) {
@@ -502,23 +502,15 @@ class CustomButton extends StatelessWidget {
               ),
               onPressed: () async {
                 print("[boton crear incidente]");
+                FocusScope.of(context).unfocus();
 
                 final auth = Provider.of<AuthUseCase>(context, listen: false);
+                final archivoProvider =
+                    Provider.of<ArchivoProvider>(context, listen: false);
                 final createProvider =
                     Provider.of<CreateProvider>(context, listen: false);
-                // final user = auth.getUser();
-                // print("[INCIDENTES: ${user!.listIncidents.length}]");
 
-                // print(
-                //     "descripcion:${bloc.descripcionbloc.valueofStream().toString()}");
-                // print(
-                //     "localidad: ${bloc.localidadbloc.valueofStream().toString()}");
-                // print("titulo: ${bloc.titulobloc.valueofStream().toString()}");
-                // print("media: ${bloc.mediabloc.valueofStream().length}");
-                // print("incident: ${createProvider.getIncidentValue()}");
-                // print("tags: ${createProvider.getTags().length}");
-
-                //validar
+                //validaciones
                 final permisos = await LocationUseCase().checkLocation(context);
                 final red =
                     await NetworkStateUseCase().checkInternetConnection();
@@ -535,79 +527,110 @@ class CustomButton extends StatelessWidget {
                   return;
                 }
 
-                //load images
-                var uuid = Uuid();
-                String unicID;
-                DatabaseReference ref =
-                    FirebaseDatabase.instance.reference().child("test");
-                final incidentId = ref.push().key;
-                //create
-                final listUrlImages = [];
-                final listUrlVideos = [];
-                final listMedia = createProvider.getMedia();
-                //
-                for (int i = 0; i < listMedia!.length; i++) {
-                  if (listMedia[i].type == "imagen") {
-                    //push file
-                    unicID = uuid.v1().toString();
-                    await FirebaseStorage.instance
-                        .ref("incidents")
-                        .child(incidentId)
-                        .child(unicID + ".jpg")
-                        .putFile(
-                          File(listMedia[i].xfile!.path),
-                        );
-                    //get url
-                    final url = await FirebaseStorage.instance
-                        .ref("incidents")
-                        .child(incidentId)
-                        .child(unicID + ".jpg")
-                        .getDownloadURL();
-                    listUrlImages.add(url);
-                  } else {}
-                }
-                //load videos
-                //
+                //variables
+                final List<String> listUrlImages = [];
+                final List<String> listUrlVideos = [];
+                final List<Media> listMedia = createProvider.getMedia()!;
+
+                int totalimages = 0;
+                int totalvideos = 0;
+
                 for (int i = 0; i < listMedia.length; i++) {
-                  if (listMedia[i].type == "video") {
-                    //push file
-                    unicID = uuid.v1().toString();
-                    await FirebaseStorage.instance
-                        .ref("incidents")
-                        .child(incidentId)
-                        .child(unicID + ".mp4")
-                        .putFile(
-                          File(listMedia[i].xfile!.path),
-                        );
-                    //get url
-                    final url = await FirebaseStorage.instance
-                        .ref("incidents")
-                        .child(incidentId)
-                        .child(unicID + ".mp4")
-                        .getDownloadURL();
-                    listUrlVideos.add(url);
-                  } else {}
+                  if (listMedia[i].type == "imagen") {
+                    totalimages++;
+                  } else {
+                    totalvideos++;
+                  }
                 }
-                print("lista de videos: ${listUrlVideos.length}");
-                print("lista de imagens: ${listUrlImages.length}");
 
-                final desc = bloc.localidadbloc.valueofStream().toString();
-                final title = bloc.titulobloc.valueofStream().toString();
-                final localidad = bloc.localidadbloc.valueofStream().toString();
-                final type = createProvider.getIncidentValue().toString();
-                final tags = createProvider.getTags();
-                final userid = auth.getUser()!.authuser!.uid;
+                //crear incidente
+                final incidente = Incident(
+                    incidentId: null,
+                    description:
+                        bloc.descripcionbloc.valueofStream().toString(),
+                    listUrlImages: listUrlImages,
+                    listUrlVideos: listUrlVideos,
+                    localidad: bloc.localidadbloc.valueofStream().toString(),
+                    tags: createProvider.getTags(),
+                    title: bloc.titulobloc.valueofStream().toString(),
+                    type: createProvider.getIncidentValue(),
+                    userId: auth.getUser()!.authuser!.uid,
+                    likes: 0,
+                    geolocation: "",
+                    date: null);
 
-                ref.child(incidentId).set({
-                  "user_id": userid,
-                  "title": title,
-                  "localidad": localidad,
-                  "description": desc,
-                  "type": type,
-                  "tags": tags,
-                  "listUrlImages": listUrlImages,
-                  "listUrlVideos": listUrlVideos,
-                });
+                showAlertDialog(BuildContext context) {
+                  // set up the buttons
+                  Widget cancelButton = TextButton(
+                    child: Text("Cancelar",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(fontSize: 20)),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  );
+
+                  Widget continueButton = TextButton(
+                    child: Text("Aceptar",
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                            fontSize: 20,
+                            color: Theme.of(context).accentColor)),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      createProvider.loadingStatus();
+                      createProvider.restartBlocs();
+                      final r = await IncidentUseCase()
+                          .createIncident(incidente, listMedia);
+                      createProvider.restartLists();
+                      createProvider.finishedStatus();
+
+                      if (r == true) {
+                        auth.UpdateUserStatus().then((value) {
+                          archivoProvider.loadMyIncidents(auth.getUser()!);
+                        });
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ConfirmDialog.good();
+                          },
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ConfirmDialog.bad();
+                          },
+                        );
+                      }
+                    },
+                  );
+
+                  AlertDialog alert = AlertDialog(
+                    content: ConfirmCreateDiaglog(
+                        createProvider.getIncidentValue(),
+                        bloc.titulobloc.valueofStream().toString(),
+                        bloc.localidadbloc.valueofStream().toString(),
+                        totalimages,
+                        totalvideos,
+                        createProvider.getTags().length),
+                    actions: [
+                      cancelButton,
+                      continueButton,
+                    ],
+                  );
+
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return alert;
+                    },
+                  );
+                }
+
+                await showAlertDialog(context);
+                return;
               },
               child: AutoSizeText(
                 'Crear',

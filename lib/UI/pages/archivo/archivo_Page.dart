@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:gobike/UI/pages/archivo/widgets/incident.dart';
+import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
+import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
 import 'package:gobike/UI/widgets/background/archivoBackground.dart';
 
-class ArchivoPage extends StatelessWidget {
+import 'package:gobike/UI/widgets/incident/incident_card.dart';
+import 'package:provider/provider.dart';
+
+class ArchivoPage extends StatefulWidget {
   const ArchivoPage({Key? key}) : super(key: key);
 
+  @override
+  _ArchivoPageState createState() => _ArchivoPageState();
+}
+
+class _ArchivoPageState extends State<ArchivoPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -24,61 +33,25 @@ class ArchivoPage extends StatelessWidget {
   }
 
   createList(Size size, BuildContext context) {
-    final list = [
-      {
-        "nombre": "juan",
-        "titulo": "asdas",
-        "hora": "12:00 AM",
-        "barrio": "venecia",
-      },
-      {
-        "nombre": "juan",
-        "titulo": "asdas",
-        "hora": "12:00 AM",
-        "barrio": "venecia",
-      },
-      {
-        "nombre": "juan",
-        "titulo": "asdas",
-        "hora": "12:00 AM",
-        "barrio": "venecia",
-      },
-      {
-        "nombre": "juan",
-        "titulo": "asdas",
-        "hora": "12:00 AM",
-        "barrio": "venecia",
-      },
-      {
-        "nombre": "juan",
-        "titulo": "asdas",
-        "hora": "12:00 AM",
-        "barrio": "venecia",
-      },
-    ];
+    final provider = Provider.of<ArchivoProvider>(context);
+    final auth = Provider.of<AuthUseCase>(context);
+    if (provider.listIncident.isEmpty) {
+      provider.loadMyIncidents(auth.getUser()!);
+    }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-            margin: EdgeInsets.only(top: size.width * .25),
-            width: size.width * .9,
-            // color: Colors.green,
-            child: Container(
-              // color: Colors.red,
-              child: Center(
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: list.length,
-                    itemBuilder: (context, i) {
-                      return Container(
-                          margin: EdgeInsets.only(bottom: 24),
-                          child:
-                              IncidenteDeArchivo(list[i]["nombre"].toString()));
-                    }),
-              ),
-            )),
-      ],
+    final list = provider.listIncident;
+    return Container(
+      margin: EdgeInsets.only(
+          top: size.height * .1, right: 24, left: 24, bottom: 24),
+      child: ListView.builder(
+        physics: BouncingScrollPhysics(),
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return Container(
+              margin: EdgeInsets.only(bottom: 15),
+              child: IncidenteCard(list[index]));
+        },
+      ),
     );
   }
 

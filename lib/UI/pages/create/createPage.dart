@@ -40,7 +40,24 @@ class FormCreate extends StatelessWidget {
     final style = Theme.of(context).textTheme.headline3!.copyWith(fontSize: 14);
     final margin = const EdgeInsets.only(left: 16, top: 8, bottom: 8);
 
-    //
+    if (provider.getStatus()) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            Container(
+              height: 10,
+            ),
+            Text(
+              "Cargando...",
+              style: style,
+            ),
+          ],
+        ),
+      );
+    }
+
     return Container(
       margin: EdgeInsets.only(top: size.width * .20),
       height: size.height * .9,
@@ -346,7 +363,7 @@ class FormCreate extends StatelessWidget {
   //bottomsheetvideo
   Container _createBottomSheetVideo(
       CreateProvider provider, BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
     final ImagePicker imagePicker = provider.getImagePicker();
 
     return Container(
@@ -390,7 +407,6 @@ class FormCreate extends StatelessWidget {
             ),
             InkWell(
               onTap: () async {
-                // TODO: cam gallery
                 final XFile? video =
                     await imagePicker.pickVideo(source: ImageSource.gallery);
                 if (video != null) {

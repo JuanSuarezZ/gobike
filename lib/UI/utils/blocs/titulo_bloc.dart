@@ -17,10 +17,13 @@ class Titulobloc extends PlantillaTextField with Validators {
       _tituloController.stream.transform(validarTitulo);
 
   // Insertar valores al Stream
-  Function(String) get changeTitulo => _tituloController.sink.add;
+  changeTitulo(String titulo) {
+    _tituloController.sink.add(titulo);
+  }
 
   restartUsernameController() {
     _tituloController.sink.add("");
+    _tituloTextController.clear();
   }
 
   // Obtener el último valor ingresado a los streams

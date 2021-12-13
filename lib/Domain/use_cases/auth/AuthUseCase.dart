@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gobike/Domain/models/FirestoreUser.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
 
 import 'package:gobike/Domain/use_cases/auth/AuthUseCaseConfig.dart';
-import 'package:gobike/Domain/use_cases/models/FirestoreUser.dart';
 
 class AuthUseCase with ChangeNotifier {
   //inyection dependencias
@@ -32,8 +32,8 @@ class AuthUseCase with ChangeNotifier {
   }
 
   //update user
-  Future getCurrentUser() async {
-    final user = await this._authGateWay.getCurrentUser();
+  Future UpdateUserStatus() async {
+    final user = await this._authGateWay.UpdateUserStatus();
     if (user == null) return null;
     this._user = user;
     notifyListeners();

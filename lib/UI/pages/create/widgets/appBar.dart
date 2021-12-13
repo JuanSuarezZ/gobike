@@ -39,9 +39,10 @@ class CreateAppbar extends StatelessWidget {
               ],
             ),
             Container(
-                margin: EdgeInsets.only(right: 16),
-                height: size.height * .05,
-                child: CustomButton.create(provider.getCreateBloc(), () {}))
+              margin: EdgeInsets.only(right: 16),
+              height: size.height * .05,
+              child: CustomButton.create(provider.getCreateBloc(), () {}),
+            ),
           ],
         ),
       ),
