@@ -1,7 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:bottom_bar/bottom_bar.dart';
+
 import 'package:gobike/Core/routes/routes.dart';
-import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/UI/pages/archivo/archivo_Page.dart';
 import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
 import 'package:gobike/UI/pages/create/createPage.dart';
@@ -9,6 +9,7 @@ import 'package:gobike/UI/pages/create/provider/createProvider.dart';
 import 'package:gobike/UI/pages/home/home_page.dart';
 import 'package:gobike/UI/pages/perfil/perfilPage.dart';
 import 'package:gobike/UI/theme/theme_bloc.dart';
+import 'package:gobike/UI/widgets/buttonbar/customButtonBar.dart';
 import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
 import 'package:provider/provider.dart';
 
@@ -69,12 +70,13 @@ class _BodyState extends State<Body> {
     }
     //
 
-    final colorBottomNav = Theme.of(context).bottomAppBarTheme.color;
-    final color = Theme.of(context).iconTheme.color;
-    return createBody(body, colorBottomNav, color);
+    return createBody(body, context);
   }
 
-  Scaffold createBody(body, Color? colorBottomNav, Color? color) {
+  Scaffold createBody(body, BuildContext context) {
+    final colorBottomNav = Theme.of(context).bottomAppBarTheme.color;
+    final color = Theme.of(context).iconTheme.color;
+    final colorInactive = Theme.of(context).dividerColor;
     print("[SETSTATE]");
     return Scaffold(
       body: body,
@@ -88,39 +90,41 @@ class _BodyState extends State<Body> {
         items: <BottomBarItem>[
           BottomBarItem(
             icon: Icon(
-              Icons.home_outlined,
+              Icons.explore_outlined,
             ),
-            title: Text('Home'),
+            title: Text('Mapa'),
             inactiveColor: color,
-            activeColor: Colors.blue,
+            activeColor: colorInactive,
           ),
           BottomBarItem(
             icon: Icon(
               Icons.notifications_none_rounded,
             ),
-            title: Text(
-              'alertas',
+            title: AutoSizeText(
+              'Alertas',
             ),
             inactiveColor: color,
-            activeColor: Colors.red,
+            activeColor: colorInactive,
           ),
           BottomBarItem(
             icon: Icon(Icons.add_circle_outline),
-            title: Text('crear'),
+            title: Text('Crear incidente'),
             inactiveColor: color,
-            activeColor: Colors.greenAccent.shade700,
+            activeColor: colorInactive,
           ),
           BottomBarItem(
-            icon: Icon(Icons.inventory_2_outlined),
-            title: Text('Archivo'),
+            icon: Icon(Icons.assignment_outlined),
+            title: Text(
+              'Mis incidentes',
+            ),
             inactiveColor: color,
-            activeColor: Colors.orange,
+            activeColor: colorInactive,
           ),
           BottomBarItem(
             icon: Icon(Icons.person_outlined),
             title: Text('Perfil'),
             inactiveColor: color,
-            activeColor: Colors.purple,
+            activeColor: colorInactive,
           ),
         ],
       ),

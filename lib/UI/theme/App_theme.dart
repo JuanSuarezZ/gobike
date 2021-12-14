@@ -12,6 +12,7 @@ final darkTheme = ThemeData(
   buttonColor: const Color(0xff434243),
   accentColor: const Color(0xffB68D40),
   errorColor: Colors.red,
+  cardColor: Colors.grey[400],
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: Colors.white,
   ),
@@ -57,7 +58,7 @@ final lightTheme = ThemeData(
   colorScheme: const ColorScheme.light(primary: Color(0xffB68D40)),
   //
 
-  cardColor: Colors.white,
+  cardColor: Colors.grey[400],
   iconTheme: IconThemeData(color: Colors.black54),
   // bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
   accentColor: const Color(0xffB68D40),

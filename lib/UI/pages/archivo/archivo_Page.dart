@@ -41,15 +41,15 @@ class _ArchivoPageState extends State<ArchivoPage> {
 
     final list = provider.listIncident;
     return Container(
-      margin: EdgeInsets.only(
-          top: size.height * .1, right: 24, left: 24, bottom: 24),
+      margin: EdgeInsets.only(top: size.height * .1, right: 24, left: 24),
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: list.length,
         itemBuilder: (context, index) {
           return Container(
-              margin: EdgeInsets.only(bottom: 15),
-              child: IncidenteCard(list[index]));
+            margin: EdgeInsets.only(bottom: 20),
+            child: IncidenteCard(list[index]),
+          );
         },
       ),
     );

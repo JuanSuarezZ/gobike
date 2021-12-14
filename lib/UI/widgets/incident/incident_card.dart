@@ -38,11 +38,11 @@ class IncidenteCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(15)),
       child: Container(
-        height: size.height * .3,
-        width: size.width * .9,
+        color: Colors.white,
         child: Column(
           children: [
             Container(
+              margin: EdgeInsets.only(left: 16, right: 16, top: 16),
               height: (size.height * .3) * .7,
               width: size.width * .9,
               child: CachedNetworkImage(
@@ -66,9 +66,8 @@ class IncidenteCard extends StatelessWidget {
             ),
             Container(
               height: (size.height * .3) * .3,
-              color: Theme.of(context).cardColor,
+              color: Colors.white,
               child: Container(
-                // color: Colors.red,
                 margin: EdgeInsets.only(left: 14, top: 10, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

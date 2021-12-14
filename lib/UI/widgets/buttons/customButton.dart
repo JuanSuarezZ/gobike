@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/models/Incident.dart';
 import 'package:gobike/Domain/models/Media.dart';
@@ -12,7 +11,6 @@ import 'package:gobike/UI/pages/create/provider/createProvider.dart';
 import 'package:gobike/UI/widgets/alerts/ConfirmCreate.dart';
 import 'package:gobike/UI/widgets/alerts/ConfirmDialog.dart';
 import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CustomButton extends StatelessWidget {

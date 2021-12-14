@@ -36,13 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  bottom_bar:
-    dependency: "direct main"
-    description:
-      name: bottom_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.5"
   cached_network_image:
     dependency: "direct main"
     description:
@@ -533,7 +526,7 @@ packages:
       name: path_provider_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.4"
   path_provider_macos:
     dependency: transitive
     description:

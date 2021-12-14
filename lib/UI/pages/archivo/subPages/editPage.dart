@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
-import 'package:gobike/UI/utils/blocs/descripcion_bloc.dart';
 import 'package:gobike/UI/utils/blocs/titulo_bloc.dart';
 import 'package:gobike/UI/widgets/customTextField.dart';
 import 'package:provider/provider.dart';

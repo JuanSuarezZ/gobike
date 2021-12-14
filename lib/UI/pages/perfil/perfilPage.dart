@@ -19,7 +19,7 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final auth = Provider.of<AuthUseCase>(context);
+    // final auth = Provider.of<AuthUseCase>(context);
     // print(auth.getUser()!.authuser!.email);
 
     //variables
@@ -130,7 +130,6 @@ class _PerfilPageState extends State<PerfilPage> {
             ),
             Container(height: 80),
             Row(
-              // TODO: add data likes and dislikes
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(

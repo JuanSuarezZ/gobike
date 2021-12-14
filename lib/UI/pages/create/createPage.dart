@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +19,7 @@ class CreatePage extends StatelessWidget {
         child: Stack(
           children: [
             CreateAppbar(),
-            FormCreate(),
+            // FormCreate(),
           ],
         ),
       ),
@@ -134,7 +132,6 @@ class FormCreate extends StatelessWidget {
                     icon: Icon(Icons.camera_alt_outlined)),
                 IconButton(
                   onPressed: () async {
-                    // TODO: pickvideos for incident
                     showModalBottomSheet(
                         backgroundColor: Colors.transparent,
                         context: context,
@@ -432,7 +429,6 @@ class FormCreate extends StatelessWidget {
             Container(height: 16),
             InkWell(
               onTap: () async {
-                //TODO: cam video
                 final XFile? video =
                     await imagePicker.pickVideo(source: ImageSource.camera);
                 if (video != null) {
@@ -465,7 +461,8 @@ class FormCreate extends StatelessWidget {
   //bottomsheetimage
   Container _createBottomSheetPhoto(
       CreateProvider provider, BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    // final size = MediaQuery.of(context).size;
+
     final ImagePicker imagePicker = provider.getImagePicker();
 
     return Container(
@@ -524,7 +521,6 @@ class FormCreate extends StatelessWidget {
                 ],
               ),
               onTap: () async {
-                // TODO: cam gallery
                 final List<XFile>? photos = await imagePicker.pickMultiImage();
                 if (photos != null) {
                   provider.addImages(photos);
@@ -549,7 +545,6 @@ class FormCreate extends StatelessWidget {
                 ],
               ),
               onTap: () async {
-                //TODO: photos from cam
                 final XFile? photo =
                     await imagePicker.pickImage(source: ImageSource.camera);
                 if (photo != null) {

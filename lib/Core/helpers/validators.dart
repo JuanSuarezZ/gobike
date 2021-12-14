@@ -18,10 +18,32 @@ class Validators {
 
   final validarPassword = StreamTransformer<String, String>.fromHandlers(
       handleData: (password, sink) {
-    if (password.length >= 6) {
-      sink.add(password);
+    Pattern pattern1 = r'(?=.*?[a-z])(?=.*?[A-Z])';
+    Pattern pattern2 = r'(?=.*?[0-9])';
+    Pattern pattern3 = r'(?=.*?[#?!@$%^&*-])';
+    Pattern pattern4 = r'.{8,}';
+
+    RegExp regExp1 = new RegExp(pattern1.toString());
+    RegExp regExp2 = new RegExp(pattern2.toString());
+    RegExp regExp3 = new RegExp(pattern3.toString());
+    RegExp regExp4 = new RegExp(pattern4.toString());
+
+    if (regExp1.hasMatch(password)) {
+      if (regExp2.hasMatch(password)) {
+        if (regExp3.hasMatch(password)) {
+          if (regExp4.hasMatch(password)) {
+            sink.add(password);
+          } else {
+            sink.addError('Debe contener almenos 8 caracteres');
+          }
+        } else {
+          sink.addError('Almenos un caracater especial');
+        }
+      } else {
+        sink.addError('Almenos un numero');
+      }
     } else {
-      sink.addError('Usa más de 6 caracteres por favor');
+      sink.addError('Debe contener mayusculas y minusculas');
     }
   });
 
