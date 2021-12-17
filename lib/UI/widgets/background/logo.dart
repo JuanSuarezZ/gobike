@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gobike/UI/widgets/background/custompainter.dart';
+import 'package:gobike/UI/widgets/background/custom_painter.dart';
 
 class Logo extends StatelessWidget {
   final Size? size;

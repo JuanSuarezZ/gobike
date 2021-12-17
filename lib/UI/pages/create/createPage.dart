@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gobike/UI/pages/create/provider/createProvider.dart';
-import 'package:gobike/UI/pages/create/widgets/appBar.dart';
-import 'package:gobike/UI/pages/create/widgets/customImage.dart';
-import 'package:gobike/UI/pages/create/widgets/customVideo.dart';
-import 'package:gobike/UI/widgets/customTextField.dart';
+import 'package:gobike/UI/pages/create/provider/create_provider.dart';
+import 'package:gobike/UI/pages/create/widgets/app_Bar.dart';
+import 'package:gobike/UI/pages/create/widgets/custom_image.dart';
+import 'package:gobike/UI/pages/create/widgets/custom_video.dart';
+import 'package:gobike/UI/widgets/custom_textfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +17,7 @@ class CreatePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Stack(
-          children: [
+          children: const [
             CreateAppbar(),
             // FormCreate(),
           ],
@@ -36,14 +36,14 @@ class FormCreate extends StatelessWidget {
     final provider = Provider.of<CreateProvider>(context);
     final size = MediaQuery.of(context).size;
     final style = Theme.of(context).textTheme.headline3!.copyWith(fontSize: 14);
-    final margin = const EdgeInsets.only(left: 16, top: 8, bottom: 8);
+    const margin = EdgeInsets.only(left: 16, top: 8, bottom: 8);
 
     if (provider.getStatus()) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(),
+            const CircularProgressIndicator(),
             Container(
               height: 10,
             ),
@@ -94,13 +94,14 @@ class FormCreate extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(right: 16, left: 16),
               height: 200,
-              child: (provider.getMedia()!.length == 0)
+              child: (provider.getMedia()!.isEmpty)
                   ? ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)),
                       child: Image.asset("assets/images/placeholder.png"),
                     )
                   : ListView.builder(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       itemCount: provider.getMedia()!.length,
                       itemBuilder: (BuildContext context, int index) {
@@ -129,7 +130,7 @@ class FormCreate extends StatelessWidget {
                             return _createBottomSheetPhoto(provider, context);
                           });
                     },
-                    icon: Icon(Icons.camera_alt_outlined)),
+                    icon: const Icon(Icons.camera_alt_outlined)),
                 IconButton(
                   onPressed: () async {
                     showModalBottomSheet(
@@ -139,7 +140,7 @@ class FormCreate extends StatelessWidget {
                           return _createBottomSheetVideo(provider, context);
                         });
                   },
-                  icon: Icon(Icons.videocam_outlined),
+                  icon: const Icon(Icons.videocam_outlined),
                 ),
               ]),
             ),
@@ -159,16 +160,14 @@ class FormCreate extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              child: CustomTextField.title(context, provider.getTituloBloc()),
-            ),
+            CustomTextField.title(context, provider.getTituloBloc()),
             Container(
               margin: margin,
               child: Row(
                 children: [
-                  Icon(Icons.content_paste),
+                  const Icon(Icons.content_paste),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       "Descripcion",
                       style: style,
@@ -177,10 +176,7 @@ class FormCreate extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              child: CustomTextField.description(
-                  context, provider.getDescricionBloc()),
-            ),
+            CustomTextField.description(context, provider.getDescricionBloc()),
             Container(
               margin: margin,
               child: Row(
@@ -195,10 +191,10 @@ class FormCreate extends StatelessWidget {
                                 provider, context);
                           });
                     },
-                    icon: Icon(Icons.place),
+                    icon: const Icon(Icons.place),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       provider.getLocalidad(),
                       style: style,
@@ -211,9 +207,9 @@ class FormCreate extends StatelessWidget {
               margin: margin,
               child: Row(
                 children: [
-                  Icon(Icons.tag),
+                  const Icon(Icons.tag),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       "Tags",
                       style: style,
@@ -222,35 +218,31 @@ class FormCreate extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                      child:
-                          CustomTextField.tag(context, provider.getTagBloc())),
-                  Container(
-                    height: size.width * .15,
-                    width: size.width * .15,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).primaryColor,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
-                            offset: Offset(0, 8),
-                            blurRadius: 5)
-                      ],
-                    ),
-                    child: IconButton(
-                        onPressed: () {
-                          provider.addtag();
-                        },
-                        icon: Icon(Icons.add)),
-                  )
-                ],
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CustomTextField.tag(context, provider.getTagBloc()),
+                Container(
+                  height: size.width * .15,
+                  width: size.width * .15,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).primaryColor,
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.08),
+                          offset: const Offset(0, 8),
+                          blurRadius: 5)
+                    ],
+                  ),
+                  child: IconButton(
+                      onPressed: () {
+                        provider.addtag();
+                      },
+                      icon: const Icon(Icons.add)),
+                )
+              ],
             ),
             Container(
               height: 50,
@@ -263,7 +255,7 @@ class FormCreate extends StatelessWidget {
                   return Container(
                     margin: const EdgeInsets.only(right: 8),
                     child: Chip(
-                      deleteIcon: Icon(
+                      deleteIcon: const Icon(
                         Icons.clear,
                         size: 16,
                       ),
@@ -291,7 +283,7 @@ class FormCreate extends StatelessWidget {
       padding: const EdgeInsets.only(top: 16, bottom: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(25)),
       ),
       child: GestureDetector(
@@ -310,7 +302,7 @@ class FormCreate extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            Container(
+            SizedBox(
               height: size.height * .3,
               child: ListView.builder(
                 itemCount: localidades.length,
@@ -321,7 +313,7 @@ class FormCreate extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
+                      margin: const EdgeInsets.symmetric(vertical: 10),
                       child: Row(
                         children: [
                           Container(
@@ -367,7 +359,7 @@ class FormCreate extends StatelessWidget {
       padding: const EdgeInsets.only(top: 24, bottom: 24, left: 24, right: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(25)),
       ),
       child: GestureDetector(
@@ -390,7 +382,7 @@ class FormCreate extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 8, bottom: 16),
+                  margin: const EdgeInsets.only(top: 8, bottom: 16),
                   child: AutoSizeText(
                     "Videos",
                     minFontSize: 18,
@@ -412,9 +404,9 @@ class FormCreate extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Icon(Icons.folder),
+                  const Icon(Icons.folder),
                   Container(
-                      margin: EdgeInsets.only(left: 8),
+                      margin: const EdgeInsets.only(left: 8),
                       child: AutoSizeText(
                         "galeria",
                         minFontSize: 18,
@@ -437,9 +429,9 @@ class FormCreate extends StatelessWidget {
               },
               child: Row(
                 children: [
-                  Icon(Icons.videocam_outlined),
+                  const Icon(Icons.videocam_outlined),
                   Container(
-                    margin: EdgeInsets.only(left: 8),
+                    margin: const EdgeInsets.only(left: 8),
                     child: AutoSizeText(
                       "camara",
                       minFontSize: 18,
@@ -469,7 +461,7 @@ class FormCreate extends StatelessWidget {
       padding: const EdgeInsets.only(top: 24, bottom: 24, left: 24, right: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(25)),
       ),
       child: GestureDetector(
@@ -492,7 +484,7 @@ class FormCreate extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(top: 8, bottom: 16),
+                  margin: const EdgeInsets.only(top: 8, bottom: 16),
                   child: AutoSizeText(
                     "Fotos",
                     minFontSize: 18,
@@ -507,9 +499,9 @@ class FormCreate extends StatelessWidget {
             InkWell(
               child: Row(
                 children: [
-                  Icon(Icons.folder),
+                  const Icon(Icons.folder),
                   Container(
-                      margin: EdgeInsets.only(left: 8),
+                      margin: const EdgeInsets.only(left: 8),
                       child: AutoSizeText(
                         "galeria",
                         minFontSize: 18,
@@ -531,9 +523,9 @@ class FormCreate extends StatelessWidget {
             InkWell(
               child: Row(
                 children: [
-                  Icon(Icons.camera_alt_outlined),
+                  const Icon(Icons.camera_alt_outlined),
                   Container(
-                      margin: EdgeInsets.only(left: 8),
+                      margin: const EdgeInsets.only(left: 8),
                       child: AutoSizeText(
                         "camara",
                         minFontSize: 18,

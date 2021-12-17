@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_initializing_formals
+
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
@@ -8,9 +10,9 @@ class Media {
   final File? frame;
 
   Media({XFile? xfile, String? type, File? frame})
-      : this.xfile = xfile,
-        this.type = type,
-        this.frame = frame;
+      : xfile = xfile,
+        type = type,
+        frame = frame;
 
   getFotograma() {
     return frame;

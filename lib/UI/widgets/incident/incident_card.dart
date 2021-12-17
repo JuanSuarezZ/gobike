@@ -1,16 +1,18 @@
+// ignore_for_file: avoid_print
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gobike/Domain/models/Incident.dart';
-import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
-import 'package:gobike/Domain/use_cases/incident/IncidentUseCase.dart';
-import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
+import 'package:gobike/Domain/models/incident.dart';
+import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
+import 'package:gobike/Domain/use_cases/incident/incident_use_case.dart';
+import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class IncidenteCard extends StatelessWidget {
   final Incident incident;
 
-  IncidenteCard(this.incident);
+  const IncidenteCard(this.incident, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,20 +31,20 @@ class IncidenteCard extends StatelessWidget {
       date = incident.date!.split(" ");
     }
 
-    if (incident.listUrlImages!.length > 0) {
+    if (incident.listUrlImages!.isNotEmpty) {
       url = incident.listUrlImages![0];
     } else {
       url =
           "https://firebasestorage.googleapis.com/v0/b/gobike-723c3.appspot.com/o/incidents%2F-MqkifUKO2f1MNJAiN9E%2F93ded160-5b99-11ec-bccf-97647a69d1eb.jpg?alt=media&token=b46fb90a-95cb-4cd3-9ca5-b741e92e7bd8";
     }
     return ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(15)),
+      borderRadius: const BorderRadius.all(Radius.circular(15)),
       child: Container(
         color: Colors.white,
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(left: 16, right: 16, top: 16),
+              margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
               height: (size.height * .3) * .7,
               width: size.width * .9,
               child: CachedNetworkImage(
@@ -52,12 +54,12 @@ class IncidenteCard extends StatelessWidget {
                 placeholder: (context, url) => Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 50,
                       width: 50,
                       child: LoadingIndicator(
                         indicatorType: Indicator.ballRotateChase,
-                        colors: [Theme.of(context).accentColor],
+                        colors: [Theme.of(context).colorScheme.secondary],
                       ),
                     ),
                   ],
@@ -68,17 +70,17 @@ class IncidenteCard extends StatelessWidget {
               height: (size.height * .3) * .3,
               color: Colors.white,
               child: Container(
-                margin: EdgeInsets.only(left: 14, top: 10, right: 8),
+                margin: const EdgeInsets.only(left: 14, top: 10, right: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 8),
+                      margin: const EdgeInsets.only(bottom: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: 150,
                             child: Text(
                               incident.title!,
@@ -108,13 +110,14 @@ class IncidenteCard extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
                             color: Colors.red[400],
                           ),
                           height: (size.height * .3) * .15,
                           width: (size.width * .9) * .2,
                           child: InkWell(
-                            child: Center(
+                            child: const Center(
                                 child: Text(
                               "Eliminar",
                               style: TextStyle(color: Colors.white),
@@ -128,21 +131,22 @@ class IncidenteCard extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 16),
+                          margin: const EdgeInsets.only(left: 16),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Theme.of(context).accentColor,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            color: Theme.of(context).colorScheme.secondary,
                           ),
                           height: (size.height * .3) * .15,
                           width: (size.width * .9) * .2,
                           child: InkWell(
-                            child: Center(
+                            child: const Center(
                                 child: Text(
                               "Editar",
                               style: TextStyle(color: Colors.white),
                             )),
                             onTap: () {
-                              provider.incident = this.incident;
+                              provider.incident = incident;
                               Navigator.of(context).pushNamed(
                                 "editIncident",
                               );

@@ -4,16 +4,11 @@ final darkTheme = ThemeData(
   backgroundColor: const Color(0xff1F1F1F),
   primaryColor: const Color(0xff4B4B4B),
   dividerColor: Colors.white,
-  //color del puntero textfield
-  colorScheme: const ColorScheme.light(primary: Color(0xffB68D40)),
-
   iconTheme: const IconThemeData(color: Colors.white),
   bottomAppBarTheme: const BottomAppBarTheme(color: Colors.black),
-  buttonColor: const Color(0xff434243),
-  accentColor: const Color(0xffB68D40),
   errorColor: Colors.red,
   cardColor: Colors.grey[400],
-  textSelectionTheme: TextSelectionThemeData(
+  textSelectionTheme: const TextSelectionThemeData(
     cursorColor: Colors.white,
   ),
   textTheme: const TextTheme(
@@ -48,23 +43,21 @@ final darkTheme = ThemeData(
         fontFamily: "Roboto",
         fontWeight: FontWeight.w300),
   ),
+  colorScheme: const ColorScheme.light(primary: Color(0xffB68D40))
+      .copyWith(secondary: const Color(0xffB68D40)),
 );
 
 final lightTheme = ThemeData(
   backgroundColor: const Color(0xffF5F5F5),
   primaryColor: Colors.white,
   dividerColor: Colors.black,
-  //color del puntero textfield
-  colorScheme: const ColorScheme.light(primary: Color(0xffB68D40)),
   //
 
   cardColor: Colors.grey[400],
-  iconTheme: IconThemeData(color: Colors.black54),
-  // bottomAppBarTheme: BottomAppBarTheme(color: Colors.white),
-  accentColor: const Color(0xffB68D40),
+  iconTheme: const IconThemeData(color: Colors.black54),
   errorColor: Colors.red,
 
-  textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black26),
+  textSelectionTheme: const TextSelectionThemeData(cursorColor: Colors.black26),
   textTheme: const TextTheme(
     //titulos
     headline1: TextStyle(
@@ -97,4 +90,6 @@ final lightTheme = ThemeData(
         fontFamily: "Roboto",
         fontWeight: FontWeight.w300),
   ),
+  colorScheme: const ColorScheme.light(primary: Color(0xffB68D40))
+      .copyWith(secondary: const Color(0xffB68D40)),
 );

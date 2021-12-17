@@ -1,26 +1,28 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
-import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
-import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
+import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
+import 'package:gobike/Domain/use_cases/network/network_state_use_case.dart';
 import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
-import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
-import 'package:gobike/UI/widgets/alerts/RestartPassword.dart';
-import 'package:gobike/UI/widgets/background/loginBackground.dart';
-import 'package:gobike/UI/widgets/buttons/customSinginbutton.dart';
+import 'package:gobike/UI/widgets/alerts/error_alert_dialog.dart';
+import 'package:gobike/UI/widgets/alerts/Restart_Password.dart';
+import 'package:gobike/UI/widgets/background/login_Background.dart';
+import 'package:gobike/UI/widgets/buttons/custom_singin_button.dart';
 
-import 'package:gobike/UI/widgets/buttons/changethemebutton.dart';
-import 'package:gobike/UI/widgets/buttons/customButton.dart';
-import 'package:gobike/UI/widgets/customTextField.dart';
+import 'package:gobike/UI/widgets/buttons/change_theme_button.dart';
+import 'package:gobike/UI/widgets/buttons/custom_button.dart';
+import 'package:gobike/UI/widgets/custom_textfield.dart';
 import 'package:gobike/UI/widgets/labels.dart';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  final Emailbloc emailbloc = new Emailbloc();
-  final Passwordbloc passwordbloc = new Passwordbloc();
+  final Emailbloc emailbloc = Emailbloc();
+  final Passwordbloc passwordbloc = Passwordbloc();
 
   @override
   Widget build(BuildContext context) {
@@ -28,25 +30,24 @@ class LoginPage extends StatelessWidget {
     final safePading = MediaQuery.of(context).padding.top;
 
     //login_bloc
-    final loginBloc = new LoginBloc(emailbloc, passwordbloc);
+    final loginBloc = LoginBloc(emailbloc, passwordbloc);
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: FadeInDown(
-        delay: Duration(milliseconds: 200),
-        child: Container(
-            child: Stack(
+        delay: const Duration(milliseconds: 200),
+        child: Stack(
           children: [
             LoginBackground(),
             _crearContenido(size, safePading, context, loginBloc),
             //set theme iconbutton
-            Positioned(
+            const Positioned(
               top: 24,
               right: 16,
               child: ChangeThemeIconButton(),
             ),
           ],
-        )),
+        ),
       ),
     );
   }
@@ -62,24 +63,24 @@ class LoginPage extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20),
                   height: size.height,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FadeInLeft(
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           child: CustomTextField.email(context, emailbloc)),
                       FadeInLeft(
-                          duration: Duration(milliseconds: 1000),
+                          duration: const Duration(milliseconds: 1000),
                           child:
                               CustomTextField.password(context, passwordbloc)),
                       FadeInLeft(
-                        duration: Duration(milliseconds: 1250),
+                        duration: const Duration(milliseconds: 1250),
                         child: _createButtonLogin(context, loginBloc),
                       ),
                       FadeInLeft(
-                        duration: Duration(milliseconds: 1500),
+                        duration: const Duration(milliseconds: 1500),
                         child: _createButtons2(context),
                       ),
                     ],
@@ -97,19 +98,19 @@ class LoginPage extends StatelessWidget {
         Provider.of<AuthUseCase>(context, listen: false).signInEmailPassword;
 
     return Container(
-      padding: EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 20),
       child: CustomButton.login(loginBloc, funtion),
     );
   }
 
   Container _createButtons2(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            padding: EdgeInsets.only(left: 36),
+            padding: const EdgeInsets.only(left: 36),
             child: InkWell(
               child: Text("olvide mi contraseña",
                   style: Theme.of(context)
@@ -121,18 +122,18 @@ class LoginPage extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) =>
-                          RestarPasswordDialog());
+                          const RestarPasswordDialog());
                 } else {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) =>
-                          ErrorAlertDialog.network());
+                          const ErrorAlertDialog.network());
                 }
               },
             ),
           ),
           Container(
-            padding: EdgeInsets.only(right: 36),
+            padding: const EdgeInsets.only(right: 36),
             child: InkWell(
                 child: Text(
                   "Loguearme Con...",
@@ -157,10 +158,10 @@ class LoginPage extends StatelessWidget {
 
   Container _createBottomSheetContent(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 16, bottom: 24),
+      padding: const EdgeInsets.only(top: 16, bottom: 24),
       decoration: BoxDecoration(
         color: Theme.of(context).backgroundColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(25)),
       ),
       child: GestureDetector(
@@ -205,12 +206,12 @@ class LoginPage extends StatelessWidget {
 
   Container _crearLabels(Size size) {
     return Container(
-      padding: EdgeInsets.only(bottom: 50),
+      padding: const EdgeInsets.only(bottom: 50),
       height: size.height,
       width: size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+        children: const [
           Labels(
             ruta: 'register',
             titulo: '¿No tienes cuenta?',

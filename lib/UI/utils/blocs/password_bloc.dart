@@ -7,8 +7,8 @@ import 'package:gobike/UI/utils/blocs/textfiel_bloc.dart';
 
 class Passwordbloc extends PlantillaTextField with Validators {
   //controllers
-  final _passwordTextController = new TextEditingController();
-  final _confirmTextController = new TextEditingController();
+  final _passwordTextController = TextEditingController();
+  final _confirmTextController = TextEditingController();
 
   //streams
   final _passwordController = BehaviorSubject<String>();
