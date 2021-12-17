@@ -1,4 +1,4 @@
-import 'package:gobike/Data/user/incident/IncidentsApi.dart';
+import 'package:gobike/Data/incident/incident/IncidentsApi.dart';
 
 class IncidentUseCaseConfig {
   final getway = IncidentApi();

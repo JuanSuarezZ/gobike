@@ -10,6 +10,7 @@ import 'package:gobike/Domain/use_cases/auth/AuthGateWay.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AuthApi extends AuthGateWay {
@@ -29,6 +30,17 @@ class AuthApi extends AuthGateWay {
       print("no hay sesiones");
       return false;
     }
+  }
+
+  @override
+  Future<void> verifyEmail() async {
+    final user = await _auth.currentUser;
+    await user!.sendEmailVerification();
+  }
+
+  @override
+  Future<bool> isVerifyEmail() async {
+    return await _auth.currentUser!.emailVerified;
   }
 
   @override
@@ -53,8 +65,10 @@ class AuthApi extends AuthGateWay {
   @override
   Future<bool> signInwithGoogle() async {
     try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn
+          .signIn()
+          .onError((error, stackTrace) => null)
+          .catchError((error) => null);
 
       if (googleSignInAccount == null) return false;
 
@@ -65,7 +79,9 @@ class AuthApi extends AuthGateWay {
         accessToken: googleSignInAuthentication.accessToken,
         idToken: googleSignInAuthentication.idToken,
       );
+
       final response = await _auth.signInWithCredential(credential);
+
       if (response.additionalUserInfo!.isNewUser) {
         await FirebaseFirestore.instance
             .collection('users')
@@ -111,10 +127,14 @@ class AuthApi extends AuthGateWay {
       await FirebaseAuth.instance.currentUser!.updatePhotoURL(url.toString());
 
       return true;
+    } on PlatformException catch (e) {
+      print("The user is not signed in yet. Asking to sign in.");
+      _googleSignIn.signOut();
+      return false;
     } catch (err) {
       print("Error en googleSingIn: $err");
-      await _googleSignIn.signOut();
-      await _auth.signOut();
+      _googleSignIn.signOut();
+      _auth.signOut();
       return false;
     }
   }
@@ -135,7 +155,7 @@ class AuthApi extends AuthGateWay {
   //email auth
   @override
   Future<bool> createUsermailPassword(
-      String email, String password, String username) async {
+      String email, String password, String username, XFile foto) async {
     try {
       final response = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -156,11 +176,7 @@ class AuthApi extends AuthGateWay {
       });
       _auth.currentUser!.updateDisplayName(username);
       //read file
-      var bytes = await rootBundle.load('assets/images/profile.png');
-      String tempPath = (await getTemporaryDirectory()).path;
-      File file = File('$tempPath/profile.png');
-      await file.writeAsBytes(
-          bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+      final file = File(foto.path);
       //load file in storage
       await FirebaseStorage.instance
           .ref("userphoto")

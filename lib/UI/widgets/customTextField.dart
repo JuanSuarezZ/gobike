@@ -270,6 +270,46 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
     //cases of textfield
     switch (this.widget.type) {
+      case "usename":
+        return StreamBuilder(
+          stream: widget.bloc.getstream(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            return Container(
+              padding: padding,
+              margin: margin,
+              decoration: decoration,
+              child: TextField(
+                autofocus: false,
+                style: Theme.of(context).textTheme.bodyText1,
+                controller: widget.bloc.getTextController(),
+                obscureText: this.widget.isPassword,
+                keyboardType: this.widget.keyboardType,
+                decoration: InputDecoration(
+                  labelStyle: Theme.of(context).textTheme.bodyText1,
+                  fillColor: Colors.white,
+                  hintStyle: Theme.of(context).textTheme.bodyText1,
+                  contentPadding: contentPadding,
+                  errorStyle: errorStyle,
+                  border: border,
+                  suffixIcon: (widget.bloc.getTextController().text == null ||
+                          widget.bloc.getTextController().text == "")
+                      ? null
+                      : buttons,
+                  icon: icon,
+                  hintText: this.widget.placeholder,
+                  errorText: (snapshot.error is ArgumentError ||
+                          snapshot.error == null ||
+                          widget.bloc.valueofStream() == "" ||
+                          snapshot.error is NoSuchMethodError)
+                      ? null
+                      : snapshot.error.toString(),
+                ),
+                onChanged: widget.bloc.changeStream(),
+              ),
+            );
+          },
+        );
+
       case "confirmPassword":
         return StreamBuilder(
           stream: widget.bloc.getstream2(),

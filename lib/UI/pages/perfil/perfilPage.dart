@@ -19,10 +19,7 @@ class _PerfilPageState extends State<PerfilPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // final auth = Provider.of<AuthUseCase>(context);
-    // print(auth.getUser()!.authuser!.email);
 
-    //variables
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

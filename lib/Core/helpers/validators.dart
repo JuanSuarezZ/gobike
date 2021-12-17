@@ -49,7 +49,7 @@ class Validators {
 
   final validarUserName =
       StreamTransformer<String, String>.fromHandlers(handleData: (name, sink) {
-    if (name.length >= 6) {
+    if (name.length >= 6 && name.length <= 20) {
       sink.add(name);
     } else {
       sink.addError('Ingresa un Nombre mas largo');

@@ -8,6 +8,7 @@ import 'package:gobike/UI/pages/perfil/subpages/EditProfile.dart';
 import 'package:gobike/UI/pages/register/register_page.dart';
 import 'package:gobike/UI/pages/status/StatusPage.dart';
 import 'package:gobike/UI/pages/test/test_page.dart';
+import 'package:gobike/UI/pages/verifyEmail/verifyEmail.dart';
 
 Map<String, Widget Function(BuildContext)> getAplicationRoutes = {
   'login': (_) => LoginPage(),
@@ -20,4 +21,5 @@ Map<String, Widget Function(BuildContext)> getAplicationRoutes = {
   'editProfile': (_) => EditProfile(),
   'editIncident': (_) => EditIncident(),
   'create': (_) => CreatePage(),
+  'verifyEmail': (_) => VerifyEmailPage(),
 };

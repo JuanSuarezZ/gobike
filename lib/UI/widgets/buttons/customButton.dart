@@ -8,6 +8,7 @@ import 'package:gobike/Domain/use_cases/incident/IncidentUseCase.dart';
 import 'package:gobike/Domain/use_cases/network/NetworkStateUseCase.dart';
 import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
 import 'package:gobike/UI/pages/create/provider/createProvider.dart';
+import 'package:gobike/UI/pages/register/registro_bloc/provider/registroProvider.dart';
 import 'package:gobike/UI/widgets/alerts/ConfirmCreate.dart';
 import 'package:gobike/UI/widgets/alerts/ConfirmDialog.dart';
 import 'package:gobike/UI/widgets/alerts/ErrorAlertDialog.dart';
@@ -227,10 +228,13 @@ class CustomButton extends StatelessWidget {
                 final conection =
                     await NetworkStateUseCase().checkInternetConnection();
 
+                final provider =
+                    Provider.of<RegistroProvider>(context, listen: false);
+
                 bloc.emailbloc.restartController();
                 if (conection) {
                   final resp = await auth.createUsermailPassword(
-                      email, password, username);
+                      email, password, username, provider.getPhoto());
                   print("respuesta: ${await resp.toString()}");
 
                   if (resp == true) {

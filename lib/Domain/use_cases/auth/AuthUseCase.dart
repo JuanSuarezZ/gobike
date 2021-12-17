@@ -22,6 +22,14 @@ class AuthUseCase with ChangeNotifier {
     return resp;
   }
 
+  Future<void> verifyEmail() async {
+    await this._authGateWay.verifyEmail();
+  }
+
+  Future<bool> isVerifyEmail() async {
+    return await this._authGateWay.isVerifyEmail();
+  }
+
   Future<bool> signInwithGoogle() async {
     final result = await this._authGateWay.signInwithGoogle();
     return result;
@@ -40,8 +48,10 @@ class AuthUseCase with ChangeNotifier {
   }
 
   Future<bool> createUsermailPassword(
-      String email, String password, String username) {
-    return this._authGateWay.createUsermailPassword(email, password, username);
+      String email, String password, String username, foto) {
+    return this
+        ._authGateWay
+        .createUsermailPassword(email, password, username, foto);
   }
 
   Future<bool> signInEmailPassword(String email, String password) {
