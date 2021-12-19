@@ -8,8 +8,8 @@ import 'package:gobike/UI/pages/login/login_bloc/login_bloc.dart';
 import 'package:gobike/UI/utils/blocs/email_bloc.dart';
 import 'package:gobike/UI/utils/blocs/password_bloc.dart';
 import 'package:gobike/UI/widgets/alerts/error_alert_dialog.dart';
-import 'package:gobike/UI/widgets/alerts/Restart_Password.dart';
-import 'package:gobike/UI/widgets/background/login_Background.dart';
+import 'package:gobike/UI/widgets/alerts/restart_password.dart';
+import 'package:gobike/UI/widgets/background/login_background.dart';
 import 'package:gobike/UI/widgets/buttons/custom_singin_button.dart';
 
 import 'package:gobike/UI/widgets/buttons/change_theme_button.dart';
@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
         delay: const Duration(milliseconds: 200),
         child: Stack(
           children: [
-            LoginBackground(),
+            const LoginBackground(),
             _crearContenido(size, safePading, context, loginBloc),
             //set theme iconbutton
             const Positioned(

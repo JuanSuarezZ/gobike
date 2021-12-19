@@ -42,6 +42,7 @@ class AuthApi extends AuthGateWay {
 
   @override
   Future<bool> isVerifyEmail() async {
+    // await _auth.currentUser!.reload();
     return _auth.currentUser!.emailVerified;
   }
 

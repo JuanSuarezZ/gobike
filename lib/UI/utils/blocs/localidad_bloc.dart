@@ -8,7 +8,7 @@ import 'package:gobike/UI/utils/blocs/textfiel_bloc.dart';
 
 class Localidadbloc extends PlantillaTextField with Validators {
   //controllers
-  final _localidadTextController = new TextEditingController();
+  final _localidadTextController = TextEditingController();
 
   //streams
   final _localidadController = BehaviorSubject<String>();

@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
-import 'package:gobike/UI/pages/create/widgets/app_Bar.dart';
+import 'package:gobike/UI/pages/create/widgets/app_bar.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_image.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_video.dart';
 import 'package:gobike/UI/widgets/custom_textfield.dart';

@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 
 class EdadBloc extends PlantillaTextField with Validators {
   //controllers
-  final _edadTextController = new TextEditingController();
+  final _edadTextController = TextEditingController();
 
   //streams
   final _edadController = BehaviorSubject<String>();

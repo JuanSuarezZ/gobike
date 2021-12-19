@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
 import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
-import 'package:gobike/UI/widgets/background/archivo_Background.dart';
+import 'package:gobike/UI/widgets/background/archivo_background.dart';
 
 import 'package:gobike/UI/widgets/incident/incident_card.dart';
 import 'package:provider/provider.dart';

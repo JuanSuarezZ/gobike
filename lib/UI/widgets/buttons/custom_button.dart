@@ -11,8 +11,8 @@ import 'package:gobike/Domain/use_cases/network/network_state_use_case.dart';
 import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
 import 'package:gobike/UI/pages/register/registro_bloc/provider/registro_provider.dart';
-import 'package:gobike/UI/widgets/alerts/Confirm_Create.dart';
-import 'package:gobike/UI/widgets/alerts/Confirm_Dialog.dart';
+import 'package:gobike/UI/widgets/alerts/confirm_create.dart';
+import 'package:gobike/UI/widgets/alerts/confirm_dialog.dart';
 import 'package:gobike/UI/widgets/alerts/error_alert_dialog.dart';
 import 'package:provider/provider.dart';
 

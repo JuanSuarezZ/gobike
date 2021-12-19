@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
 import 'package:gobike/UI/pages/verifyEmail/provider/verify_email.dart';
@@ -12,19 +14,25 @@ class VerifyEmailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => VerifyEmailProvider(),
-      child: const X(),
+      child: const _Body(),
     );
   }
 }
 
-class X extends StatelessWidget {
-  const X({Key? key}) : super(key: key);
+class _Body extends StatefulWidget {
+  const _Body({Key? key}) : super(key: key);
 
   @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  @override
   Widget build(BuildContext context) {
-    final auth = Provider.of<AuthUseCase>(context, listen: false);
+    final auth = Provider.of<AuthUseCase>(context);
     final provider = Provider.of<VerifyEmailProvider>(context);
 
+    // tryVerify(auth, context);
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -123,12 +131,15 @@ class X extends StatelessWidget {
       ),
     );
   }
+
+  tryVerify(AuthUseCase auth, BuildContext context) async {
+    print("[intento]");
+    bool verify = false;
+    while (verify == false) {
+      await Future.delayed(const Duration(seconds: 10));
+      verify = await auth.isVerifyEmail();
+      print("[intento de verificacion: $verify]");
+    }
+    Navigator.of(context).pushReplacementNamed("status");
+  }
 }
-// IconButton(
-//           onPressed: () async {
-//             await auth.signOutEmailPassword();
-//             await auth.signOutFromGoogle();
-//             Navigator.of(context).pushReplacementNamed("login");
-//           },
-//           icon: Icon(Icons.ac_unit),
-//         ),

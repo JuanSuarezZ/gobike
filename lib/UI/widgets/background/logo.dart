@@ -11,7 +11,7 @@ class Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: size!.height,
       child: Stack(
         children: [

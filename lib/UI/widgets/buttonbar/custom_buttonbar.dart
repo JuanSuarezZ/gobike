@@ -182,7 +182,7 @@ class _BottomBarItemWidget extends StatelessWidget {
           shape: const StadiumBorder(),
           child: SizedBox(
             // color: Colors.grey,
-            height: 48,
+            height: 44,
             child: InkWell(
               onTap: onTap,
               customBorder: const StadiumBorder(),
@@ -201,7 +201,7 @@ class _BottomBarItemWidget extends StatelessWidget {
                         data: IconThemeData(
                           color:
                               Color.lerp(inactiveColor, selectedColor, value),
-                          size: 28,
+                          size: 24,
                         ),
                         child: isSelected ? icon : (inactiveIcon ?? icon),
                       ),

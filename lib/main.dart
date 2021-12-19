@@ -15,13 +15,15 @@ void main() async {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark));
 
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<BlocTheme>(create: (_) => BlocTheme()),
-      ChangeNotifierProvider<AuthUseCase>(create: (_) => AuthUseCase()),
-    ],
-    child: const App(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BlocTheme>(create: (_) => BlocTheme()),
+        ChangeNotifierProvider<AuthUseCase>(create: (_) => AuthUseCase()),
+      ],
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatefulWidget {
