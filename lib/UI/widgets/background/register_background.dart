@@ -24,16 +24,24 @@ class _HomePageState extends State<RegisterBackground>
     controller1 = AnimationController(
       vsync: this,
       duration: const Duration(
-        seconds: 10,
+        seconds: 4,
       ),
     );
-    animation2 = Tween<double>(begin: .5, end: .3).animate(
+    animation2 = Tween<double>(begin: .4, end: .3).animate(
       CurvedAnimation(
         parent: controller1,
-        curve: Curves.linear,
+        curve: Curves.easeInOut,
       ),
-    )..addListener(() {
+    )
+      ..addListener(() {
         setState(() {});
+      })
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          controller1.reverse();
+        } else if (status == AnimationStatus.dismissed) {
+          controller1.forward();
+        }
       });
 
     controller2 = AnimationController(
@@ -42,7 +50,7 @@ class _HomePageState extends State<RegisterBackground>
         seconds: 5,
       ),
     );
-    animation3 = Tween<double>(begin: 100, end: 120).animate(CurvedAnimation(
+    animation3 = Tween<double>(begin: 80, end: 120).animate(CurvedAnimation(
       parent: controller2,
       curve: Curves.easeInOut,
     ))
@@ -56,22 +64,16 @@ class _HomePageState extends State<RegisterBackground>
           controller2.forward();
         }
       });
-    animation4 = Tween<double>(begin: 100, end: 120).animate(
-      CurvedAnimation(
-        parent: controller2,
-        curve: Curves.easeInOut,
-      ),
-    )..addListener(() {
-        setState(() {});
-      });
 
-    Timer(const Duration(milliseconds: 100), () {
-      controller1.forward();
-    });
+    // Timer(const Duration(milliseconds: 100), () {
+    //   controller1.forward();
+    // });
 
-    Timer(const Duration(milliseconds: 100), () {
-      controller1.forward();
-    });
+    // Timer(const Duration(milliseconds: 100), () {
+    //   controller1.forward();
+    // });
+    controller1.forward();
+    controller2.forward();
   }
 
   @override
@@ -94,13 +96,6 @@ class _HomePageState extends State<RegisterBackground>
               left: 30,
               child: CustomPaint(
                 painter: MyPainter(animation3.value),
-              ),
-            ),
-            Positioned(
-              top: size.height * .5,
-              left: size.width * (animation4.value),
-              child: CustomPaint(
-                painter: MyPainter(60),
               ),
             ),
             Positioned(
