@@ -45,6 +45,9 @@ class _StatusPageState extends State<StatusPage> {
       setState(() {});
       return;
     }
+    //update user
+    await auth.updateUserStatus();
+
     //if there is a sesion
     final sesion = await auth.checkSesion();
     print("[SESION STATE: ${sesion}]");
@@ -62,8 +65,6 @@ class _StatusPageState extends State<StatusPage> {
       Navigator.of(context).pushReplacementNamed("verifyEmail");
       return;
     }
-    //update user
-    await auth.updateUserStatus();
 
     //check premisions location
     var permission = await Geolocator.checkPermission();

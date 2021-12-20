@@ -14,25 +14,33 @@ class VerifyEmailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => VerifyEmailProvider(),
-      child: const _Body(),
+      child: _Body(),
     );
   }
 }
 
 class _Body extends StatefulWidget {
-  const _Body({Key? key}) : super(key: key);
-
   @override
   State<_Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<_Body> {
   @override
-  Widget build(BuildContext context) {
-    final auth = Provider.of<AuthUseCase>(context);
-    final provider = Provider.of<VerifyEmailProvider>(context);
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<VerifyEmailProvider>(context, listen: false);
+      provider
+          .tryVerify(context)
+          .then((value) => Navigator.pushReplacementNamed(context, "status"));
+    });
+  }
 
-    // tryVerify(auth, context);
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<VerifyEmailProvider>(context);
+    final auth = Provider.of<AuthUseCase>(context);
+    print("{set state}");
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -96,6 +104,12 @@ class _BodyState extends State<_Body> {
                         color: Theme.of(context).colorScheme.secondary)
                   },
                   onPressed: () {
+                    if (provider.verify) {
+                      return;
+                    }
+                    if (provider.loading) {
+                      return;
+                    }
                     provider.sendEmailVerify(auth);
                   },
                   state: provider.estado,
@@ -130,16 +144,5 @@ class _BodyState extends State<_Body> {
         ],
       ),
     );
-  }
-
-  tryVerify(AuthUseCase auth, BuildContext context) async {
-    print("[intento]");
-    bool verify = false;
-    while (verify == false) {
-      await Future.delayed(const Duration(seconds: 10));
-      verify = await auth.isVerifyEmail();
-      print("[intento de verificacion: $verify]");
-    }
-    Navigator.of(context).pushReplacementNamed("status");
   }
 }

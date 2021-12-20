@@ -51,6 +51,7 @@ class BottomBar extends StatelessWidget {
     final _brightness = Theme.of(context).brightness;
 
     return Container(
+      padding: const EdgeInsets.only(top: 4, bottom: 4, left: 4, right: 4),
       height: height?.toDouble(),
       decoration: BoxDecoration(color: backgroundColor),
       child: Padding(
@@ -201,7 +202,7 @@ class _BottomBarItemWidget extends StatelessWidget {
                         data: IconThemeData(
                           color:
                               Color.lerp(inactiveColor, selectedColor, value),
-                          size: 24,
+                          size: 22,
                         ),
                         child: isSelected ? icon : (inactiveIcon ?? icon),
                       ),

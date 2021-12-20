@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/Domain/models/incident.dart';
@@ -245,12 +244,11 @@ class CustomButton extends StatelessWidget {
                   print("respuesta: ${resp.toString()}");
 
                   if (resp == true) {
+                    Navigator.of(context).pushReplacementNamed("status");
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       duration: Duration(seconds: 2),
                       content: Text("Te has logueado"),
                     ));
-
-                    Navigator.pushNamed(context, "status");
                     return;
                   } else {
                     showDialog(
@@ -308,9 +306,7 @@ class CustomButton extends StatelessWidget {
                 // elevation: MaterialStateProperty.all(3),
                 shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
-              onPressed: () {
-                print("button pushed: $text");
-              },
+              onPressed: () {},
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,

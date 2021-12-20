@@ -36,19 +36,29 @@ class AuthApi extends AuthGateWay {
 
   @override
   Future<void> verifyEmail() async {
-    final user = _auth.currentUser;
-    await user!.sendEmailVerification();
+    try {
+      final user = _auth.currentUser;
+      await user!.sendEmailVerification();
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Future<bool> isVerifyEmail() async {
-    // await _auth.currentUser!.reload();
+    final auth = _auth.currentUser;
+    if (auth == null) {
+      return false;
+    }
+    await _auth.currentUser!.reload();
     return _auth.currentUser!.emailVerified;
+    // return true;
   }
 
   @override
   Future<FirestoreUser?> updateUserStatus() async {
     try {
+      await FirebaseAuth.instance.currentUser?.reload();
       final User? authuser = FirebaseAuth.instance.currentUser;
       if (authuser != null) {
         return await FirebaseFirestore.instance

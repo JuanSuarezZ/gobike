@@ -37,7 +37,6 @@ class _MyAppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<BlocTheme>(context);
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: "status",
