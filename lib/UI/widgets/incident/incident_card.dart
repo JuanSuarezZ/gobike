@@ -4,8 +4,7 @@ import 'package:gobike/Domain/models/Incident.dart';
 import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
 import 'package:gobike/Domain/use_cases/incident/IncidentUseCase.dart';
 import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
-import 'package:loading_indicator/loading_indicator.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class IncidenteCard extends StatelessWidget {
   final Incident incident;
