@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:gobike/Domain/models/Media.dart';
+import 'package:gobike/Domain/models/media.dart';
 
 class Validators {
   final validarEmail =
       StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-    RegExp regExp = new RegExp(pattern.toString());
+    RegExp regExp = RegExp(pattern.toString());
 
     if (regExp.hasMatch(email)) {
       sink.add(email);
@@ -23,10 +23,10 @@ class Validators {
     Pattern pattern3 = r'(?=.*?[#?!@$%^&*-])';
     Pattern pattern4 = r'.{8,}';
 
-    RegExp regExp1 = new RegExp(pattern1.toString());
-    RegExp regExp2 = new RegExp(pattern2.toString());
-    RegExp regExp3 = new RegExp(pattern3.toString());
-    RegExp regExp4 = new RegExp(pattern4.toString());
+    RegExp regExp1 = RegExp(pattern1.toString());
+    RegExp regExp2 = RegExp(pattern2.toString());
+    RegExp regExp3 = RegExp(pattern3.toString());
+    RegExp regExp4 = RegExp(pattern4.toString());
 
     if (regExp1.hasMatch(password)) {
       if (regExp2.hasMatch(password)) {
@@ -49,7 +49,7 @@ class Validators {
 
   final validarUserName =
       StreamTransformer<String, String>.fromHandlers(handleData: (name, sink) {
-    if (name.length >= 6) {
+    if (name.length >= 6 && name.length <= 20) {
       sink.add(name);
     } else {
       sink.addError('Ingresa un Nombre mas largo');
@@ -58,7 +58,7 @@ class Validators {
 
   final validarLocalidad =
       StreamTransformer<String, String>.fromHandlers(handleData: (name, sink) {
-    if (name.length >= 1) {
+    if (name.isNotEmpty) {
       sink.add(name);
     } else {
       sink.addError('Ingresa un Nombre mas largo');
@@ -77,7 +77,7 @@ class Validators {
   final validarEdad =
       StreamTransformer<String, String>.fromHandlers(handleData: (edad, sink) {
     Pattern pattern = r'^[0-9]+$';
-    RegExp regExp = new RegExp(pattern.toString());
+    RegExp regExp = RegExp(pattern.toString());
 
     if (regExp.hasMatch(edad)) {
       if (int.parse(edad) > 13 && int.parse(edad) <= 100) {
@@ -101,7 +101,7 @@ class Validators {
 
   final validarMedia = StreamTransformer<List<Media>, List<Media>>.fromHandlers(
       handleData: (media, sink) {
-    if (media.length != 0) {
+    if (media.isNotEmpty) {
       sink.add(media);
     } else {
       sink.addError('no hay media');

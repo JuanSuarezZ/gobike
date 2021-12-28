@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:gobike/Domain/models/Media.dart';
+import 'package:gobike/Domain/models/media.dart';
 
 import 'package:rxdart/rxdart.dart';
 
@@ -19,7 +19,7 @@ class Mediabloc extends PlantillaTextField with Validators {
   }
 
   // Obtener el último valor ingresado a los streams
-  List<Media>? get localidad => _mediaController.value;
+  List<Media>? get media => _mediaController.value;
 
   dispose() {
     _mediaController.close();
@@ -38,6 +38,6 @@ class Mediabloc extends PlantillaTextField with Validators {
 
   @override
   valueofStream() {
-    return localidad;
+    return media;
   }
 }

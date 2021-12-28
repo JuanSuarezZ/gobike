@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 
 class TagBloc extends PlantillaTextField with Validators {
   //controllers
-  final _tagTextController = new TextEditingController();
+  final _tagTextController = TextEditingController();
 
   //streams
   final _tagController = BehaviorSubject<String>();

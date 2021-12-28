@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Labels extends StatelessWidget {
@@ -7,23 +6,25 @@ class Labels extends StatelessWidget {
   final String? subTitulo;
 
   const Labels({
+    Key? key,
     @required this.ruta,
     @required this.titulo,
     @required this.subTitulo,
-  }) : super();
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        decoration: BoxDecoration(color: Colors.transparent),
+        decoration: const BoxDecoration(color: Colors.transparent),
         child: Column(
           children: <Widget>[
-            Text(this.titulo!,
+            Text(titulo!,
                 style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontSize: 20, color: Theme.of(context).accentColor)),
-            SizedBox(height: 10),
-            Text(this.subTitulo!,
+                    fontSize: 20,
+                    color: Theme.of(context).colorScheme.secondary)),
+            const SizedBox(height: 10),
+            Text(subTitulo!,
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!

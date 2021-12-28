@@ -8,7 +8,7 @@ import 'package:gobike/UI/utils/blocs/textfiel_bloc.dart';
 
 class Descripcionbloc extends PlantillaTextField with Validators {
   //controllers
-  final _descripcionTextController = new TextEditingController();
+  final _descripcionTextController = TextEditingController();
 
   //streams
   final _descripcionController = BehaviorSubject<String>();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gobike/Domain/use_cases/auth/AuthUseCase.dart';
-import 'package:gobike/UI/pages/archivo/provider/ArchivoProvider.dart';
-import 'package:gobike/UI/widgets/background/archivoBackground.dart';
+import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
+import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
+import 'package:gobike/UI/widgets/background/archivo_background.dart';
 
 import 'package:gobike/UI/widgets/incident/incident_card.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,7 @@ class _ArchivoPageState extends State<ArchivoPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            ArchivoBackground(),
+            const ArchivoBackground(),
             createTitle(context, size),
             createList(size, context),
           ],
@@ -43,11 +43,11 @@ class _ArchivoPageState extends State<ArchivoPage> {
     return Container(
       margin: EdgeInsets.only(top: size.height * .1, right: 24, left: 24),
       child: ListView.builder(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: list.length,
         itemBuilder: (context, index) {
           return Container(
-            margin: EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 20),
             child: IncidenteCard(list[index]),
           );
         },
@@ -59,7 +59,7 @@ class _ArchivoPageState extends State<ArchivoPage> {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        margin: EdgeInsets.only(left: 24, right: 24, top: 24),
+        margin: const EdgeInsets.only(left: 24, right: 24, top: 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class _ArchivoPageState extends State<ArchivoPage> {
                   .copyWith(fontWeight: FontWeight.w400),
             ),
             Container(
-              margin: EdgeInsets.only(top: 8),
+              margin: const EdgeInsets.only(top: 8),
               width: size.width * .35,
               height: 2,
               color: Theme.of(context).dividerColor,

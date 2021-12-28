@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 
 class Emailbloc extends PlantillaTextField with Validators {
   //controllers
-  final _emailTextController = new TextEditingController();
+  final _emailTextController = TextEditingController();
 
   //streams
   final _emailController = BehaviorSubject<String>();

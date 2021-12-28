@@ -8,13 +8,13 @@ import 'package:gobike/UI/utils/blocs/textfiel_bloc.dart';
 
 class Usernamebloc extends PlantillaTextField with Validators {
   //controllers
-  final _usernameTextController = new TextEditingController();
+  final _usernameTextController = TextEditingController();
 
   //streams
   final _usernameController = BehaviorSubject<String>();
 
   Stream<String> get usernameStream =>
-      _usernameController.stream.transform(validarPassword);
+      _usernameController.stream.transform(validarUserName);
 
   // Insertar valores al Stream
   Function(String) get changeUsername => _usernameController.sink.add;

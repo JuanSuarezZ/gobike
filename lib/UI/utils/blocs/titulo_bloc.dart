@@ -8,7 +8,7 @@ import 'package:gobike/UI/utils/blocs/textfiel_bloc.dart';
 
 class Titulobloc extends PlantillaTextField with Validators {
   //controllers
-  final _tituloTextController = new TextEditingController();
+  final _tituloTextController = TextEditingController();
 
   //streams
   final _tituloController = BehaviorSubject<String>();
