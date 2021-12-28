@@ -51,9 +51,11 @@ class BottomBar extends StatelessWidget {
     final _brightness = Theme.of(context).brightness;
 
     return Container(
-      padding: const EdgeInsets.only(top: 4, bottom: 4, left: 4, right: 4),
+      padding: const EdgeInsets.only(left: 4, right: 4),
       height: height?.toDouble(),
-      decoration: BoxDecoration(color: backgroundColor),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Row(
@@ -169,7 +171,12 @@ class _BottomBarItemWidget extends StatelessWidget {
     return TweenAnimationBuilder<double>(
       tween: Tween(
         begin: 0,
-        end: isSelected ? 1 : 0,
+        end: index == 2
+            ? 0 //
+            : isSelected
+                ? 1
+                : 0,
+        //
       ),
       curve: curve,
       duration: duration,
@@ -182,7 +189,6 @@ class _BottomBarItemWidget extends StatelessWidget {
           ),
           shape: const StadiumBorder(),
           child: SizedBox(
-            // color: Colors.grey,
             height: 44,
             child: InkWell(
               onTap: onTap,
@@ -193,16 +199,17 @@ class _BottomBarItemWidget extends StatelessWidget {
               hoverColor: selectedColorWithOpacity,
               child: Padding(
                 padding: const EdgeInsets.only(left: 12, right: 12),
-                // itemPadding - EdgeInsets.only(right: rightPadding * value),
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 4),
+                      padding: index == 2
+                          ? const EdgeInsets.only()
+                          : const EdgeInsets.only(right: 4),
                       child: IconTheme(
                         data: IconThemeData(
                           color:
                               Color.lerp(inactiveColor, selectedColor, value),
-                          size: 22,
+                          size: index == 2 ? 40 : 22,
                         ),
                         child: isSelected ? icon : (inactiveIcon ?? icon),
                       ),
@@ -224,7 +231,7 @@ class _BottomBarItemWidget extends StatelessWidget {
                                 color: Color.lerp(
                                     Colors.transparent, selectedColor, value),
                               ),
-                              child: title,
+                              child: index == 2 ? Container() : title,
                             ),
                           ),
                         ),

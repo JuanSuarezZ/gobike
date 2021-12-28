@@ -106,7 +106,7 @@ class CustomButton extends StatelessWidget {
                       duration: Duration(seconds: 2),
                       content: Text("Te has logueado"),
                     ));
-                    Navigator.pushNamed(context, "status");
+                    Navigator.of(context).pushReplacementNamed("status");
                     return;
                   } else {
                     showDialog(
@@ -576,7 +576,6 @@ class CustomButton extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   );
-
                   Widget continueButton = TextButton(
                     child: Text("Aceptar",
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(

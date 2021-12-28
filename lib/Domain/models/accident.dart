@@ -1,10 +1,10 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-Incident incidentFromJson(String str) => Incident.fromJson(json.decode(str));
+Accident incidentFromJson(String str) => Accident.fromJson(json.decode(str));
 
-class Incident {
-  Incident({
+class Accident {
+  Accident({
     @required this.incidentId,
     @required this.userId,
     @required this.title,
@@ -32,46 +32,46 @@ class Incident {
   final String? hour;
   final String? date;
   final String? geolocation;
-  final List<String>? listUrlImages;
-  final List<String>? listUrlVideos;
+  final List<dynamic>? listUrlImages;
+  final List<dynamic>? listUrlVideos;
   final String? description;
   final String? localidad;
   final List<dynamic>? tags;
   final int? likes;
   final int? dislikes;
 
-  factory Incident.fromJson(Map<String, dynamic> json) => Incident(
+  factory Accident.fromJson(Map<String, dynamic> json) => Accident(
         incidentId: json["incidentId"]?.toString(),
         userId: json["userId"]?.toString(),
         title: json["title"].toString(),
         severity: json["severity"]?.toDouble(),
         direction: json["direction"]?.toString(),
-        type: json["type"]?.toInt(),
+        type: json["type"] == null ? null : int.parse(json["type"]),
         hour: json["hour"]?.toString(),
         date: json["date"]?.toString(),
         geolocation: json["geolocation"]?.toString(),
         listUrlImages: json["listUrlImages"] == null
-            ? []
-            : List<String>.from(json["listUrlImages"].map((x) => x)),
+            ? null
+            : List<dynamic>.from(json["listUrlImages"].map((x) => x)),
         listUrlVideos: json["listUrlVideos"] == null
-            ? []
-            : List<String>.from(json["listUrlVideos"].map((x) => x)),
+            ? null
+            : List<dynamic>.from(json["listUrlVideos"].map((x) => x)),
         description: json["description"]?.toString(),
         localidad: json["localidad"]?.toString(),
         tags: json["tags"] == null
             ? null
             : List<dynamic>.from(json["tags"].map((x) => x)),
-        likes: json["likes"]?.toInt(),
-        dislikes: json["dislikes"]?.toInt(),
+        likes: json["likes"] == null ? null : int.parse(json["likes"]),
+        dislikes: json["dislikes"] == null ? null : int.parse(json["dislikes"]),
       );
 
   Map<String, dynamic> toJson() => {
         "incidentId": incidentId?.toString(),
         "userId": userId?.toString(),
         "title": title?.toString(),
-        "severity": severity?.toDouble(),
+        "severity": severity == null ? null : severity!.toDouble(),
         "direction": direction?.toString(),
-        "type": type?.toInt(),
+        "type": type == null ? null : type!.toInt(),
         "hour": hour?.toString(),
         "date": date?.toString(),
         "geolocation": geolocation?.toString(),
@@ -84,7 +84,7 @@ class Incident {
         "description": description?.toString(),
         "localidad": localidad?.toString(),
         "tags": tags == null ? null : List<dynamic>.from(tags!.map((x) => x)),
-        "likes": likes?.toInt(),
-        "dislikes": dislikes?.toInt(),
+        "likes": likes == null ? null : likes!.toInt(),
+        "dislikes": dislikes == null ? null : dislikes!.toInt(),
       };
 }

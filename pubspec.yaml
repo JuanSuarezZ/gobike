@@ -18,68 +18,56 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   #firebase
-  firebase_database: ^8.0.0
-  firebase_core: ^1.8.0
-  firebase_storage: ^10.0.4
-  firebase_auth: ^3.1.3
-  cloud_firestore: ^2.5.3
-  google_sign_in: ^5.1.0
+  firebase_database: 
+  firebase_core: 
+  firebase_storage: 
+  firebase_auth:
+  cloud_firestore: 
+  google_sign_in: 
   #firebaseMLvision
-  google_ml_kit: ^0.7.3
+  google_ml_kit: 
   #state
   provider: 
-  rxdart: 0.26.0
+  rxdart:
   #animations
-  animate_do: 2.0.0
+  animate_do: 
   #storage
-  flutter_secure_storage: 4.2.0
-  #buttons
-  sign_button: 2.0.1
-  #load indicator
-  loading_indicator: ^3.0.2
+  flutter_secure_storage: 
   #images
-  cached_network_image: ^3.1.0+1
+  cached_network_image: 
   #conectivity
-  connectivity: ^3.0.3
-  #Toast 
-  fluttertoast: ^8.0.8
+  connectivity: 
   #testing
-  firebase_auth_mocks: ^0.8.1
+  firebase_auth_mocks: 
   #cam
-  image_picker: 0.8.4
+  image_picker:
   #internationalization
-  intl: ^0.17.0
-  #images
-  image: ^3.1.0
-  #provier image
-  path_provider: ^2.0.4
+  intl: 
+  path_provider: 
   #fonts_size
-  auto_size_text: ^3.0.0
+  auto_size_text: 
   #video
-  video_player: ^2.2.3
+  video_player: 
   #type of file
-  mime: ^1.0.1
+  mime: 
   #video frame
-  export_video_frame: ^0.0.6
+  # export_video_frame: 
   #geolocation
-  geolocator: 7.6.2
+  geolocator:
   #http
-  http: ^0.13.3
+  http: 
   #uniqueid
-  uuid: ^3.0.5
+  uuid:
   #button
-  progress_state_button: "^1.0.4"
-
-
-  
-
-
+  progress_state_button:
+  #animations
+  animations: 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -129,10 +117,9 @@ flutter:
     - family: Langer     
       fonts:
         - asset: assets/fonts/RedHatMono-VariableFont_wght.ttf
-    - family:  CustomIcons
+    - family:  Custom2Icons
       fonts:
-        - asset: assets/icons/CustomIcons.ttf
-
+        - asset: assets/icons/Custom2Icons.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

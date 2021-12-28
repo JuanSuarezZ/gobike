@@ -9,10 +9,10 @@ import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
 import 'package:gobike/UI/pages/create/create_page.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
 import 'package:gobike/UI/pages/home/home_page.dart';
+import 'package:gobike/UI/pages/notifications/notifications_page.dart';
 import 'package:gobike/UI/pages/perfil/perfil_page.dart';
 import 'package:gobike/UI/theme/theme_bloc.dart';
 import 'package:gobike/UI/widgets/buttonbar/custom_buttonbar.dart';
-import 'package:gobike/UI/widgets/buttons/change_theme_button.dart';
 import 'package:provider/provider.dart';
 
 class ButtonNav extends StatelessWidget {
@@ -56,9 +56,7 @@ class _BodyState extends State<_Body> {
         body = const HomePage();
         break;
       case 1:
-        body = Container(
-            color: Colors.green,
-            child: const Center(child: ChangeThemeIconButton()));
+        body = const NotificationsPage();
         break;
       case 2:
         body = const CreatePage();

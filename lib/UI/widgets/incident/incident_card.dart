@@ -6,7 +6,6 @@ import 'package:gobike/Domain/models/incident.dart';
 import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
 import 'package:gobike/Domain/use_cases/incident/incident_use_case.dart';
 import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 
 class IncidenteCard extends StatelessWidget {
@@ -22,20 +21,15 @@ class IncidenteCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final provider = Provider.of<ArchivoProvider>(context);
     //
-    var date = [];
+    String date = incident.date ?? "";
+    String hour = incident.hour ?? "";
     var url = "";
-    if (incident.date == "null") {
-      date = [" ", " ", " "];
-      print("[lista vacia ${date.length}]");
-    } else {
-      date = incident.date!.split(" ");
-    }
 
     if (incident.listUrlImages!.isNotEmpty) {
       url = incident.listUrlImages![0];
     } else {
       url =
-          "https://firebasestorage.googleapis.com/v0/b/gobike-723c3.appspot.com/o/incidents%2F-MqkifUKO2f1MNJAiN9E%2F93ded160-5b99-11ec-bccf-97647a69d1eb.jpg?alt=media&token=b46fb90a-95cb-4cd3-9ca5-b741e92e7bd8";
+          "https://images.pexels.com/photos/844297/pexels-photo-844297.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260";
     }
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -55,13 +49,11 @@ class IncidenteCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: LoadingIndicator(
-                        indicatorType: Indicator.ballRotateChase,
-                        colors: [Theme.of(context).colorScheme.secondary],
-                      ),
-                    ),
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.secondary,
+                        )),
                   ],
                 ),
               ),
@@ -94,11 +86,11 @@ class IncidenteCard extends StatelessWidget {
                           ),
                           Expanded(child: Container()),
                           Text(
-                            date[0],
+                            hour,
                             style: style.copyWith(fontSize: 14),
                           ),
                           Text(
-                            "${date[1]} ${date[2]}",
+                            date,
                             style: style.copyWith(fontSize: 14),
                             overflow: TextOverflow.ellipsis,
                           ),

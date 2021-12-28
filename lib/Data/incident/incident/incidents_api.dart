@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,7 +27,7 @@ class IncidentApi extends IncidentGateWay {
       var uuid = const Uuid();
       String unicID;
       DatabaseReference ref =
-          FirebaseDatabase.instance.reference().child("incidents");
+          FirebaseDatabase.instance.ref().child("incidents");
       final incidentId = ref.push().key;
       final List<String> listUrlImages = [];
       final List<String> listUrlVideos = [];
@@ -37,7 +38,7 @@ class IncidentApi extends IncidentGateWay {
           unicID = uuid.v1().toString();
           await FirebaseStorage.instance
               .ref("incidents")
-              .child(incidentId)
+              .child(incidentId!)
               .child(unicID + ".jpg")
               .putFile(
                 File(listMedia[i].xfile!.path),
@@ -58,7 +59,7 @@ class IncidentApi extends IncidentGateWay {
           unicID = uuid.v1().toString();
           await FirebaseStorage.instance
               .ref("incidents")
-              .child(incidentId)
+              .child(incidentId!)
               .child(unicID + ".mp4")
               .putFile(
                 File(listMedia[i].xfile!.path),
@@ -84,20 +85,23 @@ class IncidentApi extends IncidentGateWay {
       String currentdate = _dateFormat.format(date);
 
       // push incident to realtimestore
-      await ref.child(incidentId).set({
-        "incidentId": incidentId,
-        "user_id": incident.userId,
-        "title": incident.title,
-        "localidad": incident.localidad,
-        "description": incident.description,
-        "date": currentdate,
-        "type": incident.type,
-        "tags": incident.tags,
-        "listUrlImages": listUrlImages,
-        "listUrlVideos": listUrlVideos,
-        "likes": 0,
-        "geolocation": position.toString(),
-      });
+      await ref.child(incidentId!).set(incident.toJson()
+
+          // {
+          // "incidentId": incidentId,
+          // "user_id": incident.userId,
+          // "title": incident.title,
+          // "localidad": incident.localidad,
+          // "description": incident.description,
+          // "date": currentdate,
+          // "type": incident.type,
+          // "tags": incident.tags,
+          // "listUrlImages": listUrlImages,
+          // "listUrlVideos": listUrlVideos,
+          // "likes": 0,
+          // "geolocation": position.toString(),
+          // }
+          );
       //update listimages and videos for user
 
       final auth = FirebaseAuth.instance;
@@ -129,20 +133,57 @@ class IncidentApi extends IncidentGateWay {
 
   @override
   Future<List<Incident>> loadMyIncidents(FirestoreUser user) async {
+    // try {
+    //   final List<dynamic> mylist = user.listIncidents;
+    //   final List<Incident> list = [];
+    //   print("funcion");
+
+    //   for (var item in mylist) {
+    //     final db = await FirebaseDatabase.instance
+    //         .ref()
+    //         .child("incidents")
+    //         .child(item.toString())
+    //         .get()
+    //         .then((value) {
+    //       Map<dynamic, dynamic> values = value.value as Map<dynamic, dynamic>;
+    //       final Map<String, dynamic> json = Map.from(values);
+    //       list.add(Incident.fromJson(json));
+    //       print(value.value);
+    //     });
+    //     // print(db.children);
+    //     // if (db.value != null) {
+    //     //   print(db.value.runtimeType.toString());
+    //     //   // Map<String, dynamic>.from(db.value);
+    //     //   // Map<String, dynamic>.from(db.value);
+    //     //   // Map<String, dynamic> json2 = Map.from(x);
+    //     //   // list.add(Incident.fromJson(json));
+    //     // }
+    //   }
+
+    //   return list;
+    // } catch (e) {
+    //   print("excepcion $e");
+    //   return [];
+    // }
+
+    // load all incidents
     final List<dynamic> mylist = user.listIncidents;
     final List<Incident> list = [];
+    final List<String> list2 = [];
 
-    for (var item in mylist) {
-      final db = await FirebaseDatabase.instance
-          .reference()
-          .child("incidents")
-          .child(item.toString())
-          .get();
+    final db = await FirebaseDatabase.instance.ref().child("incidents").get();
 
-      final Map<String, dynamic> json = Map.from(db.value);
-
-      list.add(Incident.fromJson(json));
+    for (var value in db.children) {
+      try {
+        Map<dynamic, dynamic> values = value.value as Map<dynamic, dynamic>;
+        final Map<String, dynamic> json = Map.from(values);
+        list.add(Incident.fromJson(json));
+      } catch (e) {
+        print(e);
+      }
+      // print(list.length);
     }
+
     return list;
   }
 
@@ -168,7 +209,7 @@ class IncidentApi extends IncidentGateWay {
 
       //borrar realtime
       await FirebaseDatabase.instance
-          .reference()
+          .ref()
           .child("incidents")
           .child(incident.incidentId!.toString())
           .remove();

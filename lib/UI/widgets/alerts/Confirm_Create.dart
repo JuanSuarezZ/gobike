@@ -21,14 +21,14 @@ class ConfirmCreateDiaglog extends StatelessWidget {
     IconData icon;
     if (incidente == 0) {
       text = "accidente";
-      icon = CustomIcons.tipo_accidente_negro;
+      icon = CustomIcons.tipoAccidente;
     } else {
       if (incidente == 1) {
         text = "hurto";
-        icon = CustomIcons.tipo_hurto;
+        icon = CustomIcons.tipoHurto;
       } else {
         text = "estado vial";
-        icon = CustomIcons.road;
+        icon = CustomIcons.tipoEstadoVial;
       }
     }
     return SizedBox(

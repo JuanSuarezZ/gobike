@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:export_video_frame/export_video_frame.dart';
+// import 'package:export_video_frame/export_video_frame.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
 
@@ -12,6 +12,7 @@ String validatorFile(String path) {
 Future<File> getFrame(XFile? file) async {
   var duration = const Duration(seconds: 1);
 
-  return await ExportVideoFrame.exportImageBySeconds(
-      File(file!.path), duration, 0);
+  // return await ExportVideoFrame.exportImageBySeconds(
+  //     File(file!.path), duration, 0);
+  return File("");
 }

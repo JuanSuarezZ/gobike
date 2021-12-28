@@ -69,17 +69,18 @@ class CustomImage extends StatelessWidget {
                 ),
               )),
           SizedBox(
-              height: 200,
-              width: 300,
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Container(
-                  margin: const EdgeInsets.only(bottom: 4, left: 4),
-                  height: 40,
-                  width: 40,
-                  child: const Icon(Icons.image_outlined),
-                ),
-              )),
+            height: 200,
+            width: 300,
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 4, left: 4),
+                height: 40,
+                width: 40,
+                child: const Icon(Icons.image_outlined),
+              ),
+            ),
+          ),
         ],
       ),
     );

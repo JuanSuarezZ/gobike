@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
 import 'package:gobike/UI/pages/create/widgets/app_bar.dart';
+import 'package:gobike/UI/pages/create/widgets/create_item.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_image.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_video.dart';
 import 'package:gobike/UI/widgets/custom_textfield.dart';
@@ -19,7 +20,7 @@ class CreatePage extends StatelessWidget {
         child: Stack(
           children: const [
             CreateAppbar(),
-            // FormCreate(),
+            FormCreate(),
           ],
         ),
       ),
@@ -30,6 +31,27 @@ class CreatePage extends StatelessWidget {
 
 class FormCreate extends StatelessWidget {
   const FormCreate({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            CreateItem.vial(),
+            CreateItem.hurto(),
+            CreateItem.accidente(),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class FormCreate2 extends StatelessWidget {
+  const FormCreate2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

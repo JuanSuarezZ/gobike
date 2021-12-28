@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gobike/UI/pages/create/provider/create_provider.dart';
-import 'package:gobike/UI/widgets/buttons/custom_button.dart';
-import 'package:provider/provider.dart';
 
 class CreateAppbar extends StatelessWidget {
   const CreateAppbar({Key? key}) : super(key: key);
@@ -9,7 +6,6 @@ class CreateAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final provider = Provider.of<CreateProvider>(context);
     // final margin = const EdgeInsets.only(left: 16, top: 24);
     return Align(
       alignment: Alignment.topLeft,
@@ -38,11 +34,11 @@ class CreateAppbar extends StatelessWidget {
                 )
               ],
             ),
-            Container(
-              margin: const EdgeInsets.only(right: 16),
-              height: size.height * .05,
-              child: CustomButton.create(provider.getCreateBloc(), () {}),
-            ),
+            // Container(
+            //   margin: const EdgeInsets.only(right: 16),
+            //   height: size.height * .05,
+            //   child: CustomButton.create(provider.getCreateBloc(), () {}),
+            // ),
           ],
         ),
       ),

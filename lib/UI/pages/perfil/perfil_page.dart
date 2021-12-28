@@ -221,14 +221,24 @@ class _PerfilPageState extends State<PerfilPage> {
               ],
             ),
             Container(height: 70),
-            ElevatedButton(
-                onPressed: () async {
-                  auth.signOutFromGoogle();
-                  auth.signOutEmailPassword();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, "login", (route) => false);
-                },
-                child: const Text("Cerrar sesion"))
+            // Expanded(child: Container()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      auth.signOutFromGoogle();
+                      auth.signOutEmailPassword();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, "login", (route) => false);
+                    },
+                    child: const Text("Cerrar sesion"),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

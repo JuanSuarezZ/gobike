@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
 class RegisterBackground extends StatefulWidget {
   const RegisterBackground({Key? key}) : super(key: key);
