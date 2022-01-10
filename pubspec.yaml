@@ -31,7 +31,7 @@ dependencies:
   cloud_firestore: 
   google_sign_in: 
   #firebaseMLvision
-  google_ml_kit: 
+  # google_ml_kit: 
   #state
   provider: 
   rxdart:
@@ -68,6 +68,8 @@ dependencies:
   progress_state_button:
   #animations
   animations: 
+  #maps
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

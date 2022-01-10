@@ -80,8 +80,11 @@ class _PerfilPageState extends State<PerfilPage> {
                           final image = await ImagePicker()
                               .pickImage(source: ImageSource.gallery)
                               .onError((error, stackTrace) => null);
+                          if (image == null) {
+                            return;
+                          }
 
-                          File file = File(image!.path);
+                          File file = File(image.path);
                           if (await userdata.changeProfilePhoto(file)) {
                             auth.updateUserStatus();
                           } else {

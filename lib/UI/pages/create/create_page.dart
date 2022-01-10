@@ -1,4 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
@@ -21,6 +24,34 @@ class CreatePage extends StatelessWidget {
           children: const [
             CreateAppbar(),
             FormCreate(),
+            // FormCreate2()
+            // Center(
+            //   child: ElevatedButton(
+            //       onPressed: () async {
+            //         try {
+            //           DatabaseReference ref =
+            //               FirebaseDatabase.instance.ref().child("incidents");
+            //           final incidentId = ref.push().key;
+            //           await ref.child(incidentId!).set({
+            //             "incidentId": incidentId,
+            //             "user_id": "IZScFujhokMX1bEza0sgPVYnkF12",
+            //             "title": "testing",
+            //             "localidad": "ciudad bolivar",
+            //             "description": "descripcion de prueba",
+            //             "date": "10/01/2022",
+            //             "type": 1,
+            //             "tags": [],
+            //             "listUrlImages": [],
+            //             "listUrlVideos": [],
+            //             "likes": 0,
+            //             "geolocation": "4.579703, -74.152447",
+            //           });
+            //         } catch (e) {
+            //           print(e);
+            //         }
+            //       },
+            //       child: const Text("aasd")),
+            // )
           ],
         ),
       ),
