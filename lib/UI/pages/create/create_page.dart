@@ -4,12 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gobike/Domain/models/accidente.dart';
+import 'package:gobike/Domain/models/estadoVial.dart';
+import 'package:gobike/Domain/models/hurto.dart';
+import 'package:gobike/Domain/models/incident.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
 import 'package:gobike/UI/pages/create/widgets/app_bar.dart';
 import 'package:gobike/UI/pages/create/widgets/create_item.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_image.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_video.dart';
 import 'package:gobike/UI/widgets/custom_textfield.dart';
+import 'package:google_geocoding/google_geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +26,7 @@ class CreatePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Stack(
-          children: const [
+          children: [
             CreateAppbar(),
             FormCreate(),
             // FormCreate2()
@@ -29,23 +34,91 @@ class CreatePage extends StatelessWidget {
             //   child: ElevatedButton(
             //       onPressed: () async {
             //         try {
-            //           DatabaseReference ref =
-            //               FirebaseDatabase.instance.ref().child("incidents");
-            //           final incidentId = ref.push().key;
-            //           await ref.child(incidentId!).set({
-            //             "incidentId": incidentId,
-            //             "user_id": "IZScFujhokMX1bEza0sgPVYnkF12",
+            //           //basico
+
+            //           // DatabaseReference ref =
+            //           //     FirebaseDatabase.instance.ref().child("incidents");
+            //           // final incidentId = ref.push().key;
+            //           // await ref.child(incidentId!).set({
+            //           //   "incidentId": incidentId,
+            //           //   "user_id": "IZScFujhokMX1bEza0sgPVYnkF12",
+            //           //   "title": "testing",
+            //           //   "gravedad: 1,2,3"
+            //           //   "type": 1,
+            //           //   "hour": "12:00 am",
+            //           //   "date": "10/01/2022",
+            //           //   "geolocation": "4.579703, -74.152447",
+            //           //   "listUrlImages": [],
+            //           //   "listUrlVideos": [],
+            //           //   "direccion": "cl 59a #48b 49"
+            //           //   "localidad": "ciudad bolivar",
+            //           //   "tags": [],
+            //           //   "likes": 0,
+            //           //   "dislikes": 0,
+            //           //   "id_registro_bici": "adssdsdada",
+            //           //   "description": "descripcion de prueba",
+            //           // });
+
+            //           final jsondeprueba = {
+            //             "incidentId": "asd",
+            //             "userId": "IZScFujhokMX1bEza0sgPVYnkF12",
             //             "title": "testing",
-            //             "localidad": "ciudad bolivar",
-            //             "description": "descripcion de prueba",
-            //             "date": "10/01/2022",
+            //             "severity": 1.0,
+            //             "direccion": "cl 59a #48b 49",
             //             "type": 1,
-            //             "tags": [],
+            //             "hour": "12:00 am",
+            //             "date": "10/01/2022",
+            //             "geolocation": "4.579703, -74.152447",
             //             "listUrlImages": [],
             //             "listUrlVideos": [],
+            //             "description": "descripcion de prueba",
+            //             "localidad": "ciudad bolivar",
+            //             "tags": [],
             //             "likes": 0,
-            //             "geolocation": "4.579703, -74.152447",
-            //           });
+            //             "dislikes": 0,
+            //           };
+
+            //           final incidente = Incident.fromJson(jsondeprueba);
+
+            //           final accidente = Accidente.fromJson(jsondeprueba);
+
+            //           final hurto = Hurto.fromJson(jsondeprueba);
+
+            //           final estadovial = EstadoVial.fromJson(jsondeprueba);
+            //           //
+            //           print(accidente.idRegistroBici);
+            //           print(hurto.descripcionLadron);
+            //           print(estadovial.incidentId);
+
+            //           // var googleGeocoding = GoogleGeocoding(
+            //           //     "AIzaSyDbOXvbTpS-YMGTHHuo42unZ-6ptGyg-yU");
+            //           // var risult = await googleGeocoding.geocoding
+            //           //     .getReverse(const LatLon(4.578262, -74.153462));
+            //           // print("[desde coordenadas]");
+            //           // for (var item in risult!.results!) {
+            //           //   print(item.formattedAddress);
+            //           //   // if (item.postcodeLocalities != null) {
+            //           //   //   for (var item2 in item.postcodeLocalities!) {
+            //           //   //     print(item2);
+            //           //   //   }
+            //           //   // }
+            //           // }
+
+            //           // var risult2 = await googleGeocoding.geocoding.get(
+            //           //     "Cl. 59a Sur #48b-85 a 48b-1, Bogotá, Colombia", []);
+
+            //           // print("[desde direccion]");
+            //           // print("${risult2!.results!.length}");
+
+            //           // for (var item in risult2.results!) {
+            //           //   print(item.geometry!.location!.lat);
+            //           //   print(item.geometry!.location!.lng);
+            //           //   // if (item.postcodeLocalities != null) {
+            //           //   //   for (var item2 in item.postcodeLocalities!) {
+            //           //   //     print(item2);
+            //           //   //   }
+            //           //   // }
+            //           // }
             //         } catch (e) {
             //           print(e);
             //         }

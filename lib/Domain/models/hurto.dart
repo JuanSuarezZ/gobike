@@ -1,5 +1,7 @@
-class Incident {
-  Incident({
+import 'package:gobike/Domain/models/Incident.dart';
+
+class Hurto extends Incident {
+  Hurto({
     this.incidentId,
     this.userId,
     this.title,
@@ -16,7 +18,28 @@ class Incident {
     this.tags,
     this.likes,
     this.dislikes,
-  });
+    this.idRegistroBici,
+    this.descripcionBici,
+    this.descripcionLadron,
+    this.urlBiciRobada,
+  }) : super(
+          incidentId: incidentId,
+          userId: userId,
+          title: title,
+          severity: severity,
+          direction: direction,
+          type: type,
+          hour: hour,
+          date: date,
+          geolocation: geolocation,
+          listUrlImages: listUrlImages,
+          listUrlVideos: listUrlVideos,
+          description: description,
+          localidad: localidad,
+          tags: tags,
+          likes: likes,
+          dislikes: dislikes,
+        );
 
   final String? incidentId;
   final String? userId;
@@ -34,8 +57,12 @@ class Incident {
   final List<dynamic>? tags;
   final int? likes;
   final int? dislikes;
+  final String? idRegistroBici;
+  final String? descripcionBici;
+  final String? descripcionLadron;
+  final String? urlBiciRobada;
 
-  factory Incident.fromJson(Map<String, dynamic> json) => Incident(
+  factory Hurto.fromJson(Map<String, dynamic> json) => Hurto(
         incidentId: json["incidentId"]?.toString(),
         userId: json["userId"]?.toString(),
         title: json["title"].toString(),
@@ -58,8 +85,13 @@ class Incident {
             : List<dynamic>.from(json["tags"].map((x) => x)),
         likes: json["likes"]?.toInt(),
         dislikes: json["dislikes"]?.toInt(),
+        idRegistroBici: json["idRegistroBici"]?.toString(),
+        descripcionBici: json["descripcionBici"]?.toString(),
+        descripcionLadron: json["descripcionLadron"]?.toString(),
+        urlBiciRobada: json["urlBiciRobada"]?.toString(),
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         "incidentId": incidentId?.toString(),
         "userId": userId?.toString(),
@@ -81,5 +113,9 @@ class Incident {
         "tags": tags == null ? null : List<dynamic>.from(tags!.map((x) => x)),
         "likes": likes?.toInt(),
         "dislikes": dislikes?.toInt(),
+        "idRegistroBici": idRegistroBici?.toString(),
+        "descripcionBici": descripcionBici?.toString(),
+        "descripcionLadron": descripcionLadron?.toString(),
+        "urlBiciRobada": urlBiciRobada?.toString()
       };
 }

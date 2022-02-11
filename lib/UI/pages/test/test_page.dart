@@ -5,10 +5,21 @@ class TestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-        onPressed: () async {},
-        child: Container(),
+    return Scaffold(
+      body: const Center(
+        // child: ElevatedButton(
+        //   onPressed: () async {},
+        //   child: Container(),
+        // ),
+        child: Hero(
+          tag: "tag",
+          child: Text("heroe"),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, "test2");
+        },
       ),
     );
   }

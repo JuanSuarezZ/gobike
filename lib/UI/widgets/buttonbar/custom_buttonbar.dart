@@ -57,7 +57,7 @@ class BottomBar extends StatelessWidget {
         color: backgroundColor,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.only(right: 8, left: 8, bottom: 4),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
@@ -189,6 +189,7 @@ class _BottomBarItemWidget extends StatelessWidget {
           ),
           shape: const StadiumBorder(),
           child: SizedBox(
+            // color: Colors.red,
             height: 44,
             child: InkWell(
               onTap: onTap,
@@ -203,7 +204,7 @@ class _BottomBarItemWidget extends StatelessWidget {
                   children: [
                     Padding(
                       padding: index == 2
-                          ? const EdgeInsets.only()
+                          ? const EdgeInsets.all(0)
                           : const EdgeInsets.only(right: 4),
                       child: IconTheme(
                         data: IconThemeData(
@@ -218,7 +219,7 @@ class _BottomBarItemWidget extends StatelessWidget {
                       child: SizedBox(
                         height: 20,
                         child: Align(
-                          alignment: const Alignment(-0.2, 0),
+                          alignment: const Alignment(0, 0),
                           widthFactor: value,
                           child: Padding(
                             // padding: EdgeInsets.only(

@@ -82,6 +82,7 @@ class _BodyState extends State<_Body> {
     return Scaffold(
       body: body,
       bottomNavigationBar: BottomBar(
+        height: 50,
         backgroundColor: colorBottomNav,
         selectedIndex: _currentPage,
         onTap: (int index) {

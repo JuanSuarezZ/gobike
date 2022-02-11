@@ -69,7 +69,12 @@ dependencies:
   #animations
   animations: 
   #maps
-  
+  google_maps_cluster_manager: ^3.0.0+1
+  google_maps_flutter: ^2.1.1
+  google_geocoding: ^0.2.0
+  google_place: ^0.4.3
+  #env
+  flutter_dotenv: ^5.0.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

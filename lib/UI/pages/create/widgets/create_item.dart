@@ -15,7 +15,7 @@ class CreateItem extends StatelessWidget {
   final Color color1;
   final Color color2;
   final IconData icon;
-  final Widget page;
+  final String route;
 
   const CreateItem.vial({
     Key? key,
@@ -26,18 +26,18 @@ class CreateItem extends StatelessWidget {
     this.color1 = const Color(0xff83c2f0),
     this.color2 = const Color(0xff7da0f2),
     this.icon = CustomIcons.tipoEstadoVial,
-    this.page = const RoadPage(),
+    this.route = 'createRoad',
   }) : super(key: key);
 
   const CreateItem.hurto({
     Key? key,
     this.titulo = "Hurto",
-    this.descripcion = "Agrega detalles, ubicacion fotos \n y videos",
+    this.descripcion = "Agrega detalles, ubicacion, fotos \n y videos",
     this.color = const Color(0xfff27498),
     this.color1 = const Color(0xfff05c74),
     this.color2 = const Color(0xfff06494),
     this.icon = CustomIcons.tipoHurto,
-    this.page = const StealerPage(),
+    this.route = 'createStealer',
   }) : super(key: key);
 
   const CreateItem.accidente({
@@ -48,7 +48,7 @@ class CreateItem extends StatelessWidget {
     this.color1 = const Color(0xfff1a95f),
     this.color2 = const Color(0xffeea05d),
     this.icon = CustomIcons.tipoAccidente,
-    this.page = const AccidentPage(),
+    this.route = 'createAccident',
   }) : super(key: key);
 
   @override
@@ -58,104 +58,101 @@ class CreateItem extends StatelessWidget {
     final themeNotifier = Provider.of<BlocTheme>(context);
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 16),
-      decoration: (themeNotifier.getTheme() == _themeDataLight)
-          ? BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: color,
-                  blurRadius: 3,
-                  offset: const Offset(0, 4), // Shadow position
-                )
-              ],
-            )
-          : BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-            ),
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: OpenContainer(
-          transitionDuration: const Duration(milliseconds: 800),
-          closedBuilder: (_, openContainer) {
-            return Container(
+      height: 160,
+      width: size.width * .9,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Stack(
+        children: [
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              clipBehavior: Clip.antiAlias,
+              height: 140,
               width: size.width * .9,
-              height: 150,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [color1, color2],
+              decoration: (themeNotifier.getTheme() == _themeDataLight)
+                  ? BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [color1, color2],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: color,
+                          blurRadius: 3,
+                          offset: const Offset(0, 4), // Shadow position
+                        )
+                      ],
+                    )
+                  : BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [color1, color2],
+                      ),
+                    ),
+              child: InkWell(
+                onTap: () => Navigator.of(context).pushNamed(route),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: -80,
+                      bottom: -80,
+                      top: 0,
+                      child: Container(
+                        width: size.width * .5,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: color,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      left: 100,
+                      child: Hero(
+                        tag: titulo,
+                        child: Text(
+                          titulo,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16, bottom: 16),
+                        child: Text(
+                          descripcion,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(fontSize: 14),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 5,
-                    left: 5,
-                    child: Icon(
-                      icon,
-                      size: 80,
-                    ),
-                  ),
-                  Positioned(
-                    right: -100,
-                    bottom: -100,
-                    top: -55,
-                    child: Container(
-                      width: size.width * .5,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: color,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    left: 100,
-                    child: Text(
-                      titulo,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2!
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              descripcion,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(fontSize: 14),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-          closedElevation: 0,
-          openElevation: 0,
-          closedShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            ),
           ),
-          closedColor: color,
-          openColor: Theme.of(context).backgroundColor,
-          middleColor: Theme.of(context).backgroundColor,
-          openBuilder: (_, closeContainer) {
-            return page;
-          },
-        ),
+          Positioned(
+            top: 0,
+            left: 5,
+            child: Hero(
+              tag: descripcion,
+              child: Icon(
+                icon,
+                size: 80,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

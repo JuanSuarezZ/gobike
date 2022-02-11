@@ -167,24 +167,28 @@ class IncidentApi extends IncidentGateWay {
     // }
 
     // load all incidents
-    final List<dynamic> mylist = user.listIncidents;
-    final List<Incident> list = [];
-    final List<String> list2 = [];
 
-    final db = await FirebaseDatabase.instance.ref().child("incidents").get();
+    try {
+      final List<dynamic> mylist = user.listIncidents;
+      final List<Incident> list = [];
+      final List<String> list2 = [];
 
-    for (var value in db.children) {
-      try {
-        Map<dynamic, dynamic> values = value.value as Map<dynamic, dynamic>;
-        final Map<String, dynamic> json = Map.from(values);
-        list.add(Incident.fromJson(json));
-      } catch (e) {
-        print(e);
+      final db = await FirebaseDatabase.instance.ref().child("incidents").get();
+
+      for (var value in db.children) {
+        try {
+          Map<dynamic, dynamic> values = value.value as Map<dynamic, dynamic>;
+          final Map<String, dynamic> json = Map.from(values);
+          list.add(Incident.fromJson(json));
+        } catch (e) {
+          print(e);
+        }
+        // print(list.length);
       }
-      // print(list.length);
+      return list;
+    } catch (e) {
+      return [];
     }
-
-    return list;
   }
 
   @override
