@@ -9,6 +9,7 @@ import 'package:gobike/UI/theme/theme_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  //
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(

@@ -133,7 +133,7 @@ class _PerfilPageState extends State<PerfilPage> {
               children: [
                 Column(
                   children: [
-                    Text("20",
+                    Text("0",
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                             color: Theme.of(context).colorScheme.secondary)),
                     Text(
@@ -153,7 +153,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 Column(
                   children: [
                     Text(
-                      "30",
+                      "0",
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                           color: Theme.of(context).colorScheme.secondary),
                       textAlign: TextAlign.center,
