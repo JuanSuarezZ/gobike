@@ -122,7 +122,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 style: Theme.of(context)
                     .textTheme
                     .headline3!
-                    .copyWith(fontSize: 15),
+                    .copyWith(fontSize: 16),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
