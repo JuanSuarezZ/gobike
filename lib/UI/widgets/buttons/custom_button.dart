@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:gobike/Domain/models/incident.dart';
-import 'package:gobike/Domain/models/media.dart';
+import 'package:gobike/Domain/models/Incident.dart';
+import 'package:gobike/Domain/models/Media.dart';
 import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
 import 'package:gobike/Domain/use_cases/device/location_use_case.dart';
 import 'package:gobike/Domain/use_cases/incident/incident_use_case.dart';
@@ -10,8 +10,8 @@ import 'package:gobike/Domain/use_cases/network/network_state_use_case.dart';
 import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
 import 'package:gobike/UI/pages/register/registro_bloc/provider/registro_provider.dart';
-import 'package:gobike/UI/widgets/alerts/confirm_create.dart';
-import 'package:gobike/UI/widgets/alerts/confirm_dialog.dart';
+import 'package:gobike/UI/widgets/alerts/Confirm_Create.dart';
+import 'package:gobike/UI/widgets/alerts/Confirm_Dialog.dart';
 import 'package:gobike/UI/widgets/alerts/error_alert_dialog.dart';
 import 'package:provider/provider.dart';
 

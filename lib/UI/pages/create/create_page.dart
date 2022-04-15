@@ -1,20 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gobike/Domain/models/accidente.dart';
-import 'package:gobike/Domain/models/estadoVial.dart';
-import 'package:gobike/Domain/models/hurto.dart';
-import 'package:gobike/Domain/models/incident.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';
-import 'package:gobike/UI/pages/create/widgets/app_bar.dart';
+import 'package:gobike/UI/pages/create/widgets/app_Bar.dart';
 import 'package:gobike/UI/pages/create/widgets/create_item.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_image.dart';
 import 'package:gobike/UI/pages/create/widgets/custom_video.dart';
 import 'package:gobike/UI/widgets/custom_textfield.dart';
-import 'package:google_geocoding/google_geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +18,7 @@ class CreatePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Stack(
-          children: [
+          children: const [
             CreateAppbar(),
             FormCreate(),
             // FormCreate2()

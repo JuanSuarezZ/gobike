@@ -1,6 +1,4 @@
 // ignore_for_file: avoid_print
-
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,9 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gobike/Domain/models/incident.dart';
+import 'package:gobike/Domain/models/Incident.dart';
+import 'package:gobike/Domain/models/Media.dart';
 import 'package:gobike/Domain/models/firestore_user.dart';
-import 'package:gobike/Domain/models/media.dart';
 import 'package:gobike/Domain/use_cases/incident/incident_gate_way.dart';
 import 'package:intl/intl.dart';
 

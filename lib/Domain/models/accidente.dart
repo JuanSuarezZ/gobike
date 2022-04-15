@@ -1,4 +1,4 @@
-import 'package:gobike/Domain/models/incident.dart';
+import 'package:gobike/Domain/models/Incident.dart';
 
 class Accidente extends Incident {
   Accidente({

@@ -1,10 +1,6 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:gobike/UI/icons/custom_icons.dart';
-import 'package:gobike/UI/pages/create/createAccident/create_acidentpage.dart';
-import 'package:gobike/UI/pages/create/createRoad/create_roadpage.dart';
-import 'package:gobike/UI/pages/create/createStealer/create_stealerpage.dart';
-import 'package:gobike/UI/theme/app_theme.dart';
+import 'package:gobike/UI/theme/App_theme.dart';
 import 'package:gobike/UI/theme/theme_bloc.dart';
 import 'package:provider/provider.dart';
 

@@ -4,7 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gobike/Core/routes/routes.dart';
-import 'package:gobike/UI/pages/archivo/archivo_page.dart';
+import 'package:gobike/UI/pages/archivo/archivo_Page.dart';
 import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';
 import 'package:gobike/UI/pages/create/create_page.dart';
 import 'package:gobike/UI/pages/create/provider/create_provider.dart';

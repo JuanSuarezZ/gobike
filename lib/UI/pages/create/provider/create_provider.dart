@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gobike/Core/helpers/validator_file.dart';
-import 'package:gobike/Domain/models/media.dart';
+import 'package:gobike/Domain/models/Media.dart';
 import 'package:gobike/UI/pages/create/provider/blocs/create_bloc.dart';
 import 'package:gobike/UI/utils/blocs/descripcion_bloc.dart';
 import 'package:gobike/UI/utils/blocs/localidad_bloc.dart';

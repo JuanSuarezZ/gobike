@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:gobike/Domain/models/media.dart';
+import 'package:gobike/Domain/models/Media.dart';
 
 class Validators {
   final validarEmail =
