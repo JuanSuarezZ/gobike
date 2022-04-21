@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gobike/Domain/models/Incident.dart';
 import 'package:gobike/Domain/models/firestore_user.dart';
-import 'package:gobike/Domain/models/incident.dart';
 import 'package:gobike/Domain/use_cases/incident/incident_use_case.dart';
 
 class ArchivoProvider with ChangeNotifier {
@@ -12,7 +12,8 @@ class ArchivoProvider with ChangeNotifier {
   ArchivoProvider();
 
   loadMyIncidents(FirestoreUser user) async {
-    listIncident = await IncidentUseCase().loadMyIncidents(user);
+    final incident = IncidentUseCase();
+    listIncident = await incident.loadMyIncidents(user);
     notifyListeners(); // this.listloaded = true;
   }
 

@@ -1,6 +1,4 @@
 // ignore_for_file: avoid_print
-
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,9 +6,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:gobike/Domain/models/incident.dart';
+import 'package:gobike/Domain/models/Incident.dart';
+import 'package:gobike/Domain/models/Media.dart';
 import 'package:gobike/Domain/models/firestore_user.dart';
-import 'package:gobike/Domain/models/media.dart';
 import 'package:gobike/Domain/use_cases/incident/incident_gate_way.dart';
 import 'package:intl/intl.dart';
 
@@ -167,24 +165,28 @@ class IncidentApi extends IncidentGateWay {
     // }
 
     // load all incidents
-    final List<dynamic> mylist = user.listIncidents;
-    final List<Incident> list = [];
-    final List<String> list2 = [];
 
-    final db = await FirebaseDatabase.instance.ref().child("incidents").get();
+    try {
+      final List<dynamic> mylist = user.listIncidents;
+      final List<Incident> list = [];
+      final List<String> list2 = [];
 
-    for (var value in db.children) {
-      try {
-        Map<dynamic, dynamic> values = value.value as Map<dynamic, dynamic>;
-        final Map<String, dynamic> json = Map.from(values);
-        list.add(Incident.fromJson(json));
-      } catch (e) {
-        print(e);
+      final db = await FirebaseDatabase.instance.ref().child("incidents").get();
+
+      for (var value in db.children) {
+        try {
+          Map<dynamic, dynamic> values = value.value as Map<dynamic, dynamic>;
+          final Map<String, dynamic> json = Map.from(values);
+          list.add(Incident.fromJson(json));
+        } catch (e) {
+          print(e);
+        }
+        // print(list.length);
       }
-      // print(list.length);
+      return list;
+    } catch (e) {
+      return [];
     }
-
-    return list;
   }
 
   @override

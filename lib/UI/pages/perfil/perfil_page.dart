@@ -80,8 +80,11 @@ class _PerfilPageState extends State<PerfilPage> {
                           final image = await ImagePicker()
                               .pickImage(source: ImageSource.gallery)
                               .onError((error, stackTrace) => null);
+                          if (image == null) {
+                            return;
+                          }
 
-                          File file = File(image!.path);
+                          File file = File(image.path);
                           if (await userdata.changeProfilePhoto(file)) {
                             auth.updateUserStatus();
                           } else {
@@ -119,7 +122,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 style: Theme.of(context)
                     .textTheme
                     .headline3!
-                    .copyWith(fontSize: 15),
+                    .copyWith(fontSize: 16),
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
@@ -130,7 +133,7 @@ class _PerfilPageState extends State<PerfilPage> {
               children: [
                 Column(
                   children: [
-                    Text("20",
+                    Text("0",
                         style: Theme.of(context).textTheme.headline1!.copyWith(
                             color: Theme.of(context).colorScheme.secondary)),
                     Text(
@@ -150,7 +153,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 Column(
                   children: [
                     Text(
-                      "30",
+                      "0",
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                           color: Theme.of(context).colorScheme.secondary),
                       textAlign: TextAlign.center,

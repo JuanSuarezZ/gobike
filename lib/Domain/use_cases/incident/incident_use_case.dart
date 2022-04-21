@@ -1,6 +1,7 @@
+import 'package:gobike/Domain/models/Incident.dart';
+import 'package:gobike/Domain/models/Media.dart';
 import 'package:gobike/Domain/models/firestore_user.dart';
-import 'package:gobike/Domain/models/incident.dart';
-import 'package:gobike/Domain/models/media.dart';
+
 import 'package:gobike/Domain/use_cases/incident/incident_gate_way.dart';
 import 'package:gobike/Domain/use_cases/incident/incident_use_case_config.dart';
 

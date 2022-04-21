@@ -1,27 +1,41 @@
-import 'package:meta/meta.dart';
-import 'dart:convert';
+import 'package:gobike/Domain/models/Incident.dart';
 
-Accident incidentFromJson(String str) => Accident.fromJson(json.decode(str));
-
-class Accident {
-  Accident({
-    @required this.incidentId,
-    @required this.userId,
-    @required this.title,
-    @required this.severity,
-    @required this.direction,
-    @required this.type,
-    @required this.hour,
-    @required this.date,
-    @required this.geolocation,
-    @required this.listUrlImages,
-    @required this.listUrlVideos,
-    @required this.description,
-    @required this.localidad,
-    @required this.tags,
-    @required this.likes,
-    @required this.dislikes,
-  });
+class EstadoVial extends Incident {
+  EstadoVial({
+    this.incidentId,
+    this.userId,
+    this.title,
+    this.severity,
+    this.direction,
+    this.type,
+    this.hour,
+    this.date,
+    this.geolocation,
+    this.listUrlImages,
+    this.listUrlVideos,
+    this.description,
+    this.localidad,
+    this.tags,
+    this.likes,
+    this.dislikes,
+  }) : super(
+          incidentId: incidentId,
+          userId: userId,
+          title: title,
+          severity: severity,
+          direction: direction,
+          type: type,
+          hour: hour,
+          date: date,
+          geolocation: geolocation,
+          listUrlImages: listUrlImages,
+          listUrlVideos: listUrlVideos,
+          description: description,
+          localidad: localidad,
+          tags: tags,
+          likes: likes,
+          dislikes: dislikes,
+        );
 
   final String? incidentId;
   final String? userId;
@@ -32,46 +46,46 @@ class Accident {
   final String? hour;
   final String? date;
   final String? geolocation;
-  final List<dynamic>? listUrlImages;
-  final List<dynamic>? listUrlVideos;
+  final List<String>? listUrlImages;
+  final List<String>? listUrlVideos;
   final String? description;
   final String? localidad;
   final List<dynamic>? tags;
   final int? likes;
   final int? dislikes;
 
-  factory Accident.fromJson(Map<String, dynamic> json) => Accident(
+  factory EstadoVial.fromJson(Map<String, dynamic> json) => EstadoVial(
         incidentId: json["incidentId"]?.toString(),
         userId: json["userId"]?.toString(),
         title: json["title"].toString(),
         severity: json["severity"]?.toDouble(),
         direction: json["direction"]?.toString(),
-        type: json["type"] == null ? null : int.parse(json["type"]),
+        type: json["type"]?.toInt(),
         hour: json["hour"]?.toString(),
         date: json["date"]?.toString(),
         geolocation: json["geolocation"]?.toString(),
         listUrlImages: json["listUrlImages"] == null
-            ? null
-            : List<dynamic>.from(json["listUrlImages"].map((x) => x)),
+            ? []
+            : List<String>.from(json["listUrlImages"].map((x) => x)),
         listUrlVideos: json["listUrlVideos"] == null
-            ? null
-            : List<dynamic>.from(json["listUrlVideos"].map((x) => x)),
+            ? []
+            : List<String>.from(json["listUrlVideos"].map((x) => x)),
         description: json["description"]?.toString(),
         localidad: json["localidad"]?.toString(),
         tags: json["tags"] == null
             ? null
             : List<dynamic>.from(json["tags"].map((x) => x)),
-        likes: json["likes"] == null ? null : int.parse(json["likes"]),
-        dislikes: json["dislikes"] == null ? null : int.parse(json["dislikes"]),
+        likes: json["likes"]?.toInt(),
+        dislikes: json["dislikes"]?.toInt(),
       );
 
   Map<String, dynamic> toJson() => {
         "incidentId": incidentId?.toString(),
         "userId": userId?.toString(),
         "title": title?.toString(),
-        "severity": severity == null ? null : severity!.toDouble(),
+        "severity": severity?.toDouble(),
         "direction": direction?.toString(),
-        "type": type == null ? null : type!.toInt(),
+        "type": type?.toInt(),
         "hour": hour?.toString(),
         "date": date?.toString(),
         "geolocation": geolocation?.toString(),
@@ -84,7 +98,7 @@ class Accident {
         "description": description?.toString(),
         "localidad": localidad?.toString(),
         "tags": tags == null ? null : List<dynamic>.from(tags!.map((x) => x)),
-        "likes": likes == null ? null : likes!.toInt(),
-        "dislikes": dislikes == null ? null : dislikes!.toInt(),
+        "likes": likes?.toInt(),
+        "dislikes": dislikes?.toInt(),
       };
 }

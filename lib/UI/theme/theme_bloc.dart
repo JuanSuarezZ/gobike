@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:gobike/UI/theme/app_theme.dart';
+import 'package:gobike/UI/theme/App_theme.dart';
 
 class BlocTheme with ChangeNotifier {
   //

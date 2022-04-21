@@ -2,7 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gobike/Domain/models/incident.dart';
+import 'package:gobike/Domain/models/Incident.dart';
 import 'package:gobike/Domain/use_cases/auth/auth_use_case.dart';
 import 'package:gobike/Domain/use_cases/incident/incident_use_case.dart';
 import 'package:gobike/UI/pages/archivo/provider/archivo_provider.dart';

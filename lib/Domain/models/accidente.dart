@@ -1,5 +1,7 @@
-class Incident {
-  Incident({
+import 'package:gobike/Domain/models/Incident.dart';
+
+class Accidente extends Incident {
+  Accidente({
     this.incidentId,
     this.userId,
     this.title,
@@ -16,7 +18,25 @@ class Incident {
     this.tags,
     this.likes,
     this.dislikes,
-  });
+    this.idRegistroBici,
+  }) : super(
+          incidentId: incidentId,
+          userId: userId,
+          title: title,
+          severity: severity,
+          direction: direction,
+          type: type,
+          hour: hour,
+          date: date,
+          geolocation: geolocation,
+          listUrlImages: listUrlImages,
+          listUrlVideos: listUrlVideos,
+          description: description,
+          localidad: localidad,
+          tags: tags,
+          likes: likes,
+          dislikes: dislikes,
+        );
 
   final String? incidentId;
   final String? userId;
@@ -34,8 +54,9 @@ class Incident {
   final List<dynamic>? tags;
   final int? likes;
   final int? dislikes;
+  final String? idRegistroBici;
 
-  factory Incident.fromJson(Map<String, dynamic> json) => Incident(
+  factory Accidente.fromJson(Map<String, dynamic> json) => Accidente(
         incidentId: json["incidentId"]?.toString(),
         userId: json["userId"]?.toString(),
         title: json["title"].toString(),
@@ -58,8 +79,10 @@ class Incident {
             : List<dynamic>.from(json["tags"].map((x) => x)),
         likes: json["likes"]?.toInt(),
         dislikes: json["dislikes"]?.toInt(),
+        idRegistroBici: json["idRegistroBici"]?.toString(),
       );
 
+  @override
   Map<String, dynamic> toJson() => {
         "incidentId": incidentId?.toString(),
         "userId": userId?.toString(),

@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:gobike/UI/theme/app_theme.dart';
+import 'package:gobike/UI/theme/App_theme.dart';
 import 'package:gobike/UI/theme/theme_bloc.dart';
 import 'package:provider/provider.dart';
 

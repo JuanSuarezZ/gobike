@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gobike/UI/icons/custom_icons.dart';
 
 class AccidentPage extends StatelessWidget {
   const AccidentPage({Key? key}) : super(key: key);
@@ -6,7 +7,16 @@ class AccidentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
+    final media = MediaQuery.of(context).size;
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xffeea05d),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          elevation: 0,
+        ),
         body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -19,14 +29,40 @@ class AccidentPage extends StatelessWidget {
             ),
           ),
           child: PageView(
-            /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-            /// Use [Axis.vertical] to scroll vertically.
             controller: controller,
-            // reverse: true,
             children: [
               Center(
                 child: InkWell(
-                  child: const Text('First Page'),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            // Hero(
+                            //   tag: "Accidente",
+                            //   child: Icon(
+                            //     CustomIcons.tipoAccidente,
+                            //     size: 80,
+                            //   ),
+                            // ),
+
+                            Hero(
+                              tag: "Accidente",
+                              child: Text(
+                                "Accidente",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2!
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   onTap: () async {
                     controller.animateToPage(
                       2,
@@ -35,9 +71,6 @@ class AccidentPage extends StatelessWidget {
                     );
                   },
                 ),
-              ),
-              const Center(
-                child: Text('Second Page'),
               ),
               const Center(
                 child: Text('Third Page'),
